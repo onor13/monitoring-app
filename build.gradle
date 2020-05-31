@@ -25,10 +25,10 @@ compileTestJava.options.encoding = "UTF-8"
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.1-jre'
+    implementation group: 'org.cactoos', name: 'cactoos', version: '0.46'
 
     testImplementation 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest:2.2'
-    testCompile group: 'org.cactoos', name: 'cactoos', version: '0.46'
     testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
 }
 

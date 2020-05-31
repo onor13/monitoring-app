@@ -3,12 +3,11 @@ package task.storage;
 import task.ITaskResult;
 
 import java.time.Instant;
-import java.util.Set;
 
-public interface ITasksResultsStorage {
-  Set<ITaskResult> getAllTasksResults();
+public interface ITasksResultsStorage extends Iterable<ITaskResult> {
+  int size();
   void addTaskResult( ITaskResult taskResult );
   boolean contains( ITaskResult taskResult );
-  void removeAllTaskResults();
-  void removeTaskResultsOlderThan( Instant instant );
+  void removeAll();
+  void removeOlderThan( Instant instant );
 }
