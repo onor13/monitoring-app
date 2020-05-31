@@ -21,29 +21,15 @@ repositories {
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main', 'src/sample']
-        }
-        resources {
-            srcDirs = ['src/main/resources']
-        }
-        test {
-            java {
-                srcDirs = ['src/test']
-            }
-        }
-    }
-
-}
 
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.1-jre'
 
-    // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest:2.2'
+    testCompile group: 'org.cactoos', name: 'cactoos', version: '0.46'
+    testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
 }
 
 java {
@@ -63,5 +49,5 @@ application {
 
 test {
     useJUnit()
-    maxHeapSize = '4G'
+    maxHeapSize = '1G'
 }
