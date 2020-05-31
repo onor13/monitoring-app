@@ -14,7 +14,23 @@ public class MockTaskResult
   }
 
   public MockTaskResult( Long seqNumber, Instant creationTime ){
-    super( seqNumber, MockTaskResult.class.getSimpleName(), "dontNotCare" , null, TaskResultType.SUCCESS, creationTime, Duration.ofMinutes( (int)Math.random() ));
+    this( seqNumber, "dontCare" , creationTime, TaskResultType.SUCCESS);
+  }
+
+  public MockTaskResult( Long seqNumber, String taskName ){
+    this( seqNumber, taskName , Instant.now(), TaskResultType.SUCCESS);
+  }
+
+  public MockTaskResult( Long seqNumber, TaskResultType taskResultType ){
+    this( seqNumber, "dontCare" , Instant.now(), taskResultType );
+  }
+
+  public MockTaskResult( Long seqNumber, String taskName, Instant creationTime ){
+    this( seqNumber, taskName , creationTime, TaskResultType.SUCCESS);
+  }
+
+  public MockTaskResult( Long seqNumber, String taskName, Instant creationTime, TaskResultType taskResultType ){
+    super( seqNumber, MockTaskResult.class.getSimpleName(), taskName , null, taskResultType, creationTime, Duration.ofMinutes( (int)Math.random() ));
   }
 
 }
