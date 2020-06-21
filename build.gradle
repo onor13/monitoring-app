@@ -6,31 +6,69 @@
  * User Manual available at https://docs.gradle.org/6.1.1/userguide/tutorial_java_projects.html
  */
 
+
 plugins {
     // Apply the application plugin to add support for building a CLI application.
-    id 'application'
+  //  id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/release" }
+    maven { url "https://repo.spring.io/libs-release" }
+   // maven { url "http://repo.spring.io/milestone" }
+   // maven { url "https://repo.spring.io/libs-milestone" }
 }
 
-compileJava.options.encoding = "UTF-8"
-compileTestJava.options.encoding = "UTF-8"
+processResources {
+    expand(project.properties)
+}
 
 
 dependencies {
     // This dependency is used by the application.
+    compile group: 'org.springframework', name: 'spring-core', version: '5.2.7.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    compile group: 'org.springframework', name: 'spring-context', version: '5.2.7.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-tx
+    compile group: 'org.springframework', name: 'spring-tx', version: '5.2.7.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.7.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.3.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
+    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.3.1.RELEASE'
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.3.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.3.1.RELEASE'
+
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+
     implementation 'com.google.guava:guava:28.1-jre'
     implementation group: 'org.cactoos', name: 'cactoos', version: '0.46'
 
     testImplementation 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest:2.2'
     testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
 }
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_14
@@ -42,12 +80,15 @@ javafx {
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
-application {
+//application {
     // Define the main class for the application.
-    mainClassName = 'sample1.Main'
-}
+  //  mainClassName = 'MonitoringUIApp'
+//}
 
 test {
     useJUnit()
     maxHeapSize = '1G'
 }
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
