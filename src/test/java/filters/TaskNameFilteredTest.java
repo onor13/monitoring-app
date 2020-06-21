@@ -1,12 +1,12 @@
 package filters;
 
-import mock.MockTaskResult;
+import mock.MockFakeTaskResult;
 import mock.MockTasksResultsStorage;
 import org.junit.Assert;
 import org.junit.Test;
-import task.ITaskResult;
+import task.TaskResult;
 import task.filters.TaskNameFiltered;
-import task.storage.ITasksResultsStorage;
+import task.storage.TasksResultsStorage;
 
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;
@@ -15,21 +15,21 @@ public class TaskNameFilteredTest {
   @Test
   public void testNameFiltering(){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
-    ITasksResultsStorage tasksResultsStorage = new MockTasksResultsStorage();
+    TasksResultsStorage tasksResultsStorage = new MockTasksResultsStorage();
     String desiredTaskName = "sun";
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), desiredTaskName ) );
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), desiredTaskName ) );
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), desiredTaskName ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), desiredTaskName ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
     int expectedFilteredSize = 2;
 
-    Iterable<ITaskResult> filteredTasksResults = new TaskNameFiltered( desiredTaskName, tasksResultsStorage);
-    Iterator<ITaskResult> iterator = filteredTasksResults.iterator();
+    Iterable<TaskResult> filteredTasksResults = new TaskNameFiltered( desiredTaskName, tasksResultsStorage);
+    Iterator<TaskResult> iterator = filteredTasksResults.iterator();
 
     int counter = 0;
     while ( iterator.hasNext() ){
       ++counter;
-      ITaskResult taskResult = iterator.next();
+      TaskResult taskResult = iterator.next();
       Assert.assertTrue( "test taskName", taskResult.getTaskName().equals( desiredTaskName ) );
     }
     Assert.assertEquals( "taskName filtered size", expectedFilteredSize, counter );

@@ -1,13 +1,13 @@
 package task.storage;
 
-import task.ITaskResult;
+import task.TaskResult;
 
 import java.time.Instant;
 import java.util.*;
 
 public class InMemoryTasksResultStorage
-    implements ITasksResultsStorage {
-  Set<ITaskResult> taskResults = new HashSet<>();
+    implements TasksResultsStorage {
+  Set<TaskResult> taskResults = new HashSet<>();
 
   public InMemoryTasksResultStorage(){}
 
@@ -16,11 +16,11 @@ public class InMemoryTasksResultStorage
     return taskResults.size();
   }
 
-  @Override public synchronized void addTaskResult( ITaskResult taskResult ) {
+  @Override public synchronized void addTaskResult( TaskResult taskResult ) {
     taskResults.add( taskResult );
   }
 
-  @Override public boolean contains( ITaskResult taskResult ) {
+  @Override public boolean contains( TaskResult taskResult ) {
     return taskResults.contains( taskResult );
   }
 
@@ -32,7 +32,7 @@ public class InMemoryTasksResultStorage
     taskResults.removeIf( taskResult -> taskResult.getStartTime().isBefore( instant ) );
   }
 
-  @Override public Iterator<ITaskResult> iterator() {
+  @Override public Iterator<TaskResult> iterator() {
     return taskResults.iterator();
   }
 }

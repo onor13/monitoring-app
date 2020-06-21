@@ -1,29 +1,28 @@
 package storage;
 
-import mock.MockTaskResult;
+import mock.MockFakeTaskResult;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
-import task.ITaskResult;
-import task.storage.ITasksResultsStorage;
+import task.TaskResult;
+import task.storage.TasksResultsStorage;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class TasksResultsStorageTest {
 
-  protected abstract ITasksResultsStorage createStorage();
+  protected abstract TasksResultsStorage createStorage();
 
   @Test
   public void testAddOperation(){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
-    ITasksResultsStorage tasksResultsStorage = createStorage();
+    TasksResultsStorage tasksResultsStorage = createStorage();
     MatcherAssert.assertThat(
         t -> {
-          ITaskResult taskResult = new MockTaskResult( taskResultSequenceNumber.getAndIncrement() );
+          TaskResult taskResult = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() );
           tasksResultsStorage.addTaskResult( taskResult );
           return tasksResultsStorage.contains( taskResult );
         },
@@ -34,9 +33,9 @@ public abstract class TasksResultsStorageTest {
   @Test
   public void testRemoveOperation(){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
-    ITasksResultsStorage tasksResultsStorage = createStorage();
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
-    tasksResultsStorage.addTaskResult( new MockTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() ) );
     Assert.assertEquals( "Initial size", tasksResultsStorage.size(), 2 );
 
     tasksResultsStorage.removeAll();
@@ -46,11 +45,11 @@ public abstract class TasksResultsStorageTest {
   @Test
   public void testContainsOperation(){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
-    ITasksResultsStorage tasksResultsStorage = createStorage();
-    ITaskResult taskResult1 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement() );
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    TaskResult taskResult1 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() );
     tasksResultsStorage.addTaskResult( taskResult1  );
 
-    ITaskResult taskResult2 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement() );
+    TaskResult taskResult2 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement() );
     Assert.assertFalse( "contains test before adding", tasksResultsStorage.contains( taskResult2 )  );
     tasksResultsStorage.addTaskResult( taskResult2  );
     Assert.assertTrue( "contains test after adding", tasksResultsStorage.contains( taskResult2 )  );
@@ -59,17 +58,17 @@ public abstract class TasksResultsStorageTest {
   @Test
   public void testRemoveTaskResultsOlderThan(){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
-    ITasksResultsStorage tasksResultsStorage = createStorage();
+    TasksResultsStorage tasksResultsStorage = createStorage();
 
     Instant instantT1 = Instant.now();
     Instant instantT2 = instantT1.plusSeconds( 1 );
     Instant instantT3 = instantT1.plusSeconds( 2 );
     Instant instantT4 = instantT1.plusSeconds( 3 );
 
-    ITaskResult taskResult1 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT1 );
-    ITaskResult taskResult2 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT2 );
-    ITaskResult taskResult3 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT3 );
-    ITaskResult taskResult4 = new MockTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT4 );
+    TaskResult taskResult1 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT1 );
+    TaskResult taskResult2 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT2 );
+    TaskResult taskResult3 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT3 );
+    TaskResult taskResult4 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT4 );
     tasksResultsStorage.addTaskResult( taskResult1 );
     tasksResultsStorage.addTaskResult( taskResult2 );
     tasksResultsStorage.addTaskResult( taskResult3 );
