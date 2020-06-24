@@ -29,30 +29,34 @@ processResources {
     expand(project.properties)
 }
 
+ext{
+    springVersion = '5.2.7.RELEASE'
+    springBootVersion = '2.3.1.RELEASE'
+}
 
 dependencies {
     // This dependency is used by the application.
-    compile group: 'org.springframework', name: 'spring-core', version: '5.2.7.RELEASE'
+    compile "org.springframework:spring-core:$springVersion"
     // https://mvnrepository.com/artifact/org.springframework/spring-context
-    compile group: 'org.springframework', name: 'spring-context', version: '5.2.7.RELEASE'
+    compile "org.springframework:spring-context:$springVersion"
 
     // https://mvnrepository.com/artifact/org.springframework/spring-tx
-    compile group: 'org.springframework', name: 'spring-tx', version: '5.2.7.RELEASE'
+    compile "org.springframework:spring-tx:$springVersion"
 
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-    compile group: 'org.springframework', name: 'spring-jdbc', version: '5.2.7.RELEASE'
+    compile "org.springframework:spring-jdbc:$springVersion"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '2.3.1.RELEASE'
+    compile "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-gradle-plugin
-    compile group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.3.1.RELEASE'
+    compile "org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion"
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.3.1.RELEASE'
+    compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.3.1.RELEASE'
+    compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
 
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
@@ -66,9 +70,8 @@ dependencies {
     testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.1.RELEASE'
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 }
-
 
 java {
     sourceCompatibility = JavaVersion.VERSION_14
