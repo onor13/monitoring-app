@@ -14,11 +14,4 @@ public class MonitoringApplication  {
   public static void main(String[] args) {
     Application.launch( MonitoringFXApp.class, args);
   }
-
- /* @Bean
-  public javafx.StageListener stageListener(){
-    return new javafx.StageListener(  )
-  }*/
-
-
 }

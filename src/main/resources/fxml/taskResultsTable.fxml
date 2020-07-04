@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0"
+          xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="javafx.controllers.TaskResultsTableController"
+          prefHeight="400.0" prefWidth="800.0">
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+    </padding>
+    <Label style="-fx-font: NORMAL 20 Tahoma;" text="Tasks Results"
+           GridPane.columnIndex="0" GridPane.rowIndex="0">
+    </Label>
+    <TableView fx:id="tableView" GridPane.columnIndex="0"
+               GridPane.rowIndex="1">
+        <columns>
+            <TableColumn text="Application ID" prefWidth="100" fx:id="applicationId">
+                <cellValueFactory><PropertyValueFactory property="applicationId" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Task name" prefWidth="100" fx:id="taskName">
+                <cellValueFactory><PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Task group" prefWidth="100" fx:id="taskGroup">
+                <cellValueFactory><PropertyValueFactory property="group" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Result" prefWidth="60" fx:id="taskResult">
+                <cellValueFactory><PropertyValueFactory property="result" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Start time" prefWidth="120" fx:id="taskStartTime">
+                <cellValueFactory><PropertyValueFactory property="startTime" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Execution duration" prefWidth="120" fx:id="taskExecutionDuration">
+                <cellValueFactory><PropertyValueFactory property="executionDuration" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</GridPane>
