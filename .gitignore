@@ -29,5 +29,5 @@ hs_err_pid*
 .idea
 
 # Ignore Gradle build output directory
-build
+monitoring-appFX/build
 
