@@ -7,4 +7,5 @@ compileTestJava.options.encoding = "UTF-8"
 
 
 dependencies {
+    compile project(':taskModel')
 }

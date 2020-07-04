@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:28.1-jre'
+    implementation group: 'org.cactoos', name: 'cactoos', version: '0.46'
+
+    testImplementation 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest:2.2'
+    testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
+}

@@ -9,4 +9,5 @@
 
 rootProject.name = 'all'
 include 'monitoring-appFX'
+include 'taskModel'
 include 'dummyAppToMonitor'

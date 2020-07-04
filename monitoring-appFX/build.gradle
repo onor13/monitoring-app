@@ -35,6 +35,9 @@ ext{
 }
 
 dependencies {
+
+    compile project(':taskModel')
+
     // This dependency is used by the application.
     compile "org.springframework:spring-core:$springVersion"
     // https://mvnrepository.com/artifact/org.springframework/spring-context
@@ -61,13 +64,7 @@ dependencies {
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 
-
-    implementation 'com.google.guava:guava:28.1-jre'
-    implementation group: 'org.cactoos', name: 'cactoos', version: '0.46'
-
     testImplementation 'junit:junit:4.12'
-    testCompile 'org.hamcrest:hamcrest:2.2'
-    testCompile group: 'org.llorllale', name: 'cactoos-matchers', version: '0.18'
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
