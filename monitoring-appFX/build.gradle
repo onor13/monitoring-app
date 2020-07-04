@@ -32,11 +32,15 @@ processResources {
 ext{
     springVersion = '5.2.7.RELEASE'
     springBootVersion = '2.3.1.RELEASE'
+    springAmqpVersion = '2.2.8.RELEASE'
 }
 
 dependencies {
 
     compile project(':taskModel')
+
+    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp
+    compile "org.springframework.amqp:spring-amqp:$springAmqpVersion"
 
     // This dependency is used by the application.
     compile "org.springframework:spring-core:$springVersion"

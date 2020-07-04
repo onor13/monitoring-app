@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import task.TaskResult;
 import task.TaskResultType;
-import task.filters.TaskResultTypeFiltered;
-import task.storage.TasksResultsStorage;
+import filters.TaskResultTypeFiltered;
+import storage.TasksResultsStorage;
 
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;

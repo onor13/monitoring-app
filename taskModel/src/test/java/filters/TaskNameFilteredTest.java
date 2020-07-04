@@ -5,8 +5,8 @@ import mock.MockTasksResultsStorage;
 import org.junit.Assert;
 import org.junit.Test;
 import task.TaskResult;
-import task.filters.TaskNameFiltered;
-import task.storage.TasksResultsStorage;
+import filters.TaskNameFiltered;
+import storage.TasksResultsStorage;
 
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;

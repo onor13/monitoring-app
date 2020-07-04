@@ -7,5 +7,6 @@ I'll write the doc on how to use it as soon as I have something working <br/>
 It will be a JAVA app, using JavaFX UI Framework. <br/>
 Gradle version 6.4.1 <br/>
 Java version 14 <br/>
+dummyAppToMonitor requires rabbitMQ server  <br/>
 **compile**: gradlew build <br/>
 **run**: gradlew run <br/>

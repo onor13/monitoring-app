@@ -1,4 +1,4 @@
-package task.filters;
+package filters;
 
 import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;

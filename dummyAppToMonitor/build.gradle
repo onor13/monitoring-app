@@ -1,5 +1,12 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+mainClassName = 'Runner'
+
+repositories {
+    mavenCentral()
 }
 
 compileJava.options.encoding = "UTF-8"
@@ -8,4 +15,5 @@ compileTestJava.options.encoding = "UTF-8"
 
 dependencies {
     compile project(':taskModel')
+    compile 'com.rabbitmq:amqp-client:5.9.0'
 }

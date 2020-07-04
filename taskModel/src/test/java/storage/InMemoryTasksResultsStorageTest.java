@@ -1,6 +1,6 @@
 package storage;
 
-import task.storage.*;
+import storage.*;
 
 public class InMemoryTasksResultsStorageTest
     extends TasksResultsStorageTest {

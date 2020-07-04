@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 import task.TaskResult;
-import task.storage.TasksResultsStorage;
+import storage.TasksResultsStorage;
 
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicInteger;

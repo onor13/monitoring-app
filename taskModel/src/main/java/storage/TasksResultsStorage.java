@@ -1,4 +1,4 @@
-package task.storage;
+package storage;
 
 import task.TaskResult;
 

@@ -30,4 +30,6 @@ hs_err_pid*
 
 # Ignore Gradle build output directory
 monitoring-appFX/build
+taskModel/build
+dummyAppToMonitor/build
 

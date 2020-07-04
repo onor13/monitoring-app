@@ -1,6 +1,7 @@
 package task;
 
-import task.storage.TasksResultsStorage;
+import task.TaskDataConnector;
+import storage.TasksResultsStorage;
 
 public class TaskDataProvider {
   private TaskDataConnector dataConnector;
