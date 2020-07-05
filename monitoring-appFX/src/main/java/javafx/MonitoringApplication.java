@@ -3,7 +3,6 @@ package javafx;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import constants.AmqpConstants;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
@@ -13,6 +12,7 @@ import javafx.application.Application;
 import org.springframework.amqp.support.converter.DefaultClassMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,16 +23,23 @@ import task.JsonTaskResult;
 import java.util.HashMap;
 import java.util.Map;
 
-import static constants.AmqpConstants.ROUTING_KEY_PREFIX;
-
 @ComponentScan( basePackages = {
     "javafx",
     "queue" })
 @SpringBootApplication
 public class MonitoringApplication  {
 
+  @Value("${jsa.rabbitmq.queue}")
+  String queueName;
+
+  @Value("${jsa.rabbitmq.exchange}")
+  private String exchange;
+
+  @Value("${jsa.rabbitmq.routingKey}")
+  private String routingkey;
+
   @Bean Queue queue() {
-    return new Queue( AmqpConstants.QUEUE_NAME, false);
+    return new Queue( queueName, false);
   }
 
   @Bean
@@ -62,11 +69,11 @@ public class MonitoringApplication  {
 
   @Bean
   TopicExchange exchange() {
-    return new TopicExchange( AmqpConstants.EXCHANGE_OBJECTS );
+    return new TopicExchange( exchange );
   }
 
   @Bean Binding binding(Queue queue, TopicExchange exchange) {
-    return BindingBuilder.bind(queue).to(exchange).with( ROUTING_KEY_PREFIX +"#");
+    return BindingBuilder.bind(queue).to(exchange).with( routingkey );
   }
 
   public AmqpTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
