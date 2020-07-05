@@ -69,7 +69,7 @@ public class MonitoringApplication  {
     return BindingBuilder.bind(queue).to(exchange).with( ROUTING_KEY_PREFIX +"#");
   }
 
-  public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+  public AmqpTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
     final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
     rabbitTemplate.setMessageConverter( jsonMessageConverter() );
     return rabbitTemplate;

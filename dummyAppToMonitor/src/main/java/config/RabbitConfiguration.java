@@ -28,16 +28,8 @@ public class RabbitConfiguration {
     return new Jackson2JsonMessageConverter();
   }
 
-  @Bean
-  public ConnectionFactory connectionFactory() {
-    CachingConnectionFactory connectionFactory =
-        new CachingConnectionFactory("127.0.0.1");
-    return connectionFactory;
-  }
-
-
-  @Bean RabbitTemplate rabbitTemplate() {
-    RabbitTemplate template = new RabbitTemplate( connectionFactory() );
+  @Bean RabbitTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
+    RabbitTemplate template = new RabbitTemplate( connectionFactory );
     template.setRoutingKey( AmqpConstants.ROUTING_KEY_PREFIX + "test" );
     template.setMessageConverter( jsonMessageConverter() );
     return template;

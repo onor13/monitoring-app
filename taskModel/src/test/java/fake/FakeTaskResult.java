@@ -5,6 +5,7 @@ import task.TaskResultType;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class FakeTaskResult
@@ -14,10 +15,10 @@ public class FakeTaskResult
   private String         taskName;
   private String         taskGroup;
   private TaskResultType taskResultType;
-  private Instant        startTime;
+  private LocalDateTime        startTime;
   private Duration       executionDuration;
 
-  public FakeTaskResult( Long seqNumber, String applicationId, String taskName, String taskGroup, TaskResultType taskResultType, Instant startExecutionTime, Duration executionDuration ){
+  public FakeTaskResult( Long seqNumber, String applicationId, String taskName, String taskGroup, TaskResultType taskResultType, LocalDateTime startExecutionTime, Duration executionDuration ){
     Objects.requireNonNull( applicationId );
     Objects.requireNonNull( taskResultType );
     Objects.requireNonNull( startExecutionTime );
@@ -48,7 +49,7 @@ public class FakeTaskResult
     return taskResultType;
   }
 
-  public Instant getStartTime() {
+  public LocalDateTime getStartTime() {
     return startTime;
   }
 

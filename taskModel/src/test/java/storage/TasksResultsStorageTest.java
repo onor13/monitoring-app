@@ -6,9 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 import task.TaskResult;
-import storage.TasksResultsStorage;
-
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -60,10 +58,10 @@ public abstract class TasksResultsStorageTest {
     AtomicLong taskResultSequenceNumber = new AtomicLong();
     TasksResultsStorage tasksResultsStorage = createStorage();
 
-    Instant instantT1 = Instant.now();
-    Instant instantT2 = instantT1.plusSeconds( 1 );
-    Instant instantT3 = instantT1.plusSeconds( 2 );
-    Instant instantT4 = instantT1.plusSeconds( 3 );
+    LocalDateTime instantT1 = LocalDateTime.now();
+    LocalDateTime instantT2 = instantT1.plusSeconds( 1 );
+    LocalDateTime instantT3 = instantT1.plusSeconds( 2 );
+    LocalDateTime instantT4 = instantT1.plusSeconds( 3 );
 
     TaskResult taskResult1 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT1 );
     TaskResult taskResult2 = new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), instantT2 );
