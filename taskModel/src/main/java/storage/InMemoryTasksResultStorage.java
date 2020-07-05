@@ -3,6 +3,7 @@ package storage;
 import task.TaskResult;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTasksResultStorage
@@ -28,8 +29,8 @@ public class InMemoryTasksResultStorage
     taskResults.clear();
   }
 
-  @Override public void removeOlderThan( Instant instant ) {
-    taskResults.removeIf( taskResult -> taskResult.getStartTime().isBefore( instant ) );
+  @Override public void removeOlderThan( LocalDateTime ldt ) {
+    taskResults.removeIf( taskResult -> taskResult.getStartTime().isBefore( ldt ) );
   }
 
   @Override public Iterator<TaskResult> iterator() {

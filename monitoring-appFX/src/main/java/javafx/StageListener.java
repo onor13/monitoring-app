@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -87,8 +88,8 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
         return TaskResultType.SUCCESS;
       }
 
-      @Override public Instant getStartTime() {
-        return Instant.now();
+      @Override public LocalDateTime getStartTime() {
+        return LocalDateTime.now();
       }
 
       @Override public Duration getExecutionDuration() {
@@ -112,8 +113,8 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
         return TaskResultType.ERROR;
       }
 
-      @Override public Instant getStartTime() {
-        return Instant.now();
+      @Override public LocalDateTime getStartTime() {
+        return LocalDateTime.now();
       }
 
       @Override public Duration getExecutionDuration() {

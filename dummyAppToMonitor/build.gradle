@@ -6,14 +6,66 @@ plugins {
 mainClassName = 'Runner'
 
 repositories {
+    mavenLocal()
     mavenCentral()
+    maven { url "http://repo.spring.io/release" }
+    maven { url "https://repo.spring.io/libs-release" }
+}
+
+processResources {
+    expand(project.properties)
+}
+
+ext{
+    springVersion = '5.2.7.RELEASE'
+    springAmqpVersion = '2.2.8.RELEASE'
+    fasterXmlJacksonVersion = '2.11.1'
+}
+
+dependencies {
+
+    compile project(':taskModel')
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile "com.fasterxml.jackson.core:jackson-core:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile "com.fasterxml.jackson.core:jackson-databind:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    compile "com.fasterxml.jackson.core:jackson-annotations:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$fasterXmlJacksonVersion"
+
+
+    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp
+    compile "org.springframework.amqp:spring-amqp:$springAmqpVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
+    compile "org.springframework.amqp:spring-rabbit:$springAmqpVersion"
+
+    // This dependency is used by the application.
+    compile "org.springframework:spring-core:$springVersion"
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    compile "org.springframework:spring-context:$springVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-tx
+    compile "org.springframework:spring-tx:$springVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+    compile "org.springframework:spring-jdbc:$springVersion"
+
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+    testImplementation 'junit:junit:4.12'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
 }
 
 compileJava.options.encoding = "UTF-8"
 compileTestJava.options.encoding = "UTF-8"
-
-
-dependencies {
-    compile project(':taskModel')
-    compile 'com.rabbitmq:amqp-client:5.9.0'
-}

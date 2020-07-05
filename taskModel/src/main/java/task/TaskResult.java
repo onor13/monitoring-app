@@ -2,6 +2,7 @@ package task;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public interface TaskResult {
 
@@ -13,7 +14,7 @@ public interface TaskResult {
 
   TaskResultType getTaskResultType();
 
-  Instant getStartTime();
+  LocalDateTime getStartTime();
 
   Duration getExecutionDuration();
 }

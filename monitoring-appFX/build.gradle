@@ -33,6 +33,7 @@ ext{
     springVersion = '5.2.7.RELEASE'
     springBootVersion = '2.3.1.RELEASE'
     springAmqpVersion = '2.2.8.RELEASE'
+    fasterXmlJacksonVersion = '2.11.1'
 }
 
 dependencies {
@@ -41,6 +42,22 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp
     compile "org.springframework.amqp:spring-amqp:$springAmqpVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
+    compile "org.springframework.amqp:spring-rabbit:$springAmqpVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    compile "com.fasterxml.jackson.core:jackson-core:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile "com.fasterxml.jackson.core:jackson-databind:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations
+    compile "com.fasterxml.jackson.core:jackson-annotations:$fasterXmlJacksonVersion"
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$fasterXmlJacksonVersion"
+
 
     // This dependency is used by the application.
     compile "org.springframework:spring-core:$springVersion"
@@ -61,6 +78,8 @@ dependencies {
 
 // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
     compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
     compile "org.springframework.boot:spring-boot-starter:$springBootVersion"
@@ -83,11 +102,6 @@ javafx {
     version = "14"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
-
-//application {
-    // Define the main class for the application.
-  //  mainClassName = 'MonitoringUIApp'
-//}
 
 test {
     useJUnit()
