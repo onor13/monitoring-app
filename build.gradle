@@ -13,6 +13,33 @@ allprojects {
 
 subprojects {
     version = '1.0'
+	apply plugin: 'java'
+	
+	compileJava.options.encoding = "UTF-8"
+	compileTestJava.options.encoding = "UTF-8"
+	
+	java {
+		sourceCompatibility = JavaVersion.VERSION_14
+		targetCompatibility = JavaVersion.VERSION_14
+	}
+	
+	ext{
+		springVersion = '5.2.7.RELEASE'
+		springBootVersion = '2.3.1.RELEASE'
+		springAmqpVersion = '2.2.8.RELEASE'
+		fasterXmlJacksonVersion = '2.11.1'
+	}
+	
+	repositories {
+		// Use jcenter for resolving dependencies.
+		// You can declare any Maven/Ivy/file repository here.
+		mavenLocal()
+		mavenCentral()
+		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/libs-release" }
+	   // maven { url "http://repo.spring.io/milestone" }
+	   // maven { url "https://repo.spring.io/libs-milestone" }
+	}
 
 }
 

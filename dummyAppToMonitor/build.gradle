@@ -5,21 +5,8 @@ plugins {
 
 mainClassName = 'Runner'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "http://repo.spring.io/release" }
-    maven { url "https://repo.spring.io/libs-release" }
-}
-
 processResources {
     expand(project.properties)
-}
-
-ext{
-    springVersion = '5.2.7.RELEASE'
-    springAmqpVersion = '2.2.8.RELEASE'
-    fasterXmlJacksonVersion = '2.11.1'
 }
 
 dependencies {
@@ -61,11 +48,3 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 }
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_14
-    targetCompatibility = JavaVersion.VERSION_14
-}
-
-compileJava.options.encoding = "UTF-8"
-compileTestJava.options.encoding = "UTF-8"
