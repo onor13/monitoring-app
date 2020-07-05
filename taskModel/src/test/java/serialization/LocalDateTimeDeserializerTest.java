@@ -18,7 +18,7 @@ public class LocalDateTimeDeserializerTest {
   }
 
   @Test
-  public void testLocalDateTimeSerializer() throws IOException {
+  public void testLocalDateTimeDeserializer() throws IOException {
     LocalDateTimeSerializationHelper testObject = new LocalDateTimeSerializationHelper();
     LocalDateTime expected = testObject.getLocalDateTime();
 
