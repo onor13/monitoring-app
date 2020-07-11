@@ -1,11 +1,10 @@
 package task.config;
 
+import com.google.common.flogger.FluentLogger;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -20,15 +19,13 @@ import task.dao.ApplicationDaoImpl;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db/jdbc.properties")
 public class DBConfig {
 
-  private static Logger logger = Logger.getLogger(DBConfig.class.getSimpleName());
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Value("${driverClassName}")
   private String driverClassName;
@@ -54,7 +51,7 @@ public class DBConfig {
       dataSource.setPassword(password);
       return dataSource;
     } catch (Exception e) {
-      logger.log( Level.SEVERE, ("DBCP DataSource bean cannot be created! " + e.toString() ) );
+      logger.atSevere().withCause( e ).log( "DBCP DataSource bean cannot be created! " + e.getMessage() );
       return null;
     }
   }

@@ -1,12 +1,10 @@
 package task.config;
 
-import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import com.google.common.flogger.FluentLogger;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.logging.Logger;
-
 public class CleanUp {
-  private static Logger logger = Logger.getLogger(CleanUp.class.getSimpleName());
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private JdbcTemplate jdbcTemplate;
 
@@ -15,7 +13,7 @@ public class CleanUp {
   }
 
   private void destroy() {
-    logger.info(" ... Deleting database files.");
+    logger.atInfo().log(" ... Deleting database files.");
     jdbcTemplate.execute("DROP ALL OBJECTS DELETE FILES;");
   }
 }

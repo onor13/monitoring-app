@@ -31,6 +31,7 @@ subprojects {
 
 		hibernateJpaVersion = '1.0.0.Final'
 		fasterXmlJacksonVersion = '2.11.1'
+		floggerVersion = '0.5.1'
 	}
 	
 	repositories {
@@ -42,6 +43,14 @@ subprojects {
 		maven { url "https://repo.spring.io/libs-release" }
 	   // maven { url "http://repo.spring.io/milestone" }
 	   // maven { url "https://repo.spring.io/libs-milestone" }
+	}
+
+	dependencies {
+		// https://mvnrepository.com/artifact/com.google.flogger/flogger
+		compile "com.google.flogger:flogger:$floggerVersion"
+		// https://mvnrepository.com/artifact/com.google.flogger/flogger-system-backend
+		compile "com.google.flogger:flogger-system-backend:$floggerVersion"
+
 	}
 
 }

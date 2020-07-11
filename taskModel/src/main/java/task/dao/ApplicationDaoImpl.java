@@ -1,25 +1,20 @@
 package task.dao;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.google.common.flogger.FluentLogger;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import task.TaskResult;
+import org.springframework.transaction.annotation.Transactional;
 import task.entities.ApplicationTable;
 
 import javax.annotation.Resource;
-import org.springframework.transaction.annotation.Transactional;
-import task.entities.TaskResultTable;
-
 import java.util.List;
-import java.util.logging.Logger;
 
 @SuppressWarnings("unchecked")
 @Transactional
 @Repository("applicationDao")
 public class ApplicationDaoImpl implements ApplicationDao {
 
-  private static final Logger logger = Logger.getLogger( ApplicationDaoImpl.class.getSimpleName() );
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private SessionFactory sessionFactory;
 
   @Override
@@ -37,6 +32,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
   @Override
   @Transactional(readOnly = true)
   public ApplicationTable findById( Long id ) {
+    logger.atFine().log( "find application by %d", id );
     return (ApplicationTable) sessionFactory.getCurrentSession().
         getNamedQuery(ApplicationTable.FIND_APPLICATION_BY_ID).
         setParameter("id", id).uniqueResult();
@@ -45,14 +41,14 @@ public class ApplicationDaoImpl implements ApplicationDao {
   @Override
   public ApplicationTable save( ApplicationTable app ) {
     sessionFactory.getCurrentSession().saveOrUpdate(app);
-    logger.info("Application saved with id: " + app.getId());
+    logger.atFine().log( "Application saved with id %s", app.getId() );
     return app;
   }
 
   @Override
   public void delete( ApplicationTable app ) {
     sessionFactory.getCurrentSession().delete(app);
-    logger.info("Application deleted with id: " + app.getId());
+    logger.atFine().log( "Application deleted with id %s", app.getId() );
   }
 
   public SessionFactory getSessionFactory() {

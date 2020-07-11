@@ -25,7 +25,7 @@ public class ApplicationDaoTest {
 
   @Before
   public void setUp(){
-    ctx = new AnnotationConfigApplicationContext( DBConfig.class);
+    ctx = new AnnotationConfigApplicationContext( DBConfig.class );
     appDao = ctx.getBean(ApplicationDao.class);
     assertNotNull( appDao );
   }
