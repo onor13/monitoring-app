@@ -1,6 +1,4 @@
-import task.JsonTaskResult;
-import task.TaskResult;
-import task.TaskResultType;
+import task.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -9,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TaskResultGenerator {
 
   AtomicInteger counter = new AtomicInteger();
-  final String applicationId;
+  final Application app;
   final String group = "Medical";
 
   public enum Categories{
@@ -36,18 +34,17 @@ public class TaskResultGenerator {
     }
   }
 
-  public TaskResultGenerator( String applicationId ){
-    this.applicationId = applicationId;
+  public TaskResultGenerator( Application application ){
+    this.app = application;
   }
 
   public TaskResult generateInstance(){
-    JsonTaskResult tr = new JsonTaskResult();
-    tr.setApplicationId( applicationId );
+    JsonTaskResult tr = new JsonTaskResult( app );
     tr.setTaskName( Categories.fromInteger( getRandomBetweenRange( 0, Categories.values().length ) ).name() + counter.incrementAndGet() );
     tr.setTaskGroup( group );
     tr.setTaskResultType( getResultTypeFromInt( getRandomBetweenRange( 0, 10 ) ) );
-    tr.setStartTime( LocalDateTime.now() );
-    tr.setExecutionDuration( Duration.ofMinutes( getRandomBetweenRange( 1, 60 ) ) );
+    tr.setTaskStartTime( LocalDateTime.now() );
+    tr.setTaskExecutionDuration( Duration.ofMinutes( getRandomBetweenRange( 1, 60 ) ) );
     return tr;
   }
 

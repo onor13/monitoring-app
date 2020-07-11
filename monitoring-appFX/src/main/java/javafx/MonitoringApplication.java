@@ -19,13 +19,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import task.JsonTaskResult;
+import task.config.DBConfig;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @ComponentScan( basePackages = {
     "javafx",
-    "queue" })
+    "queue" },
+basePackageClasses = DBConfig.class)
 @SpringBootApplication
 public class MonitoringApplication  {
 

@@ -27,6 +27,9 @@ subprojects {
 		springVersion = '5.2.7.RELEASE'
 		springBootVersion = '2.3.1.RELEASE'
 		springAmqpVersion = '2.2.8.RELEASE'
+		hibernateVersion = '5.4.18.Final'
+
+		hibernateJpaVersion = '1.0.0.Final'
 		fasterXmlJacksonVersion = '2.11.1'
 	}
 	

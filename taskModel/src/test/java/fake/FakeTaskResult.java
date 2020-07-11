@@ -1,40 +1,43 @@
 package fake;
 
+import task.Application;
 import task.TaskResult;
 import task.TaskResultType;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class FakeTaskResult
     implements TaskResult {
-  private Long           seqNumber;
-  private String         applicationId;
   private String         taskName;
   private String         taskGroup;
   private TaskResultType taskResultType;
-  private LocalDateTime        startTime;
-  private Duration       executionDuration;
+  private LocalDateTime taskStartTime;
+  private Duration      taskExecutionDuration;
+  private Application   app;
 
-  public FakeTaskResult( Long seqNumber, String applicationId, String taskName, String taskGroup, TaskResultType taskResultType, LocalDateTime startExecutionTime, Duration executionDuration ){
-    Objects.requireNonNull( applicationId );
+  public FakeTaskResult( Application application, String taskName, String taskGroup, TaskResultType taskResultType, LocalDateTime startExecutionTime, Duration executionDuration ){
+    Objects.requireNonNull( application );
     Objects.requireNonNull( taskResultType );
     Objects.requireNonNull( startExecutionTime );
     Objects.requireNonNull( executionDuration );
-
-    this.seqNumber = seqNumber;
-    this.applicationId = applicationId;
+    this.app = application;
     this.taskName = taskName;
     this.taskGroup = taskGroup;
     this.taskResultType = taskResultType;
-    this.startTime = startExecutionTime;
-    this.executionDuration = executionDuration;
+    this.taskStartTime = startExecutionTime;
+    this.taskExecutionDuration = executionDuration;
   }
 
-  public String getApplicationId() {
-    return applicationId;
+
+  @Override
+  public String getApplicationName() {
+    return app.getName();
+  }
+
+  @Override public LocalDateTime getApplicationStartTime() {
+    return app.getStartTime();
   }
 
   public String getTaskName() {
@@ -49,12 +52,12 @@ public class FakeTaskResult
     return taskResultType;
   }
 
-  public LocalDateTime getStartTime() {
-    return startTime;
+  public LocalDateTime getTaskStartTime() {
+    return taskStartTime;
   }
 
-  public Duration getExecutionDuration() {
-    return executionDuration;
+  public Duration getTaskExecutionDuration() {
+    return taskExecutionDuration;
   }
 
   @Override public boolean equals( Object other ) {
@@ -62,14 +65,7 @@ public class FakeTaskResult
     if ( other == null || getClass() != other.getClass() ) return false;
 
     FakeTaskResult otherTaskResult = (FakeTaskResult) other;
-
-    if ( !applicationId.equals( otherTaskResult.applicationId ) ) return false;
-    return seqNumber == otherTaskResult.seqNumber ;
+    return this.equals( otherTaskResult ) ;
   }
 
-  @Override public int hashCode() {
-    int l_result = applicationId.hashCode();
-    l_result = 13 * l_result + seqNumber.hashCode();
-    return l_result;
-  }
 }

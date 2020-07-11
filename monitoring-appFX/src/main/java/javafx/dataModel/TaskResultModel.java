@@ -18,12 +18,12 @@ public class TaskResultModel {
   private final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone( ZoneId.systemDefault());
 
   public TaskResultModel( TaskResult taskResult ){
-    setApplicationId( taskResult.getApplicationId() );
+    setApplicationId( taskResult.getApplicationName() );
     setName( taskResult.getTaskName() );
     setGroup( taskResult.getTaskGroup() );
     setResult( taskResult.getTaskResultType().name() );
-    setStartTime( DATE_TIME_FORMATTER.format( taskResult.getStartTime() ) );
-    setExecutionDuration( taskResult.getExecutionDuration().toString() );
+    setStartTime( DATE_TIME_FORMATTER.format( taskResult.getTaskStartTime() ) );
+    setExecutionDuration( taskResult.getTaskExecutionDuration().toString() );
   }
 
   public String getApplicationId() {

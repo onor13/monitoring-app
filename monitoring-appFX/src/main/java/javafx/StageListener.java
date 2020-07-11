@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import task.Application;
 import task.TaskResult;
 import task.TaskResultType;
 
@@ -24,6 +25,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -61,7 +63,6 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
       stage.setScene( scene );
       stage.setTitle( this.applicationTitle );
       stage.show();
-      populateWithDummyData();
     }
     catch ( IOException e ) {
       e.printStackTrace();
@@ -70,56 +71,7 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
   }
 
   protected void populateWithDummyData(){
-     TaskResultsTableController table = applicationContext.getBean( TaskResultsTableController.class );
-    table.addTaskResult( new TaskResult() {
-      @Override public String getApplicationId() {
-        return "Id122444";
-      }
 
-      @Override public String getTaskName() {
-        return "cancer check";
-      }
 
-      @Override public String getTaskGroup() {
-        return "medical";
-      }
-
-      @Override public TaskResultType getTaskResultType() {
-        return TaskResultType.SUCCESS;
-      }
-
-      @Override public LocalDateTime getStartTime() {
-        return LocalDateTime.now();
-      }
-
-      @Override public Duration getExecutionDuration() {
-        return Duration.ofMinutes( 65 );
-      }
-    } );
-    table.addTaskResult( new TaskResult() {
-      @Override public String getApplicationId() {
-        return "Id1254844";
-      }
-
-      @Override public String getTaskName() {
-        return "fractures check";
-      }
-
-      @Override public String getTaskGroup() {
-        return "medical";
-      }
-
-      @Override public TaskResultType getTaskResultType() {
-        return TaskResultType.ERROR;
-      }
-
-      @Override public LocalDateTime getStartTime() {
-        return LocalDateTime.now();
-      }
-
-      @Override public Duration getExecutionDuration() {
-        return Duration.ofMinutes( 15 );
-      }
-    } );
   }
 }

@@ -3,8 +3,7 @@ package task;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import serializer.CustomDurationDeserializer;
@@ -15,65 +14,78 @@ import serializer.CustomLocalDateTimeSerializer;
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = JsonTaskResult.class)
 public class JsonTaskResult implements TaskResult {
 
-  private String applicationId;
+  private String applicationName;
+  private LocalDateTime applicationStartTime;
   private String taskName;
   private String taskGroup;
   private TaskResultType taskResultType;
-  private LocalDateTime startTime;
-  private Duration executionDuration;
+  private LocalDateTime taskStartTime;
+  private Duration      taskExecutionDuration;
 
-  @Override public String getApplicationId() {
-    return applicationId;
+  public JsonTaskResult(){
   }
 
-  public void setApplicationId( String aApplicationId ) {
-    applicationId = aApplicationId;
+  public JsonTaskResult( Application app ){
+    applicationName = app.getName();
+    applicationStartTime = app.getStartTime();
+  }
+
+  @Override
+  public String getApplicationName() {
+    return applicationName;
+  }
+
+  @Override
+  @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+  @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+  public LocalDateTime getApplicationStartTime() {
+    return applicationStartTime;
   }
 
   @Override public String getTaskName() {
     return taskName;
   }
 
-  public void setTaskName( String aTaskName ) {
-    taskName = aTaskName;
+  public void setTaskName( String taskName ) {
+    this.taskName = taskName;
   }
 
   @Override public String getTaskGroup() {
     return taskGroup;
   }
 
-  public void setTaskGroup( String aTaskGroup ) {
-    taskGroup = aTaskGroup;
+  public void setTaskGroup( String taskGroup ) {
+    this.taskGroup = taskGroup;
   }
 
   @Override public TaskResultType getTaskResultType() {
     return taskResultType;
   }
 
-  public void setTaskResultType( TaskResultType aTaskResultType ) {
-    taskResultType = aTaskResultType;
+  public void setTaskResultType( TaskResultType taskResultType ) {
+    this.taskResultType = taskResultType;
   }
 
   @Override
   @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
   @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-  public LocalDateTime getStartTime() {
-    return startTime;
+  public LocalDateTime getTaskStartTime() {
+    return taskStartTime;
   }
 
-  public void setStartTime( LocalDateTime aStartTime ) {
-    startTime = aStartTime;
+  public void setTaskStartTime( LocalDateTime startTime ) {
+    this.taskStartTime = startTime;
   }
 
 
   @Override
   @JsonSerialize(using = CustomDurationSerializer.class)
   @JsonDeserialize(using = CustomDurationDeserializer.class)
-  public Duration getExecutionDuration() {
-    return executionDuration;
+  public Duration getTaskExecutionDuration() {
+    return taskExecutionDuration;
   }
 
-  public void setExecutionDuration( Duration aExecutionDuration ) {
-    executionDuration = aExecutionDuration;
+  public void setTaskExecutionDuration( Duration aExecutionDuration ) {
+    taskExecutionDuration = aExecutionDuration;
   }
 }

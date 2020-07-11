@@ -24,10 +24,10 @@ public class TaskResultsTableController implements Initializable {
   @FXML TableColumn taskResult;
   @FXML TableColumn taskStartTime;
   @FXML TableColumn taskExecutionDuration;
-  ObservableList<TaskResultModel> tasksResults;
+  ObservableList<TaskResultModel> tasksResults = FXCollections.observableArrayList();
 
-  @Override public void initialize( URL location, ResourceBundle resources ) {
-    tasksResults = FXCollections.observableArrayList();
+  @Override
+  public void initialize( URL location, ResourceBundle resources ) {
     tableView.setItems( tasksResults );
   }
 

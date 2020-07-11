@@ -30,7 +30,7 @@ public class InMemoryTasksResultStorage
   }
 
   @Override public void removeOlderThan( LocalDateTime ldt ) {
-    taskResults.removeIf( taskResult -> taskResult.getStartTime().isBefore( ldt ) );
+    taskResults.removeIf( taskResult -> taskResult.getTaskStartTime().isBefore( ldt ) );
   }
 
   @Override public Iterator<TaskResult> iterator() {

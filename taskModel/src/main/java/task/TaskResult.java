@@ -6,15 +6,11 @@ import java.time.LocalDateTime;
 
 public interface TaskResult {
 
-  String getApplicationId();
-
+  String getApplicationName();
+  LocalDateTime getApplicationStartTime();
   String getTaskName();
-
   String getTaskGroup();
-
   TaskResultType getTaskResultType();
-
-  LocalDateTime getStartTime();
-
-  Duration getExecutionDuration();
+  LocalDateTime getTaskStartTime();
+  Duration getTaskExecutionDuration();
 }
