@@ -20,12 +20,14 @@ public class ApplicationDaoImpl implements ApplicationDao {
   @Override
   @Transactional(readOnly = true)
   public List<ApplicationEntity> findAll() {
+    logger.atFine().log( "find all application's" );
     return sessionFactory.getCurrentSession().createQuery("from Application app").list();
   }
 
   @Override
   @Transactional(readOnly = true)
   public List<ApplicationEntity> findAllWithTasksResults() {
+    logger.atFine().log( "find all application's with tasks results" );
     return sessionFactory.getCurrentSession().getNamedQuery( ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS).list();
   }
 
@@ -57,6 +59,7 @@ public class ApplicationDaoImpl implements ApplicationDao {
 
   @Resource(name = "sessionFactory")
   public void setSessionFactory(SessionFactory sessionFactory) {
+    logger.atConfig().log( "setting SessionFactory" );
     this.sessionFactory = sessionFactory;
   }
 }

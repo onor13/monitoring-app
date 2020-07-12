@@ -11,8 +11,17 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity(name="TaskResult")
-@Table(name = "taskResult")
+@Table(name = TaskResultEntity.TABLE_NAME)
+@NamedQueries({
+    @NamedQuery(name= TaskResultEntity.FIND_TASK_RESULT_BY_ID,
+        query="select tr from TaskResult tr " +
+            "join fetch tr.application a " +
+            "where tr.id = :id")
+})
 public class TaskResultEntity extends AbstractEntity implements TaskResult {
+
+  final public static String TABLE_NAME="taskResult";
+  public static final String FIND_TASK_RESULT_BY_ID = "TaskResult.findById";
 
   @ManyToOne
   @JoinColumn(name = "APPLICATION_ID")

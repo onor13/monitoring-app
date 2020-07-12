@@ -15,6 +15,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import task.dao.ApplicationDao;
 import task.dao.ApplicationDaoImpl;
+import task.dao.TaskResultDao;
+import task.dao.TaskResultDaoImpl;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -91,6 +93,13 @@ public class DBConfig {
     ApplicationDaoImpl appDao = new ApplicationDaoImpl();
     appDao.setSessionFactory( sessionFactory() );
     return appDao;
+  }
+
+  @Bean
+  public TaskResultDao taskResultDao(){
+    TaskResultDaoImpl trDao = new TaskResultDaoImpl();
+    trDao.setSessionFactory( sessionFactory() );
+    return trDao;
   }
 
   @Bean DBInitializer dbInitializer(){

@@ -32,8 +32,8 @@ public class ApplicationDaoTest {
 
   @Test
   public void testFindAll(){
-    List<ApplicationEntity> singers = appDao.findAll();
-    assertTrue(singers.size() > 0);
+    List<ApplicationEntity> appEntities = appDao.findAll();
+    assertTrue(appEntities.size() > 0);
   }
 
   @Test
