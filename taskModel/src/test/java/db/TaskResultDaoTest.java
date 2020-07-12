@@ -7,6 +7,7 @@ import org.springframework.context.support.GenericApplicationContext;
 import task.TaskResult;
 import task.TaskResultType;
 import task.config.DBConfig;
+import task.config.DBInitializer;
 import task.dao.ApplicationDao;
 import task.dao.TaskResultDao;
 import task.entities.ApplicationEntity;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 public class TaskResultDaoTest {
   private GenericApplicationContext ctx;
@@ -46,6 +48,14 @@ public class TaskResultDaoTest {
   public void testFindByID(){
     TaskResult tr = taskResultDao.findById(2L);
     assertNotNull(tr);
+  }
+
+  @Test
+  public void testFindByAppIdTaskNameTaskStartTime(){
+    String taskName = DBInitializer.firstTaskName;
+    LocalDateTime taskStartTime = DBInitializer.firstTaskStartTime;
+    TaskResultEntity tre = taskResultDao.find( 1L, taskName, taskStartTime );
+    assertNotNull(tre);
   }
 
   @Test

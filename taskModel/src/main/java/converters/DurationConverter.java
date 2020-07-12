@@ -1,7 +1,5 @@
 package converters;
 
-import com.google.common.flogger.FluentLogger;
-
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.time.Duration;

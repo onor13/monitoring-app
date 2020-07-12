@@ -8,6 +8,7 @@ import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -17,6 +18,9 @@ public class DBInitializer {
 
   @Autowired
   ApplicationDao applicationDao;
+
+  public static final String firstTaskName = "prostateExam";
+  public static final LocalDateTime firstTaskStartTime = LocalDateTime.of( 2020, 07, 12, 10, 00, 00 );
 
   @PostConstruct
   public void initDB(){
@@ -30,9 +34,9 @@ public class DBInitializer {
       trt.setApplication( app );
       trt.setTaskExecutionDuration( Duration.ofMinutes( 13 ) );
       trt.setTaskGroup( "medical" );
-      trt.setTaskName( "prostateExam" );
+      trt.setTaskName( firstTaskName );
       trt.setTaskResultType( TaskResultType.WARNING );
-      trt.setTaskStartTime( LocalDateTime.now() );
+      trt.setTaskStartTime( firstTaskStartTime );
       app.addTaskResult( trt );
     }
     {

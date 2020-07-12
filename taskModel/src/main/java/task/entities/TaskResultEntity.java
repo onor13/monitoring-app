@@ -16,12 +16,22 @@ import java.util.Objects;
     @NamedQuery(name= TaskResultEntity.FIND_TASK_RESULT_BY_ID,
         query="select tr from TaskResult tr " +
             "join fetch tr.application a " +
-            "where tr.id = :id")
+            "where tr.id = :id"),
+    @NamedQuery(name= TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME,
+        query="select tr from TaskResult tr " +
+            "join fetch tr.application app " +
+            "where app.id = :"+ TaskResultEntity.PARAM_APP_ID +
+            " and tr.taskName = :"+ TaskResultEntity.PARAM_TASK_NAME+
+            " and tr.startTime = :" +TaskResultEntity.PARAM_TASK_START_TIME )
 })
 public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
-  final public static String TABLE_NAME="taskResult";
-  public static final String FIND_TASK_RESULT_BY_ID = "TaskResult.findById";
+  final public static String TABLE_NAME ="taskResult";
+  final public static String PARAM_APP_ID = "appId";
+  final public static String PARAM_TASK_NAME = "taskName";
+  final public static String PARAM_TASK_START_TIME = "taskStartTime";
+  public static final String FIND_TASK_RESULT_BY_ID                               = "TaskResult.findById";
+  public static final String FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME = "TaskResult.findByAppIdTaskNameTaskStartTime";
 
   @ManyToOne
   @JoinColumn(name = "APPLICATION_ID")
@@ -39,7 +49,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   @NotNull
   private TaskResultType taskResultType;
 
-  @Column(name = "START_DATE_TIME", columnDefinition = "TIMESTAMP")
+  @Column(name = "START_DATE_TIME")
   @NotNull
   private LocalDateTime startTime;
 

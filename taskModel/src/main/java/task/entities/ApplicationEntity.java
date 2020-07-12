@@ -34,7 +34,7 @@ public class ApplicationEntity
   @NotNull
   private String name;
 
-  @Column(name = "START_DATE_TIME", columnDefinition = "TIMESTAMP")
+  @Column(name = "START_DATE_TIME")
   @NotNull
   private LocalDateTime startTime;
 

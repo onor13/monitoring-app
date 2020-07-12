@@ -1,13 +1,17 @@
 package task.dao;
 
 import com.google.common.flogger.FluentLogger;
+import constants.Formats;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import task.entities.TaskResultEntity;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.google.common.flogger.LazyArgs.lazy;
 
 @SuppressWarnings("unchecked")
 @Transactional
@@ -31,6 +35,15 @@ public class TaskResultDaoImpl implements TaskResultDao {
     return  (TaskResultEntity) sessionFactory.getCurrentSession().
         getNamedQuery( TaskResultEntity.FIND_TASK_RESULT_BY_ID).
         setParameter("id", id).uniqueResult();
+  }
+
+  @Override public TaskResultEntity find( Long appId, String taskName, LocalDateTime startTaskTime ) {
+    logger.atFine().log( "find taskResult by appId %d, taskName %s, taskStartTime %s", appId, taskName, lazy(()-> Formats.FORMATTER.format( startTaskTime ) ) );
+    return  (TaskResultEntity) sessionFactory.getCurrentSession().
+        getNamedQuery( TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME).
+        setParameter(TaskResultEntity.PARAM_APP_ID, appId).
+        setParameter(TaskResultEntity.PARAM_TASK_NAME, taskName).
+        setParameter(TaskResultEntity.PARAM_TASK_START_TIME, startTaskTime).uniqueResult();
   }
 
   @Override
