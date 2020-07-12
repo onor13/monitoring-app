@@ -39,7 +39,7 @@ subprojects {
 		// You can declare any Maven/Ivy/file repository here.
 		mavenLocal()
 		mavenCentral()
-		maven { url "http://repo.spring.io/release" }
+		maven { url "https://repo.spring.io/release" }
 		maven { url "https://repo.spring.io/libs-release" }
 	   // maven { url "http://repo.spring.io/milestone" }
 	   // maven { url "https://repo.spring.io/libs-milestone" }
@@ -47,9 +47,9 @@ subprojects {
 
 	dependencies {
 		// https://mvnrepository.com/artifact/com.google.flogger/flogger
-		compile "com.google.flogger:flogger:$floggerVersion"
+		implementation "com.google.flogger:flogger:$floggerVersion"
 		// https://mvnrepository.com/artifact/com.google.flogger/flogger-system-backend
-		compile "com.google.flogger:flogger-system-backend:$floggerVersion"
+		implementation "com.google.flogger:flogger-system-backend:$floggerVersion"
 
 	}
 
