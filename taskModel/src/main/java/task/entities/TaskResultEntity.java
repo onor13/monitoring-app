@@ -27,14 +27,14 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   @JoinColumn(name = "APPLICATION_ID")
   private ApplicationEntity application;
 
-  @Column(name = "TASK_NAME")
+  @Column(name = "NAME")
   @NotNull
   private String taskName;
 
-  @Column(name = "TASK_GROUP")
+  @Column(name = "GROUP_NAME")
   private String taskGroup;
 
-  @Column(name="TASK_RESULT")
+  @Column(name="RESULT")
   @Enumerated(EnumType.STRING)
   @NotNull
   private TaskResultType taskResultType;
