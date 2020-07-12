@@ -4,7 +4,7 @@ import com.google.common.flogger.FluentLogger;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import task.entities.ApplicationTable;
+import task.entities.ApplicationEntity;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,34 +19,34 @@ public class ApplicationDaoImpl implements ApplicationDao {
 
   @Override
   @Transactional(readOnly = true)
-  public List<ApplicationTable> findAll() {
+  public List<ApplicationEntity> findAll() {
     return sessionFactory.getCurrentSession().createQuery("from Application app").list();
   }
 
   @Override
   @Transactional(readOnly = true)
-  public List<ApplicationTable> findAllWithTasksResults() {
-    return sessionFactory.getCurrentSession().getNamedQuery(ApplicationTable.FIND_ALL_WITH_TASKS_RESULTS).list();
+  public List<ApplicationEntity> findAllWithTasksResults() {
+    return sessionFactory.getCurrentSession().getNamedQuery( ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS).list();
   }
 
   @Override
   @Transactional(readOnly = true)
-  public ApplicationTable findById( Long id ) {
+  public ApplicationEntity findById( Long id ) {
     logger.atFine().log( "find application by %d", id );
-    return (ApplicationTable) sessionFactory.getCurrentSession().
-        getNamedQuery(ApplicationTable.FIND_APPLICATION_BY_ID).
+    return (ApplicationEntity) sessionFactory.getCurrentSession().
+        getNamedQuery( ApplicationEntity.FIND_APPLICATION_BY_ID).
         setParameter("id", id).uniqueResult();
   }
 
   @Override
-  public ApplicationTable save( ApplicationTable app ) {
+  public ApplicationEntity save( ApplicationEntity app ) {
     sessionFactory.getCurrentSession().saveOrUpdate(app);
     logger.atFine().log( "Application saved with id %s", app.getId() );
     return app;
   }
 
   @Override
-  public void delete( ApplicationTable app ) {
+  public void delete( ApplicationEntity app ) {
     sessionFactory.getCurrentSession().delete(app);
     logger.atFine().log( "Application deleted with id %s", app.getId() );
   }

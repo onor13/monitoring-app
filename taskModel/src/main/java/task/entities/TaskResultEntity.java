@@ -12,11 +12,11 @@ import java.util.Objects;
 
 @Entity(name="TaskResult")
 @Table(name = "taskResult")
-public class TaskResultTable extends AbstractEntity implements TaskResult {
+public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
   @ManyToOne
   @JoinColumn(name = "APPLICATION_ID")
-  private ApplicationTable application;
+  private ApplicationEntity application;
 
   @Column(name = "TASK_NAME")
   @NotNull
@@ -46,7 +46,7 @@ public class TaskResultTable extends AbstractEntity implements TaskResult {
     return application.getStartTime();
   }
 
-  public void setApplication( ApplicationTable aApplication ) {
+  public void setApplication( ApplicationEntity aApplication ) {
     application = aApplication;
   }
 
@@ -110,7 +110,7 @@ public class TaskResultTable extends AbstractEntity implements TaskResult {
       return false;
     if (!super.equals(o))
       return false;
-    TaskResultTable tr = (TaskResultTable) o;
+    TaskResultEntity tr = (TaskResultEntity) o;
     if ( ! Objects.equals( taskName, tr.taskName ) )
       return false;
     return startTime != null && startTime.equals(tr.startTime);

@@ -8,8 +8,8 @@ import task.Application;
 import task.TaskResultType;
 import task.config.DBConfig;
 import task.dao.ApplicationDao;
-import task.entities.ApplicationTable;
-import task.entities.TaskResultTable;
+import task.entities.ApplicationEntity;
+import task.entities.TaskResultEntity;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -32,15 +32,15 @@ public class ApplicationDaoTest {
 
   @Test
   public void testFindAll(){
-    List<ApplicationTable> singers = appDao.findAll();
+    List<ApplicationEntity> singers = appDao.findAll();
     assertTrue(singers.size() > 0);
   }
 
   @Test
   public void testFindAllWithTasksResults(){
-    List<ApplicationTable> apps = appDao.findAllWithTasksResults();
+    List<ApplicationEntity> apps = appDao.findAllWithTasksResults();
     assertTrue(apps.size() > 0);
-    for( ApplicationTable app : apps ){
+    for( ApplicationEntity app : apps ){
       if ( app.getTasksResults() == null ){
         fail( "no tasks results found" );
       }
@@ -58,14 +58,14 @@ public class ApplicationDaoTest {
 
   @Test
   public void testInsert(){
-    ApplicationTable app = new ApplicationTable();
+    ApplicationEntity app = new ApplicationEntity();
     LocalDateTime expectedTime = LocalDateTime.now();
     String expectedAppName = "testApp";
     app.setName( expectedAppName );
     app.setStartTime( expectedTime );
     String expectedTask = "testTask";
 
-    TaskResultTable trt = new TaskResultTable();
+    TaskResultEntity trt = new TaskResultEntity();
     trt.setTaskName( expectedTask );
     trt.setTaskGroup( "medical" );
     trt.setTaskResultType( TaskResultType.SUCCESS );
@@ -79,17 +79,17 @@ public class ApplicationDaoTest {
     appDao.save(app);
     assertNotNull( app.getId() );
 
-    List<ApplicationTable> apps = appDao.findAllWithTasksResults();
+    List<ApplicationEntity> apps = appDao.findAllWithTasksResults();
     assertTrue(apps.size() > 0 );
     //LocalDateTime will not be exactly the same due to approximation when stored in the DB
-    Optional<ApplicationTable> dbApp = apps.stream().filter( myApp -> myApp.getName().equals( expectedAppName ) && Duration.between( myApp.getStartTime(), expectedTime).getSeconds() < 1 ).findFirst();
+    Optional<ApplicationEntity> dbApp = apps.stream().filter( myApp -> myApp.getName().equals( expectedAppName ) && Duration.between( myApp.getStartTime(), expectedTime).getSeconds() < 1 ).findFirst();
     assertTrue( dbApp.isPresent() );
     assertEquals( dbApp.get().getTasksResults().size(), 1 );
   }
 
   @Test
   public void testUpdate(){
-    ApplicationTable app = appDao.findById(1L);
+    ApplicationEntity app = appDao.findById(1L);
     assertNotNull(app);
     String oldAppName = app.getName();
 
@@ -97,7 +97,7 @@ public class ApplicationDaoTest {
     app.setName( newAppName );
 
     appDao.save( app );
-    ApplicationTable updatedApp = appDao.findById(1L);
+    ApplicationEntity updatedApp = appDao.findById(1L);
     assertEquals( newAppName, updatedApp.getName() );
   }
 }

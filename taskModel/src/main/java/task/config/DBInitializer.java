@@ -4,14 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task.TaskResultType;
 import task.dao.ApplicationDao;
-import task.entities.ApplicationTable;
-import task.entities.TaskResultTable;
+import task.entities.ApplicationEntity;
+import task.entities.TaskResultEntity;
 
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
 
 @Service
 public class DBInitializer {
@@ -22,12 +21,12 @@ public class DBInitializer {
   @PostConstruct
   public void initDB(){
 
-    ApplicationTable app = new ApplicationTable();
+    ApplicationEntity app = new ApplicationEntity();
     app.setName( "yourDoctorApp" );
     app.setStartTime( LocalDateTime.now().minus( 10, ChronoUnit.MINUTES ) );
 
     {
-      TaskResultTable trt = new TaskResultTable();
+      TaskResultEntity trt = new TaskResultEntity();
       trt.setApplication( app );
       trt.setTaskExecutionDuration( Duration.ofMinutes( 13 ) );
       trt.setTaskGroup( "medical" );
@@ -37,7 +36,7 @@ public class DBInitializer {
       app.addTaskResult( trt );
     }
     {
-      TaskResultTable trt2 = new TaskResultTable();
+      TaskResultEntity trt2 = new TaskResultEntity();
       trt2.setApplication( app );
       trt2.setTaskExecutionDuration( Duration.ofMinutes( 13 ) );
       trt2.setTaskGroup( "medical" );

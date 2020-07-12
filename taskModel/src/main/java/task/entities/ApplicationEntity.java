@@ -6,26 +6,24 @@ import task.TaskResult;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity(name="Application")
-@Table(name = ApplicationTable.TABLE_NAME)
+@Table(name = ApplicationEntity.TABLE_NAME)
 @NamedQueries({
-    @NamedQuery(name=ApplicationTable.FIND_APPLICATION_BY_ID,
+    @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_ID,
         query="select a from Application a " +
             "join fetch a.tasksResults t " +
             "where a.id = :id"),
-    @NamedQuery(name=ApplicationTable.FIND_ALL_WITH_TASKS_RESULTS,
+    @NamedQuery(name= ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS,
         query="select distinct a from Application a " +
             "join fetch a.tasksResults t "),
 })
-public class ApplicationTable
+public class ApplicationEntity
     extends AbstractEntity implements Application {
 
   public static final String TABLE_NAME = "application";
@@ -42,7 +40,7 @@ public class ApplicationTable
 
   @OneToMany(mappedBy = "application", cascade=CascadeType.ALL,
       orphanRemoval=true)
-  private Set<TaskResultTable> tasksResults = new HashSet<>();
+  private Set<TaskResultEntity> tasksResults = new HashSet<>();
 
   public String getName() {
     return name;
@@ -65,7 +63,7 @@ public class ApplicationTable
     startTime = aStartDateTime;
   }
 
-  public void addTaskResult( TaskResultTable taskResult ){
+  public void addTaskResult( TaskResultEntity taskResult ){
     tasksResults.add( taskResult );
   }
 
@@ -82,7 +80,7 @@ public class ApplicationTable
       return false;
     if (!super.equals(o))
       return false;
-    ApplicationTable app = (ApplicationTable) o;
+    ApplicationEntity app = (ApplicationEntity) o;
     if ( ! Objects.equals( name, app.name ) )
       return false;
     return Objects.equals( startTime, app.startTime );
