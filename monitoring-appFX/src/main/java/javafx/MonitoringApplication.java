@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import javafx.application.Application;
@@ -18,6 +18,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import storage.DBTasksResultsStorage;
+import storage.TasksResultsStorage;
 import task.JsonTaskResult;
 import task.config.DBConfig;
 
@@ -26,9 +29,11 @@ import java.util.Map;
 
 @ComponentScan( basePackages = {
     "javafx",
-    "queue" },
+    "queue",
+    "task"},
 basePackageClasses = DBConfig.class)
 @SpringBootApplication
+@EnableScheduling
 public class MonitoringApplication  {
 
   @Value("${jsa.rabbitmq.queue}")
@@ -42,6 +47,27 @@ public class MonitoringApplication  {
 
   @Bean Queue queue() {
     return new Queue( queueName, false);
+  }
+
+
+  @Value("${jsa.rabbitmq.connectionFactory.address}")
+  private String connectionFactoryAddress;
+
+  @Bean
+  public ConnectionFactory connectionFactory() {
+    CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+    connectionFactory.setAddresses( connectionFactoryAddress );
+    //connectionFactory.setUsername(username);
+    // connectionFactory.setPassword(password);
+    return connectionFactory;
+  }
+
+  @Bean RabbitTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
+    RabbitTemplate template = new RabbitTemplate( connectionFactory );
+    template.setRoutingKey( routingkey );
+    template.setMessageConverter( jsonMessageConverter() );
+    //TODO use anonymous Queues instead, so on start we do not receive old messages
+    return template;
   }
 
   @Bean
@@ -78,10 +104,9 @@ public class MonitoringApplication  {
     return BindingBuilder.bind(queue).to(exchange).with( routingkey );
   }
 
-  public AmqpTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
-    final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-    rabbitTemplate.setMessageConverter( jsonMessageConverter() );
-    return rabbitTemplate;
+  @Bean TasksResultsStorage tasksResultsStorage(){
+    TasksResultsStorage storage = new DBTasksResultsStorage();
+    return storage;
   }
 
   public static void main(String[] args) {

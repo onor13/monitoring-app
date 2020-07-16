@@ -6,7 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.GenericApplicationContext;
 import task.TaskResult;
 import task.TaskResultType;
-import task.config.DBConfig;
 import task.config.DBInitializer;
 import task.dao.ApplicationDao;
 import task.dao.TaskResultDao;
@@ -28,7 +27,7 @@ public class TaskResultDaoTest {
 
   @Before
   public void setUp(){
-    ctx = new AnnotationConfigApplicationContext( DBConfig.class );
+    ctx = new AnnotationConfigApplicationContext( TestDBConfig.class );
     taskResultDao = ctx.getBean(TaskResultDao.class);
     appDao = ctx.getBean(ApplicationDao.class);
     assertNotNull( taskResultDao );

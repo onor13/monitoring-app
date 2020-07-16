@@ -1,4 +1,4 @@
-package task.config;
+package db;
 
 import com.google.common.flogger.FluentLogger;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,6 +14,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import task.config.CleanUp;
+import task.config.DBInitializer;
 import task.dao.ApplicationDao;
 import task.dao.ApplicationDaoImpl;
 import task.dao.TaskResultDao;
@@ -25,7 +28,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db/jdbc.properties")
-public class DBConfig {
+public class TestDBConfig {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -88,4 +91,22 @@ public class DBConfig {
     return new CleanUp(new JdbcTemplate(dataSource()));
   }
 
+  @Bean
+  public ApplicationDao applicationDao(){
+    ApplicationDaoImpl appDao = new ApplicationDaoImpl();
+    appDao.setSessionFactory( sessionFactory() );
+    return appDao;
+  }
+
+  @Bean
+  public TaskResultDao taskResultDao(){
+    TaskResultDaoImpl trDao = new TaskResultDaoImpl();
+    trDao.setSessionFactory( sessionFactory() );
+    return trDao;
+  }
+
+  @Bean DBInitializer dbInitializer(){
+    DBInitializer dbInit = new DBInitializer();
+    return dbInit;
+  }
 }

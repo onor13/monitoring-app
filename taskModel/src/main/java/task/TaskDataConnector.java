@@ -1,11 +1,10 @@
 package task;
 
-import task.TaskResult;
-
-import java.util.Iterator;
+import java.util.Queue;
 
 public interface TaskDataConnector {
-  void connect();
-  void disconnect();
-  Iterator<TaskResult> pollNewData();
+  void connectToUI();
+  void disconnectFromUI();
+  boolean isConnectedToUI();
+  Queue<TaskResult> pollNewData();
 }

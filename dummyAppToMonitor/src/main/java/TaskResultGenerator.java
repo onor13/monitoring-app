@@ -38,7 +38,7 @@ public class TaskResultGenerator {
     this.app = application;
   }
 
-  public TaskResult generateInstance(){
+  public JsonTaskResult generateInstance(){
     JsonTaskResult tr = new JsonTaskResult( app );
     tr.setTaskName( Categories.fromInteger( getRandomBetweenRange( 0, Categories.values().length ) ).name() + counter.incrementAndGet() );
     tr.setTaskGroup( group );
