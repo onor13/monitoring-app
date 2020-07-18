@@ -41,6 +41,15 @@ public class ApplicationDaoImpl implements ApplicationDao {
   }
 
   @Override
+  @Transactional(readOnly = true)
+  public ApplicationEntity findByName( String name ) {
+    logger.atFine().log( "find application by name %s", name );
+    return (ApplicationEntity) sessionFactory.getCurrentSession().
+        getNamedQuery( ApplicationEntity.FIND_APPLICATION_BY_NAME).
+        setParameter("name", name).uniqueResult();
+  }
+
+  @Override
   public ApplicationEntity save( ApplicationEntity app ) {
     sessionFactory.getCurrentSession().saveOrUpdate(app);
     logger.atFine().log( "Application saved with id %s", app.getId() );

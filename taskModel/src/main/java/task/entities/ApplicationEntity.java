@@ -19,6 +19,9 @@ import java.util.stream.Collectors;
         query="select a from Application a " +
             "join fetch a.tasksResults t " +
             "where a.id = :id"),
+    @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_NAME,
+        query="select a from Application a " +
+            "where a.name = :name"),
     @NamedQuery(name= ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS,
         query="select distinct a from Application a " +
             "join fetch a.tasksResults t "),
@@ -28,6 +31,7 @@ public class ApplicationEntity
 
   public static final String TABLE_NAME = "application";
   public static final String FIND_APPLICATION_BY_ID = "Application.findById";
+  public static final String FIND_APPLICATION_BY_NAME = "Application.findByName";
   public static final String FIND_ALL_WITH_TASKS_RESULTS = "Application.findAllWithTasksResults";
 
   @Column(name = "NAME")
