@@ -51,6 +51,11 @@ subprojects {
 		// https://mvnrepository.com/artifact/com.google.flogger/flogger-system-backend
 		implementation "com.google.flogger:flogger-system-backend:$floggerVersion"
 
+		// This dependency is used by the application.
+		implementation "org.springframework:spring-core:$springVersion"
+		// https://mvnrepository.com/artifact/org.springframework/spring-context
+		implementation "org.springframework:spring-context:$springVersion"
+
 	}
 
 }
