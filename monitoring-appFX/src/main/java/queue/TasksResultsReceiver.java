@@ -11,16 +11,18 @@ import task.TaskResult;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class TasksResultsReceiver implements TaskDataConnector{
 
-  private boolean isUIupdatesEnabled = true;
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
+  private AtomicBoolean isUIupdatesEnabled = new AtomicBoolean( true );
 
   @Autowired
   private RabbitTemplate rabbitTemplate;
 
-  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   ConcurrentLinkedDeque<TaskResult> messageQueue = new ConcurrentLinkedDeque<>();
 
   private CountDownLatch latch = new CountDownLatch(1);
@@ -44,17 +46,17 @@ public class TasksResultsReceiver implements TaskDataConnector{
 
   @Override
   public void connectToUI() {
-   isUIupdatesEnabled = true;
+    isUIupdatesEnabled.set( true );
   }
 
   @Override
   public void disconnectFromUI() {
-    isUIupdatesEnabled = false;
+    isUIupdatesEnabled.set( false );
   }
 
   @Override
   public boolean isConnectedToUI() {
-    return isUIupdatesEnabled;
+    return isUIupdatesEnabled.get();
   }
 
   @Override

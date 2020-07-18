@@ -1,7 +1,5 @@
 package javafx;
 
-import javafx.MonitoringFXApp;
-import javafx.controllers.TaskResultsTableController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,17 +13,10 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
-import task.Application;
-import task.TaskResult;
-import task.TaskResultType;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.net.URL;
-import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -39,7 +30,7 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
 
   public StageListener(
       @Value("${spring.application.ui.title}") String applicationTitle,
-      @Value( "classpath:/fxml/taskResultsTable.fxml" ) Resource resource,
+      @Value( "classpath:/fxml/main.fxml" ) Resource resource,
       ApplicationContext ac ){
     this.applicationTitle = applicationTitle;
     this.fxml = resource;

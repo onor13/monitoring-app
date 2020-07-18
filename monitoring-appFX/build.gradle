@@ -19,6 +19,8 @@ dependencies {
 
     implementation project(':taskModel')
 
+    implementation "org.controlsfx:controlsfx:11.0.2"
+
     // https://mvnrepository.com/artifact/org.springframework.amqp/spring-amqp
     implementation "org.springframework.amqp:spring-amqp:$springAmqpVersion"
 

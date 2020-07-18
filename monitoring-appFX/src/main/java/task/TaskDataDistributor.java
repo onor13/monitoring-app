@@ -1,6 +1,7 @@
 package task;
 
 import com.google.common.flogger.FluentLogger;
+import javafx.controllers.MainController;
 import javafx.controllers.TaskResultsTableController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,8 +19,7 @@ public class TaskDataDistributor {
   @Autowired
   TasksResultsStorage resultsStorage;
 
-  @Autowired
-  TaskResultsTableController tableController; //TODO create a different common class for it, because will have more views added later
+  @Autowired MainController uiController;
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -27,16 +27,8 @@ public class TaskDataDistributor {
     logger.atConfig().log( "Bean " + TaskDataDistributor.class.getSimpleName() + " created" );
   }
 
-  public TaskDataConnector getDataConnector() {
-    return dataConnector;
-  }
-
   public void setDataConnector( TaskDataConnector aDataConnector ) {
     dataConnector = aDataConnector;
-  }
-
-  public TasksResultsStorage getResultsStorage() {
-    return resultsStorage;
   }
 
   public void setResultsStorage( TasksResultsStorage aResultsStorage ) {
@@ -55,9 +47,21 @@ public class TaskDataDistributor {
       logger.atFine().log( "Adding taskResult " + tr.getTaskName() );
       resultsStorage.addTaskResult( tr );
       if ( dataConnector.isConnectedToUI() ){
-        tableController.addTaskResult( tr );
+        uiController.addTaskResult( tr );
       }
 
     }/**/
+  }
+
+  public Iterable<TaskResult> getAllTasksResults(){
+    return this.resultsStorage;
+  }
+
+  public void disconnectFromUI(){
+    dataConnector.disconnectFromUI();
+  }
+
+  public void enableUIupdates(){
+    dataConnector.connectToUI();
   }
 }
