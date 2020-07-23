@@ -34,16 +34,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-tx
     implementation "org.springframework:spring-tx:$springVersion"
 
-
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
-
-
-    testImplementation 'junit:junit:4.12'
-}
-
-test {
-    useJUnit()
-    maxHeapSize = '1G'
 }
 
