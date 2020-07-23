@@ -1,4 +1,4 @@
-package logProducer;
+package producers;
 
 import task.TaskResult;
 

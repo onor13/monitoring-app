@@ -1,11 +1,10 @@
 import config.RabbitConfiguration;
-import logProducer.LogProducer;
-import logProducer.QueueLogProducer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import producers.LogProducer;
+import producers.QueueLogProducer;
 import task.Application;
 import task.JsonTaskResult;
-import task.TaskResult;
 
 public class Runner  {
 

@@ -1,4 +1,4 @@
-package logProducer;
+package producers;
 
 import com.google.common.flogger.FluentLogger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

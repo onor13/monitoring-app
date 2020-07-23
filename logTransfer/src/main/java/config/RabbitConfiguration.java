@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
 @org.springframework.context.annotation.Configuration
-@ComponentScan( basePackages = { "logProducer" })
+@ComponentScan( basePackages = { "producers" })
 @PropertySources({
     @PropertySource("classpath:application.properties"),
     @PropertySource("classpath:log4j.properties")
