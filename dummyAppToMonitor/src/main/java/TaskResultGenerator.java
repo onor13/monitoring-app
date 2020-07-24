@@ -1,11 +1,9 @@
-
-import task.Application;
-import task.JsonTaskResult;
-import task.TaskResultType;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
+import task.Application;
+import task.JsonTaskResult;
+import task.TaskResultType;
 
 public class TaskResultGenerator {
 

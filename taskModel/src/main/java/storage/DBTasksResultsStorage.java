@@ -1,6 +1,10 @@
 package storage;
 
 import factory.TaskResultEntityFactory;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -9,11 +13,6 @@ import task.dao.ApplicationDao;
 import task.dao.TaskResultDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @Component
 public class DBTasksResultsStorage implements TasksResultsStorage {

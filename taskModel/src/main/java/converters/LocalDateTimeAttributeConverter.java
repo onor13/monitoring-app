@@ -1,9 +1,9 @@
 package converters;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.time.LocalDateTime;
-import java.sql.Timestamp;
 
 @Converter(autoApply = true)
 public class LocalDateTimeAttributeConverter implements AttributeConverter<LocalDateTime, Timestamp> {

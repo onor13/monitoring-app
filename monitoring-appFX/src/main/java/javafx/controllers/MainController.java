@@ -1,6 +1,8 @@
 package javafx.controllers;
 
 import com.google.common.flogger.FluentLogger;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -10,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.TaskDataDistributor;
 import task.TaskResult;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 @Component
 public class MainController

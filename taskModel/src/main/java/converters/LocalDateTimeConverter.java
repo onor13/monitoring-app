@@ -1,10 +1,9 @@
 package converters;
 
 import formatter.Formatter;
-import parser.Parser;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import parser.Parser;
 
 public class LocalDateTimeConverter implements Formatter<LocalDateTime>, Parser<LocalDateTime> {
 

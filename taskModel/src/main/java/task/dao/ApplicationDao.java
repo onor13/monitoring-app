@@ -1,8 +1,7 @@
 package task.dao;
 
-import task.entities.ApplicationEntity;
-
 import java.util.List;
+import task.entities.ApplicationEntity;
 
 public interface ApplicationDao {
 

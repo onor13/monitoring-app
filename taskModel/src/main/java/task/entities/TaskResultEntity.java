@@ -1,9 +1,9 @@
 package task.entities;
 
 import converters.LocalDateTimeConverter;
-import task.TaskResult;
-import task.TaskResultType;
-
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,9 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import task.TaskResult;
+import task.TaskResultType;
 
 @Entity(name = "TaskResult")
 @Table(name = TaskResultEntity.TABLE_NAME)

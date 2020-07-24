@@ -1,10 +1,9 @@
 package javafx.dataModel;
 
-import javafx.beans.property.SimpleStringProperty;
-import task.TaskResult;
-
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import javafx.beans.property.SimpleStringProperty;
+import task.TaskResult;
 
 public class TaskResultModel {
   private final SimpleStringProperty applicationId = new SimpleStringProperty("");

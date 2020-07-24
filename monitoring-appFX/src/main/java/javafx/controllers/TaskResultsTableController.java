@@ -1,5 +1,10 @@
 package javafx.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.dataModel.TaskResultModel;
@@ -9,12 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Component
 public class TaskResultsTableController implements Initializable {

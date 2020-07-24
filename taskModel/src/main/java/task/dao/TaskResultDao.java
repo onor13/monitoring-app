@@ -1,9 +1,8 @@
 package task.dao;
 
-import task.entities.TaskResultEntity;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import task.entities.TaskResultEntity;
 
 public interface TaskResultDao {
   List<TaskResultEntity> findAll();

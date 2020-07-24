@@ -1,17 +1,16 @@
 package task.dao;
 
 import com.google.common.flogger.FluentLogger;
+import com.google.common.flogger.LazyArgs;
 import converters.LocalDateTimeConverter;
+import java.time.LocalDateTime;
+import java.util.List;
+import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import task.entities.TaskResultEntity;
 
-import javax.annotation.Resource;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static com.google.common.flogger.LazyArgs.lazy;
 
 @SuppressWarnings("unchecked")
 @Transactional
@@ -43,7 +42,7 @@ public class TaskResultDaoImpl implements TaskResultDao {
     logger.atFine().log("find taskResult by appId %d, taskName %s, taskStartTime %s",
         appId,
         taskName,
-        lazy(() -> ldcFormatter.format(startTaskTime)));
+        LazyArgs.lazy(() -> ldcFormatter.format(startTaskTime)));
     return (TaskResultEntity) sessionFactory.getCurrentSession().
         getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME).
         setParameter(TaskResultEntity.PARAM_APP_ID, appId).

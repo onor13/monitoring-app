@@ -1,13 +1,12 @@
 package task;
 
 import com.google.common.flogger.FluentLogger;
+import java.util.Queue;
 import javafx.controllers.MainController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import storage.TasksResultsStorage;
-
-import java.util.Queue;
 
 @Component
 public class TaskDataDistributor {

@@ -1,12 +1,11 @@
 package task;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import serializer.CustomDurationDeserializer;
 import serializer.CustomDurationSerializer;
 import serializer.CustomLocalDateTimeDeserializer;

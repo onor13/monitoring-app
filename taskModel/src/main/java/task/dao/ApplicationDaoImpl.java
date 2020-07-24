@@ -1,13 +1,12 @@
 package task.dao;
 
 import com.google.common.flogger.FluentLogger;
+import java.util.List;
+import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import task.entities.ApplicationEntity;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 @SuppressWarnings("unchecked")
 @Transactional

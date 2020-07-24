@@ -1,9 +1,8 @@
-import task.Application;
-import task.JsonApplication;
-
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import task.Application;
+import task.JsonApplication;
 
 public class ApplicationGenerator {
 

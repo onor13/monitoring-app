@@ -1,9 +1,7 @@
 package storage;
 
-import task.TaskResult;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
+import task.TaskResult;
 
 public interface TasksResultsStorage extends Iterable<TaskResult> {
   int size();
