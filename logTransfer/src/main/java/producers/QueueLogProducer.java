@@ -23,8 +23,6 @@ public class QueueLogProducer implements LogProducer {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  public QueueLogProducer(){}
-
   @Override
   public void sendTaskResult(TaskResult taskResult) {
     logger.atFine().log("Sending message...");

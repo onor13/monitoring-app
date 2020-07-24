@@ -56,7 +56,7 @@
             <property name="tokens"
              value="LITERAL_DO, LITERAL_ELSE, LITERAL_FOR, LITERAL_IF, LITERAL_WHILE"/>
         </module>
-     <!--   <module name="LeftCurly">
+       <module name="LeftCurly">
             <property name="tokens"
              value="ANNOTATION_DEF, CLASS_DEF, CTOR_DEF, ENUM_CONSTANT_DEF, ENUM_DEF,
                     INTERFACE_DEF, LAMBDA, LITERAL_CASE, LITERAL_CATCH, LITERAL_DEFAULT,
@@ -64,25 +64,25 @@
                     LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_TRY, LITERAL_WHILE, METHOD_DEF,
                     OBJBLOCK, STATIC_INIT"/>
         </module>
-        <module name="RightCurly">
+         <module name="RightCurly">
             <property name="id" value="RightCurlySame"/>
             <property name="tokens"
              value="LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE,
                     LITERAL_DO"/>
         </module>
-        <module name="RightCurly">
+		<module name="RightCurly">
             <property name="id" value="RightCurlyAlone"/>
             <property name="option" value="alone"/>
             <property name="tokens"
              value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
-                    INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF"/>
+                    INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF"/>
         </module>
         <module name="WhitespaceAfter">
             <property name="tokens"
              value="COMMA, SEMI, TYPECAST, LITERAL_IF, LITERAL_ELSE,
                     LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, DO_WHILE"/>
         </module>
-        <module name="WhitespaceAround">
+      <!--  <module name="WhitespaceAround">
             <property name="allowEmptyConstructors" value="true"/>
             <property name="allowEmptyLambdas" value="true"/>
             <property name="allowEmptyMethods" value="true"/>
