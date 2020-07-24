@@ -1,6 +1,6 @@
 package config;
 
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -8,7 +8,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @org.springframework.context.annotation.Configuration
 @ComponentScan( basePackages = { "producers" })
@@ -45,7 +48,7 @@ public class RabbitConfiguration {
     CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
     connectionFactory.setAddresses( connectionFactoryAddress );
     //connectionFactory.setUsername(username);
-   // connectionFactory.setPassword(password);
+    // connectionFactory.setPassword(password);
     return connectionFactory;
   }
 

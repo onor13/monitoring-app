@@ -1,4 +1,7 @@
-import task.*;
+
+import task.Application;
+import task.JsonTaskResult;
+import task.TaskResultType;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -6,9 +9,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskResultGenerator {
 
-  AtomicInteger counter = new AtomicInteger();
-  final Application app;
-  final String group = "Medical";
+  final AtomicInteger counter = new AtomicInteger();
+  final Application   app;
+  final String        group = "Medical";
 
   public enum Categories{
     Fracture,
