@@ -1,6 +1,7 @@
 package task.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,13 +46,16 @@ public abstract class AbstractEntity implements Serializable {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o)
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
+    }
     AbstractEntity that = (AbstractEntity) o;
-    if (id != null ? !id.equals(that.id) : that.id != null)
+    if (!Objects.equals(id, that.id)) {
       return false;
+    }
     return true;
   }
 
