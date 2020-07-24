@@ -74,8 +74,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     return application.getStartTime();
   }
 
-  public void setApplication(ApplicationEntity aApplication) {
-    application = aApplication;
+  public void setApplication(ApplicationEntity application) {
+    this.application = application;
   }
 
 
@@ -83,8 +83,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     return startTime;
   }
 
-  public void setTaskStartTime(LocalDateTime aStartTime) {
-    startTime = aStartTime;
+  public void setTaskStartTime(LocalDateTime taskStartTime) {
+    startTime = taskStartTime;
   }
 
   @Override
@@ -92,8 +92,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     return taskName;
   }
 
-  public void setTaskName(String aTaskName) {
-    taskName = aTaskName;
+  public void setTaskName(String taskName) {
+    this.taskName = taskName;
   }
 
   @Override
@@ -101,8 +101,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     return taskGroup;
   }
 
-  public void setTaskGroup(String aTaskGroup) {
-    taskGroup = aTaskGroup;
+  public void setTaskGroup(String taskGroup) {
+    this.taskGroup = taskGroup;
   }
 
   @Override
@@ -110,16 +110,16 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     return taskResultType;
   }
 
-  public void setTaskResultType(TaskResultType aTaskResultType) {
-    taskResultType = aTaskResultType;
+  public void setTaskResultType(TaskResultType taskResultType) {
+    this.taskResultType = taskResultType;
   }
 
   public Duration getTaskExecutionDuration() {
     return executionDuration;
   }
 
-  public void setTaskExecutionDuration(Duration aExecutionDuration) {
-    executionDuration = aExecutionDuration;
+  public void setTaskExecutionDuration(Duration taskExecutionDuration) {
+    executionDuration = taskExecutionDuration;
   }
 
   @Override

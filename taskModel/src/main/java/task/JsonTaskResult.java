@@ -90,7 +90,7 @@ public class JsonTaskResult implements TaskResult {
     return taskExecutionDuration;
   }
 
-  public void setTaskExecutionDuration(Duration aExecutionDuration) {
-    taskExecutionDuration = aExecutionDuration;
+  public void setTaskExecutionDuration(Duration taskExecutionDuration) {
+    this.taskExecutionDuration = taskExecutionDuration;
   }
 }

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.dataModel.TaskResultModel;
+import javafx.datamodel.TaskResultModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;

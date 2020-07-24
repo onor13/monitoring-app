@@ -54,8 +54,8 @@ public class ApplicationEntity
     return name;
   }
 
-  public void setName(String aName) {
-    name = aName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public LocalDateTime getStartTime() {
@@ -67,8 +67,8 @@ public class ApplicationEntity
     return tasksResults.stream().collect(Collectors.toSet());
   }
 
-  public void setStartTime(LocalDateTime aStartDateTime) {
-    startTime = aStartDateTime;
+  public void setStartTime(LocalDateTime startTime) {
+    this.startTime = startTime;
   }
 
   public void addTaskResult(TaskResultEntity taskResult) {

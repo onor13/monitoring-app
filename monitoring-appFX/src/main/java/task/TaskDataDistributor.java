@@ -25,12 +25,12 @@ public class TaskDataDistributor {
     logger.atConfig().log("Bean " + TaskDataDistributor.class.getSimpleName() + " created");
   }
 
-  public void setDataConnector(TaskDataConnector aDataConnector) {
-    dataConnector = aDataConnector;
+  public void setDataConnector(TaskDataConnector dataConnector) {
+    this.dataConnector = dataConnector;
   }
 
-  public void setResultsStorage(TasksResultsStorage aResultsStorage) {
-    resultsStorage = aResultsStorage;
+  public void setResultsStorage(TasksResultsStorage storage) {
+    resultsStorage = storage;
   }
 
   //@Async //TODO make it async

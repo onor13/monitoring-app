@@ -1,4 +1,4 @@
-package javafx.dataModel;
+package javafx.datamodel;
 
 import converters.LocalDateTimeConverter;
 import javafx.beans.property.SimpleStringProperty;
@@ -32,8 +32,8 @@ public class TaskResultModel {
     return applicationId;
   }
 
-  public void setApplicationId(String aApplicationId) {
-    this.applicationId.set(aApplicationId);
+  public void setApplicationId(String applicationId) {
+    this.applicationId.set(applicationId);
   }
 
   public String getName() {
@@ -44,8 +44,8 @@ public class TaskResultModel {
     return name;
   }
 
-  public void setName(String aName) {
-    this.name.set(aName);
+  public void setName(String name) {
+    this.name.set(name);
   }
 
   public String getGroup() {
@@ -56,8 +56,8 @@ public class TaskResultModel {
     return group;
   }
 
-  public void setGroup(String aGroup) {
-    this.group.set(aGroup);
+  public void setGroup(String group) {
+    this.group.set(group);
   }
 
   public String getResult() {
@@ -68,8 +68,8 @@ public class TaskResultModel {
     return result;
   }
 
-  public void setResult(String aResult) {
-    this.result.set(aResult);
+  public void setResult(String result) {
+    this.result.set(result);
   }
 
   public String getStartTime() {
@@ -80,8 +80,8 @@ public class TaskResultModel {
     return startTime;
   }
 
-  public void setStartTime(String aStartTime) {
-    this.startTime.set(aStartTime);
+  public void setStartTime(String startTime) {
+    this.startTime.set(startTime);
   }
 
   public String getExecutionDuration() {
@@ -92,7 +92,7 @@ public class TaskResultModel {
     return executionDuration;
   }
 
-  public void setExecutionDuration(String aExecutionDuration) {
-    this.executionDuration.set(aExecutionDuration);
+  public void setExecutionDuration(String executionDuration) {
+    this.executionDuration.set(executionDuration);
   }
 }

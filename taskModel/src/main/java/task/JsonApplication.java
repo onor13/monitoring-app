@@ -31,8 +31,8 @@ public class JsonApplication implements Application {
     return name;
   }
 
-  public void setName(String aName) {
-    name = aName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
@@ -41,8 +41,8 @@ public class JsonApplication implements Application {
     return startTime;
   }
 
-  public void setStartTime(LocalDateTime aStartTime) {
-    startTime = aStartTime;
+  public void setStartTime(LocalDateTime startTime) {
+    this.startTime = startTime;
   }
 
   @Override
@@ -50,7 +50,7 @@ public class JsonApplication implements Application {
     return tasksResults;
   }
 
-  public void setTasksResults(Set<TaskResult> aTasksResults) {
-    tasksResults = aTasksResults;
+  public void setTasksResults(Set<TaskResult> taskResults) {
+    this.tasksResults = taskResults;
   }
 }
