@@ -31,8 +31,9 @@ public class TaskResultGenerator {
           return Physical;
         case 4:
           return Psychological;
+        default:
+          return Unknown;
       }
-      return Unknown;
     }
   }
 
