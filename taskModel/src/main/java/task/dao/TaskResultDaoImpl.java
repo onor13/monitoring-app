@@ -1,7 +1,7 @@
 package task.dao;
 
 import com.google.common.flogger.FluentLogger;
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,7 @@ public class TaskResultDaoImpl implements TaskResultDao {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private SessionFactory sessionFactory;
+  private LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
 
   @Override
   @Transactional(readOnly = true)
@@ -42,7 +43,7 @@ public class TaskResultDaoImpl implements TaskResultDao {
     logger.atFine().log("find taskResult by appId %d, taskName %s, taskStartTime %s",
         appId,
         taskName,
-        lazy(() -> Formats.FORMATTER.format(startTaskTime)));
+        lazy(() -> ldcFormatter.format(startTaskTime)));
     return (TaskResultEntity) sessionFactory.getCurrentSession().
         getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME).
         setParameter(TaskResultEntity.PARAM_APP_ID, appId).

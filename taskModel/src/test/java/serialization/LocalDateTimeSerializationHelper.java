@@ -2,7 +2,7 @@ package serialization;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 import serializer.CustomLocalDateTimeDeserializer;
 import serializer.CustomLocalDateTimeSerializer;
 
@@ -17,7 +17,7 @@ public class LocalDateTimeSerializationHelper {
   private final static String  localDateTimeStr = "2016-03-04 11:30:00";
 
   public LocalDateTimeSerializationHelper(){
-    localDateTime = LocalDateTime.parse( localDateTimeStr, Formats.FORMATTER );
+    localDateTime = new LocalDateTimeConverter().parse(localDateTimeStr);
   }
 
   public LocalDateTime getLocalDateTime() {

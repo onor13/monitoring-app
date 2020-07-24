@@ -1,6 +1,6 @@
 package task.entities;
 
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 import task.Application;
 import task.TaskResult;
 
@@ -78,7 +78,7 @@ public class ApplicationEntity
 
   public String toString() {
     return String.format("Application - id: %d, name: %s, startDateTime: %s",
-        id, name, startTime == null ? "<unknown>" : Formats.FORMATTER.format(startTime));
+        id, name, startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime));
   }
 
   @Override

@@ -3,13 +3,15 @@ package serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class CustomLocalDateTimeSerializer
     extends StdSerializer<LocalDateTime> {
+
+  private LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
 
   public CustomLocalDateTimeSerializer() {
     this(null);
@@ -21,6 +23,6 @@ public class CustomLocalDateTimeSerializer
 
   @Override
   public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-    gen.writeString(Formats.FORMATTER.format(value));
+    gen.writeString(ldcFormatter.format(value));
   }
 }

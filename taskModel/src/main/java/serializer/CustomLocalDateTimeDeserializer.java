@@ -3,7 +3,7 @@ package serializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class CustomLocalDateTimeDeserializer
     extends StdDeserializer<LocalDateTime> {
 
+  LocalDateTimeConverter ldcParser = new LocalDateTimeConverter();
 
   public CustomLocalDateTimeDeserializer() {
     this(null);
@@ -23,7 +24,6 @@ public class CustomLocalDateTimeDeserializer
   @Override
   public LocalDateTime deserialize(JsonParser jsonparser, DeserializationContext context)
       throws IOException {
-    String ldtStr = jsonparser.getText();
-    return LocalDateTime.parse(ldtStr, Formats.FORMATTER);
+    return ldcParser.parse(jsonparser.getText());
   }
 }

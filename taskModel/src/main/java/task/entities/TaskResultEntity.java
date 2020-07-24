@@ -1,6 +1,6 @@
 package task.entities;
 
-import constants.Formats;
+import converters.LocalDateTimeConverter;
 import task.TaskResult;
 import task.TaskResultType;
 
@@ -131,7 +131,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
         (application != null && application.getId() != null) ? application.getId() : 0,
         taskName,
         taskGroup,
-        startTime == null ? "<unknown>" : Formats.FORMATTER.format(startTime),
+        startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime),
         executionDuration == null ? 0 : executionDuration.toSeconds());
   }
 
