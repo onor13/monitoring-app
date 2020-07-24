@@ -32,9 +32,9 @@ public class TaskResultDaoImpl implements TaskResultDao {
   @Transactional(readOnly = true)
   public TaskResultEntity findById(Long id) {
     logger.atFine().log("find taskResult by %d", id);
-    return (TaskResultEntity) sessionFactory.getCurrentSession().
-        getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_ID).
-        setParameter("id", id).uniqueResult();
+    return (TaskResultEntity) sessionFactory.getCurrentSession()
+        .getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_ID)
+        .setParameter("id", id).uniqueResult();
   }
 
   @Override
@@ -43,11 +43,11 @@ public class TaskResultDaoImpl implements TaskResultDao {
         appId,
         taskName,
         LazyArgs.lazy(() -> ldcFormatter.format(startTaskTime)));
-    return (TaskResultEntity) sessionFactory.getCurrentSession().
-        getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME).
-        setParameter(TaskResultEntity.PARAM_APP_ID, appId).
-        setParameter(TaskResultEntity.PARAM_TASK_NAME, taskName).
-        setParameter(TaskResultEntity.PARAM_TASK_START_TIME, startTaskTime).uniqueResult();
+    return (TaskResultEntity) sessionFactory.getCurrentSession()
+        .getNamedQuery(TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME)
+        .setParameter(TaskResultEntity.PARAM_APP_ID, appId)
+        .setParameter(TaskResultEntity.PARAM_TASK_NAME, taskName)
+        .setParameter(TaskResultEntity.PARAM_TASK_START_TIME, startTaskTime).uniqueResult();
   }
 
   @Override

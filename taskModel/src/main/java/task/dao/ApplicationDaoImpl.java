@@ -34,18 +34,18 @@ public class ApplicationDaoImpl implements ApplicationDao {
   @Transactional(readOnly = true)
   public ApplicationEntity findById(Long id) {
     logger.atFine().log("find application by %d", id);
-    return (ApplicationEntity) sessionFactory.getCurrentSession().
-        getNamedQuery(ApplicationEntity.FIND_APPLICATION_BY_ID).
-        setParameter("id", id).uniqueResult();
+    return (ApplicationEntity) sessionFactory.getCurrentSession()
+        .getNamedQuery(ApplicationEntity.FIND_APPLICATION_BY_ID)
+        .setParameter("id", id).uniqueResult();
   }
 
   @Override
   @Transactional(readOnly = true)
   public ApplicationEntity findByName(String name) {
     logger.atFine().log("find application by name %s", name);
-    return (ApplicationEntity) sessionFactory.getCurrentSession().
-        getNamedQuery(ApplicationEntity.FIND_APPLICATION_BY_NAME).
-        setParameter("name", name).uniqueResult();
+    return (ApplicationEntity) sessionFactory.getCurrentSession()
+        .getNamedQuery(ApplicationEntity.FIND_APPLICATION_BY_NAME)
+        .setParameter("name", name).uniqueResult();
   }
 
   @Override
