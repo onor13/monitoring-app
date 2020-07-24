@@ -3,7 +3,8 @@ package task;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import serializer.CustomDurationDeserializer;
@@ -11,7 +12,9 @@ import serializer.CustomDurationSerializer;
 import serializer.CustomLocalDateTimeDeserializer;
 import serializer.CustomLocalDateTimeSerializer;
 
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = JsonTaskResult.class)
+@JsonIdentityInfo(
+    generator = ObjectIdGenerators.IntSequenceGenerator.class,property="@id",
+    scope = JsonTaskResult.class)
 public class JsonTaskResult implements TaskResult {
 
   private String applicationName;
@@ -22,8 +25,7 @@ public class JsonTaskResult implements TaskResult {
   private LocalDateTime taskStartTime;
   private Duration      taskExecutionDuration;
 
-  public JsonTaskResult(){
-  }
+  public JsonTaskResult(){ }
 
   public JsonTaskResult( Application app ){
     applicationName = app.getName();

@@ -1,7 +1,12 @@
 package task.entities;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.io.Serializable;
-import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
