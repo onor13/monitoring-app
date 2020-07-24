@@ -22,15 +22,15 @@ import java.util.Objects;
 @Table(name = TaskResultEntity.TABLE_NAME)
 @NamedQueries({
     @NamedQuery(name= TaskResultEntity.FIND_TASK_RESULT_BY_ID,
-        query="select tr from TaskResult tr " +
-            "join fetch tr.application a " +
-            "where tr.id = :id"),
+        query="select tr from TaskResult tr"
+            + " join fetch tr.application a"
+            + " where tr.id = :id"),
     @NamedQuery(name= TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME,
-        query="select tr from TaskResult tr " +
-            "join fetch tr.application app " +
-            "where app.id = :"+ TaskResultEntity.PARAM_APP_ID +
-            " and tr.taskName = :"+ TaskResultEntity.PARAM_TASK_NAME+
-            " and tr.startTime = :" +TaskResultEntity.PARAM_TASK_START_TIME )
+        query="select tr from TaskResult tr"
+            + " join fetch tr.application app"
+            + " where app.id = :"+ TaskResultEntity.PARAM_APP_ID
+            + " and tr.taskName = :"+ TaskResultEntity.PARAM_TASK_NAME
+            + " and tr.startTime = :" +TaskResultEntity.PARAM_TASK_START_TIME )
 })
 public class TaskResultEntity extends AbstractEntity implements TaskResult {
 

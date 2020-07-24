@@ -22,15 +22,15 @@ import java.util.stream.Collectors;
 @Table(name = ApplicationEntity.TABLE_NAME)
 @NamedQueries({
     @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_ID,
-        query="select a from Application a " +
-            "join fetch a.tasksResults t " +
-            "where a.id = :id"),
+        query="select a from Application a"
+            + " join fetch a.tasksResults t"
+            + " where a.id = :id"),
     @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_NAME,
-        query="select a from Application a " +
-            "where a.name = :name"),
+        query="select a from Application a "
+            + " where a.name = :name"),
     @NamedQuery(name= ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS,
-        query="select distinct a from Application a " +
-            "join fetch a.tasksResults t "),
+        query="select distinct a from Application a"
+            + " join fetch a.tasksResults t "),
 })
 public class ApplicationEntity
     extends AbstractEntity implements Application {
