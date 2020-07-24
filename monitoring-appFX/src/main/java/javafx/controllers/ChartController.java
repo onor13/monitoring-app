@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings("unchecked")
 @Component
 public class ChartController {
 

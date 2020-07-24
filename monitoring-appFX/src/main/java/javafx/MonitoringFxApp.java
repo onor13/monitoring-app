@@ -12,7 +12,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
-public class MonitoringFXApp extends Application {
+public class MonitoringFxApp extends Application {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -25,7 +25,7 @@ public class MonitoringFXApp extends Application {
     logger.atFine().log("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
 
     ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
-      ac.registerBean(Application.class, () -> MonitoringFXApp.this);
+      ac.registerBean(Application.class, () -> MonitoringFxApp.this);
       ac.registerBean(Parameters.class, () -> getParameters());
       ac.registerBean(HostServices.class, () -> getHostServices());
     };

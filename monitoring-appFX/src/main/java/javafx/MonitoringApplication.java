@@ -23,16 +23,16 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import storage.DBTasksResultsStorage;
+import storage.DbTasksResultsStorage;
 import storage.TasksResultsStorage;
 import task.JsonTaskResult;
-import task.config.DBConfig;
+import task.config.DbConfig;
 
 @ComponentScan(basePackages = {
     "javafx",
     "queue",
     "task"},
-    basePackageClasses = DBConfig.class)
+    basePackageClasses = DbConfig.class)
 @SpringBootApplication
 @EnableScheduling
 public class MonitoringApplication  {
@@ -109,12 +109,12 @@ public class MonitoringApplication  {
 
   @Bean
   TasksResultsStorage tasksResultsStorage() {
-    TasksResultsStorage storage = new DBTasksResultsStorage();
+    TasksResultsStorage storage = new DbTasksResultsStorage();
     return storage;
   }
 
   public static void main(String[] args) {
-    Application.launch(MonitoringFXApp.class, args);
+    Application.launch(MonitoringFxApp.class, args);
   }
 
 }

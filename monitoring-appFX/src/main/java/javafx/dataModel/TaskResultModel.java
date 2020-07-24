@@ -1,7 +1,6 @@
 package javafx.dataModel;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import converters.LocalDateTimeConverter;
 import javafx.beans.property.SimpleStringProperty;
 import task.TaskResult;
 
@@ -14,15 +13,14 @@ public class TaskResultModel {
   private final SimpleStringProperty executionDuration = new SimpleStringProperty("");
 
   //TODO use converters instead for enum's and date related objects
-  private final DateTimeFormatter DATE_TIME_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
+  private final LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
 
   public TaskResultModel(TaskResult taskResult) {
     setApplicationId(taskResult.getApplicationName());
     setName(taskResult.getTaskName());
     setGroup(taskResult.getTaskGroup());
     setResult(taskResult.getTaskResultType().name());
-    setStartTime(DATE_TIME_FORMATTER.format(taskResult.getTaskStartTime()));
+    setStartTime(ldcFormatter.format(taskResult.getTaskStartTime()));
     setExecutionDuration(taskResult.getTaskExecutionDuration().toString());
   }
 

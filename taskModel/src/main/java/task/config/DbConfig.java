@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db/jdbc.properties")
-public class DBConfig {
+public class DbConfig {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 

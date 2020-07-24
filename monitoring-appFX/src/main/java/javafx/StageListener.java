@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class StageListener implements ApplicationListener<MonitoringFXApp.StageReadyEvent> {
+public class StageListener implements ApplicationListener<MonitoringFxApp.StageReadyEvent> {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -41,7 +41,7 @@ public class StageListener implements ApplicationListener<MonitoringFXApp.StageR
   }
 
   @Override
-  public void onApplicationEvent(MonitoringFXApp.StageReadyEvent event) {
+  public void onApplicationEvent(MonitoringFxApp.StageReadyEvent event) {
     try {
       Stage stage = event.getStage();
       URL url = this.fxml.getURL();

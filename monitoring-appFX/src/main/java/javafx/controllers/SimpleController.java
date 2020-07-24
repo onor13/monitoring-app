@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SimpleUIController {
+public class SimpleController {
 
   private final HostServices hostServices;
 
@@ -17,7 +17,7 @@ public class SimpleUIController {
   @FXML
   public Button button;
 
-  SimpleUIController(HostServices hostServices){
+  SimpleController(HostServices hostServices){
     this.hostServices = hostServices;
   }
 

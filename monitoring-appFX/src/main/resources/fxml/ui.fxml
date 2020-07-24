@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="javafx.controllers.SimpleUIController"
+            fx:controller="javafx.controllers.SimpleController"
             prefHeight="400.0" prefWidth="600.0">
    <Button fx:id="button" text="Button"></Button>
     <Label fx:id="label" text="Label"/>

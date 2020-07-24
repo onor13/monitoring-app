@@ -6,7 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.GenericApplicationContext;
 import task.Application;
 import task.TaskResultType;
-import task.config.DBConfig;
 import task.dao.ApplicationDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;

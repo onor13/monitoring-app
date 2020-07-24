@@ -15,7 +15,7 @@ import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 @Component
-public class DBTasksResultsStorage implements TasksResultsStorage {
+public class DbTasksResultsStorage implements TasksResultsStorage {
 
   @Autowired
   ApplicationDao appDao;
