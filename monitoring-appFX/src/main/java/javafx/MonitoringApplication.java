@@ -58,8 +58,6 @@ public class MonitoringApplication  {
   public ConnectionFactory connectionFactory() {
     CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
     connectionFactory.setAddresses(connectionFactoryAddress);
-    //connectionFactory.setUsername(username);
-    // connectionFactory.setPassword(password);
     return connectionFactory;
   }
 

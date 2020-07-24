@@ -8,6 +8,11 @@ import task.JsonTaskResult;
 
 public class Runner  {
 
+  /***
+   * <p>Project entry point. generates and sends tasksResults</p>
+   * @param args command line args
+   * @throws InterruptedException not clear when
+   */
   public static void main(String[] args) throws InterruptedException {
     ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
     LogProducer lp = context.getBean(QueueLogProducer.class);

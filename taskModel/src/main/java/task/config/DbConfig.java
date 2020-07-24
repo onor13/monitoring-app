@@ -38,6 +38,10 @@ public class DbConfig {
     return new PropertySourcesPlaceholderConfigurer();
   }
 
+  /***
+   * <p>Creates db dataSource.</p>
+   * @return sql DataSource
+   */
   @Bean(destroyMethod = "close")
   public DataSource dataSource() {
     try {

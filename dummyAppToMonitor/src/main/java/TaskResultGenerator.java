@@ -11,7 +11,7 @@ public class TaskResultGenerator {
   final Application app;
   final String group = "Medical";
 
-  public enum Categories {
+  public enum Category {
     Fracture,
     Flu,
     Cancer,
@@ -19,7 +19,12 @@ public class TaskResultGenerator {
     Psychological,
     Unknown;
 
-    public static Categories fromInteger(int nb) {
+    /***
+     * <p>Creates category from integer.</p>
+     * @param nb integer used for choosing a category
+     * @return one of the existing Categories
+     */
+    public static Category fromInteger(int nb) {
       switch (nb) {
         case 0:
           return Fracture;
@@ -43,7 +48,7 @@ public class TaskResultGenerator {
 
   public JsonTaskResult generateInstance() {
     JsonTaskResult tr = new JsonTaskResult(app);
-    String taskName = Categories.fromInteger(getRandomBetweenRange(0, Categories.values().length)).name()
+    String taskName = Category.fromInteger(getRandomBetweenRange(0, Category.values().length)).name()
         + counter.incrementAndGet();
     tr.setTaskName(taskName);
     tr.setTaskGroup(group);

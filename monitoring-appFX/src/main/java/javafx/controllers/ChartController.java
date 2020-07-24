@@ -18,10 +18,11 @@ public class ChartController {
   public ChartController() {
   }
 
+  /***
+   * <p>initalize some random data, just for test.</p>
+   */
   @FXML
   public void initialize() {
-
-
     ObservableList<Data<String, Double>> seriesData1 = FXCollections.observableArrayList();
     seriesData1.add(new Data<>("Val 1", 1.0));
     seriesData1.add(new Data<>("Val 2", 2.0));

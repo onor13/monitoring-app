@@ -33,7 +33,10 @@ public class TaskDataDistributor {
     resultsStorage = storage;
   }
 
-  //@Async //TODO make it async
+  /***
+   * <p>Retrieves tasksResults from the queue at regular time interval and sends them to storage
+   * and UI if active.</p>
+   */
   @Scheduled(fixedDelay = 1000)
   public void scheduleUpdate() {
     logger.atFine().log("scheduling update ");
