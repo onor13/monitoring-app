@@ -14,11 +14,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
-public class TasksResultsReceiver implements TaskDataConnector{
+public class TasksResultsReceiver implements TaskDataConnector {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private AtomicBoolean isUIupdatesEnabled = new AtomicBoolean( true );
+  private AtomicBoolean isUIupdatesEnabled = new AtomicBoolean(true);
 
   @Autowired
   private RabbitTemplate rabbitTemplate;
@@ -27,15 +27,15 @@ public class TasksResultsReceiver implements TaskDataConnector{
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  public TasksResultsReceiver(){
-    logger.atConfig().log( "Bean " + TasksResultsReceiver.class.getSimpleName() + " created ");
+  public TasksResultsReceiver() {
+    logger.atConfig().log("Bean " + TasksResultsReceiver.class.getSimpleName() + " created ");
   }
 
-  @RabbitListener( queues="${jsa.rabbitmq.queue}" )
-  public void receiveMessage( TaskResult taskResult ) {
-    messageQueue.add( taskResult );
-    logger.atFine().log( "Received task [%s]", taskResult.getTaskName() );
-    logger.atFine().log("internal queue size %d", messageQueue.size() );
+  @RabbitListener(queues = "${jsa.rabbitmq.queue}")
+  public void receiveMessage(TaskResult taskResult) {
+    messageQueue.add(taskResult);
+    logger.atFine().log("Received task [%s]", taskResult.getTaskName());
+    logger.atFine().log("internal queue size %d", messageQueue.size());
 
     latch.countDown();
   }
@@ -46,12 +46,12 @@ public class TasksResultsReceiver implements TaskDataConnector{
 
   @Override
   public void connectToUI() {
-    isUIupdatesEnabled.set( true );
+    isUIupdatesEnabled.set(true);
   }
 
   @Override
   public void disconnectFromUI() {
-    isUIupdatesEnabled.set( false );
+    isUIupdatesEnabled.set(false);
   }
 
   @Override

@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface TaskResultDao {
   List<TaskResultEntity> findAll();
+
   TaskResultEntity findById(Long id);
-  TaskResultEntity find( Long appId, String taskName, LocalDateTime startTaskTime );
-  TaskResultEntity save( TaskResultEntity app);
-  void delete( TaskResultEntity app);
+
+  TaskResultEntity find(Long appId, String taskName, LocalDateTime startTaskTime);
+
+  TaskResultEntity save(TaskResultEntity app);
+
+  void delete(TaskResultEntity app);
 }

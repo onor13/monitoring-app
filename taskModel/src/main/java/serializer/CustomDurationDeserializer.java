@@ -10,17 +10,17 @@ import java.time.Duration;
 
 public class CustomDurationDeserializer extends StdDeserializer<Duration> {
 
-  public CustomDurationDeserializer(){
-    this( null );
+  public CustomDurationDeserializer() {
+    this(null);
   }
 
-  public CustomDurationDeserializer( Class<Duration> vc ) {
-    super( vc );
+  public CustomDurationDeserializer(Class<Duration> vc) {
+    super(vc);
   }
 
   @Override
-  public Duration deserialize( JsonParser jp, DeserializationContext ctxt ) throws IOException {
+  public Duration deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
     String durationInMilliseconds = jp.getText();
-    return Duration.ofMillis( Long.parseLong( durationInMilliseconds ) );
+    return Duration.ofMillis(Long.parseLong(durationInMilliseconds));
   }
 }

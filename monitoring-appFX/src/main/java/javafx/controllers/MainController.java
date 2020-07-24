@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import storage.TasksResultsStorage;
 import task.TaskDataDistributor;
 import task.TaskResult;
 
@@ -31,32 +30,31 @@ public class MainController
   TaskDataDistributor dataDistributor;
 
   @Override
-  public void initialize( URL location, ResourceBundle resources ) {
+  public void initialize(URL location, ResourceBundle resources) {
     updatesOnOff.setStyle("-fx-font-weight: bold;");
-    updatesOnOff.setSelected( true );
-    updatesOnOff.selectedProperty().addListener( new ChangeListener<Boolean>() {
+    updatesOnOff.setSelected(true);
+    updatesOnOff.selectedProperty().addListener(new ChangeListener<Boolean>() {
       @Override
-      public void changed( ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue ) {
-        if ( newValue == Boolean.TRUE ){
-          if ( oldValue == Boolean.FALSE ){
+      public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+        if (newValue == Boolean.TRUE) {
+          if (oldValue == Boolean.FALSE) {
             reloadTasksResults();
             logger.atInfo().log("UI updates are now enabled");
             dataDistributor.enableUIupdates();
           }
-        }
-        else{
+        } else {
           logger.atInfo().log("UI updates are now disabled");
           dataDistributor.disconnectFromUI();
         }
       }
-    } );
+    });
   }
 
-  public void addTaskResult( TaskResult taskResult ){
-    tableViewController.addTaskResult( taskResult );
+  public void addTaskResult(TaskResult taskResult) {
+    tableViewController.addTaskResult(taskResult);
   }
 
-  public void reloadTasksResults(){
-    tableViewController.reloadFrom( dataDistributor.getAllTasksResults() );
+  public void reloadTasksResults() {
+    tableViewController.reloadFrom(dataDistributor.getAllTasksResults());
   }
 }

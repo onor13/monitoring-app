@@ -8,10 +8,10 @@ import task.TaskResult;
 public class TaskNameFiltered
     extends IterableEnvelope<TaskResult> {
 
-  public TaskNameFiltered( String taskName, Iterable<TaskResult> iterable ) {
-    super( new IterableOf<>(
+  public TaskNameFiltered(String taskName, Iterable<TaskResult> iterable) {
+    super(new IterableOf<>(
         () -> new org.cactoos.iterator.Filtered<>(
-            input -> input.getTaskName().equals( taskName ), iterable.iterator() ) )
+            input -> input.getTaskName().equals(taskName), iterable.iterator()))
     );
   }
 }

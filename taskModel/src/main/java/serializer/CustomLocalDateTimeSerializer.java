@@ -11,16 +11,16 @@ import java.time.LocalDateTime;
 public class CustomLocalDateTimeSerializer
     extends StdSerializer<LocalDateTime> {
 
-  public CustomLocalDateTimeSerializer(){
-    this( null );
+  public CustomLocalDateTimeSerializer() {
+    this(null);
   }
 
-  public CustomLocalDateTimeSerializer( Class<LocalDateTime> t ) {
-    super( t );
+  public CustomLocalDateTimeSerializer(Class<LocalDateTime> t) {
+    super(t);
   }
 
   @Override
-  public void serialize( LocalDateTime value, JsonGenerator gen, SerializerProvider provider ) throws IOException {
-    gen.writeString( Formats.FORMATTER.format( value ) );
+  public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    gen.writeString(Formats.FORMATTER.format(value));
   }
 }

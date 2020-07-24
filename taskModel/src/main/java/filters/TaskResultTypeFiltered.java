@@ -6,13 +6,12 @@ import task.TaskResult;
 import task.TaskResultType;
 
 public class TaskResultTypeFiltered
-    extends IterableEnvelope<TaskResult>
-  {
+    extends IterableEnvelope<TaskResult> {
 
-  public TaskResultTypeFiltered( TaskResultType taskResultType, Iterable<TaskResult> iterable ) {
-    super( new IterableOf<>(
+  public TaskResultTypeFiltered(TaskResultType taskResultType, Iterable<TaskResult> iterable) {
+    super(new IterableOf<>(
         () -> new org.cactoos.iterator.Filtered<>(
-            input -> input.getTaskResultType() == taskResultType, iterable.iterator() ) )
+            input -> input.getTaskResultType() == taskResultType, iterable.iterator()))
     );
   }
 }

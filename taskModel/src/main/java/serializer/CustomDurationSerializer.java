@@ -9,16 +9,16 @@ import java.time.Duration;
 
 public class CustomDurationSerializer extends StdSerializer<Duration> {
 
-  public CustomDurationSerializer(){
-    this( null );
+  public CustomDurationSerializer() {
+    this(null);
   }
 
-  public CustomDurationSerializer( Class<Duration> t ) {
-    super( t );
+  public CustomDurationSerializer(Class<Duration> t) {
+    super(t);
   }
 
   @Override
-  public void serialize( Duration value, JsonGenerator gen, SerializerProvider provider ) throws IOException {
-    gen.writeString( String.valueOf( value.toMillis() ) );
+  public void serialize(Duration value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+    gen.writeString(String.valueOf(value.toMillis()));
   }
 }

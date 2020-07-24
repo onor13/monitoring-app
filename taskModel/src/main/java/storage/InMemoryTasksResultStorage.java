@@ -11,30 +11,37 @@ public class InMemoryTasksResultStorage
     implements TasksResultsStorage {
   Set<TaskResult> taskResults = new HashSet<>();
 
-  public InMemoryTasksResultStorage(){}
+  public InMemoryTasksResultStorage() {
+  }
 
 
-  @Override public int size() {
+  @Override
+  public int size() {
     return taskResults.size();
   }
 
-  @Override public synchronized void addTaskResult( TaskResult taskResult ) {
-    taskResults.add( taskResult );
+  @Override
+  public synchronized void addTaskResult(TaskResult taskResult) {
+    taskResults.add(taskResult);
   }
 
-  @Override public boolean contains( TaskResult taskResult ) {
-    return taskResults.contains( taskResult );
+  @Override
+  public boolean contains(TaskResult taskResult) {
+    return taskResults.contains(taskResult);
   }
 
-  @Override public void removeAll() {
+  @Override
+  public void removeAll() {
     taskResults.clear();
   }
 
-  @Override public void removeOlderThan( LocalDateTime ldt ) {
-    taskResults.removeIf( taskResult -> taskResult.getTaskStartTime().isBefore( ldt ) );
+  @Override
+  public void removeOlderThan(LocalDateTime ldt) {
+    taskResults.removeIf(taskResult -> taskResult.getTaskStartTime().isBefore(ldt));
   }
 
-  @Override public Iterator<TaskResult> iterator() {
+  @Override
+  public Iterator<TaskResult> iterator() {
     return taskResults.iterator();
   }
 }

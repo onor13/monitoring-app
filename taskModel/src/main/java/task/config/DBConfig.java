@@ -53,7 +53,7 @@ public class DBConfig {
       dataSource.setPassword(password);
       return dataSource;
     } catch (Exception e) {
-      logger.atSevere().withCause( e ).log( "DBCP DataSource bean cannot be created! " + e.getMessage() );
+      logger.atSevere().withCause(e).log("DBCP DataSource bean cannot be created! " + e.getMessage());
       return null;
     }
   }
@@ -79,7 +79,8 @@ public class DBConfig {
         .buildSessionFactory();
   }
 
-  @Bean public PlatformTransactionManager transactionManager() throws IOException {
+  @Bean
+  public PlatformTransactionManager transactionManager() throws IOException {
     return new HibernateTransactionManager(sessionFactory());
   }
 

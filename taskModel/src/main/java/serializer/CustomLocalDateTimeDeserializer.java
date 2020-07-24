@@ -21,9 +21,9 @@ public class CustomLocalDateTimeDeserializer
   }
 
   @Override
-  public LocalDateTime deserialize( JsonParser jsonparser, DeserializationContext context)
+  public LocalDateTime deserialize(JsonParser jsonparser, DeserializationContext context)
       throws IOException {
     String ldtStr = jsonparser.getText();
-    return LocalDateTime.parse( ldtStr , Formats.FORMATTER );
+    return LocalDateTime.parse(ldtStr, Formats.FORMATTER);
   }
 }

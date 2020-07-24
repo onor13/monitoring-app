@@ -18,18 +18,18 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity(name="Application")
+@Entity(name = "Application")
 @Table(name = ApplicationEntity.TABLE_NAME)
 @NamedQueries({
-    @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_ID,
-        query="select a from Application a"
+    @NamedQuery(name = ApplicationEntity.FIND_APPLICATION_BY_ID,
+        query = "select a from Application a"
             + " join fetch a.tasksResults t"
             + " where a.id = :id"),
-    @NamedQuery(name= ApplicationEntity.FIND_APPLICATION_BY_NAME,
-        query="select a from Application a "
+    @NamedQuery(name = ApplicationEntity.FIND_APPLICATION_BY_NAME,
+        query = "select a from Application a "
             + " where a.name = :name"),
-    @NamedQuery(name= ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS,
-        query="select distinct a from Application a"
+    @NamedQuery(name = ApplicationEntity.FIND_ALL_WITH_TASKS_RESULTS,
+        query = "select distinct a from Application a"
             + " join fetch a.tasksResults t "),
 })
 public class ApplicationEntity
@@ -48,14 +48,14 @@ public class ApplicationEntity
   @NotNull
   private LocalDateTime startTime;
 
-  @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval=true)
+  @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<TaskResultEntity> tasksResults = new HashSet<>();
 
   public String getName() {
     return name;
   }
 
-  public void setName( String aName ) {
+  public void setName(String aName) {
     name = aName;
   }
 
@@ -65,20 +65,20 @@ public class ApplicationEntity
 
   @Override
   public Set<TaskResult> getTasksResults() {
-    return tasksResults.stream().collect( Collectors.toSet() );
+    return tasksResults.stream().collect(Collectors.toSet());
   }
 
-  public void setStartTime( LocalDateTime aStartDateTime ) {
+  public void setStartTime(LocalDateTime aStartDateTime) {
     startTime = aStartDateTime;
   }
 
-  public void addTaskResult( TaskResultEntity taskResult ){
-    tasksResults.add( taskResult );
+  public void addTaskResult(TaskResultEntity taskResult) {
+    tasksResults.add(taskResult);
   }
 
   public String toString() {
     return String.format("Application - id: %d, name: %s, startDateTime: %s",
-        id, name, startTime == null ? "<unknown>" : Formats.FORMATTER.format( startTime ) );
+        id, name, startTime == null ? "<unknown>" : Formats.FORMATTER.format(startTime));
   }
 
   @Override
@@ -90,16 +90,16 @@ public class ApplicationEntity
     if (!super.equals(o))
       return false;
     ApplicationEntity app = (ApplicationEntity) o;
-    if ( ! Objects.equals( name, app.name ) )
+    if (!Objects.equals(name, app.name))
       return false;
-    return Objects.equals( startTime, app.startTime );
+    return Objects.equals(startTime, app.startTime);
   }
 
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + (name == null ? 0 : name.hashCode() );
-    result = 31 * result + (startTime == null ? 0 : startTime.hashCode()) ;
+    result = 31 * result + (name == null ? 0 : name.hashCode());
+    result = 31 * result + (startTime == null ? 0 : startTime.hashCode());
     return result;
   }
 

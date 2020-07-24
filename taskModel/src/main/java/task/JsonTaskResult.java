@@ -13,7 +13,7 @@ import serializer.CustomLocalDateTimeDeserializer;
 import serializer.CustomLocalDateTimeSerializer;
 
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.IntSequenceGenerator.class,property="@id",
+    generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id",
     scope = JsonTaskResult.class)
 public class JsonTaskResult implements TaskResult {
 
@@ -23,11 +23,12 @@ public class JsonTaskResult implements TaskResult {
   private String taskGroup;
   private TaskResultType taskResultType;
   private LocalDateTime taskStartTime;
-  private Duration      taskExecutionDuration;
+  private Duration taskExecutionDuration;
 
-  public JsonTaskResult(){ }
+  public JsonTaskResult() {
+  }
 
-  public JsonTaskResult( Application app ){
+  public JsonTaskResult(Application app) {
     applicationName = app.getName();
     applicationStartTime = app.getStartTime();
   }
@@ -44,27 +45,30 @@ public class JsonTaskResult implements TaskResult {
     return applicationStartTime;
   }
 
-  @Override public String getTaskName() {
+  @Override
+  public String getTaskName() {
     return taskName;
   }
 
-  public void setTaskName( String taskName ) {
+  public void setTaskName(String taskName) {
     this.taskName = taskName;
   }
 
-  @Override public String getTaskGroup() {
+  @Override
+  public String getTaskGroup() {
     return taskGroup;
   }
 
-  public void setTaskGroup( String taskGroup ) {
+  public void setTaskGroup(String taskGroup) {
     this.taskGroup = taskGroup;
   }
 
-  @Override public TaskResultType getTaskResultType() {
+  @Override
+  public TaskResultType getTaskResultType() {
     return taskResultType;
   }
 
-  public void setTaskResultType( TaskResultType taskResultType ) {
+  public void setTaskResultType(TaskResultType taskResultType) {
     this.taskResultType = taskResultType;
   }
 
@@ -75,7 +79,7 @@ public class JsonTaskResult implements TaskResult {
     return taskStartTime;
   }
 
-  public void setTaskStartTime( LocalDateTime startTime ) {
+  public void setTaskStartTime(LocalDateTime startTime) {
     this.taskStartTime = startTime;
   }
 
@@ -87,7 +91,7 @@ public class JsonTaskResult implements TaskResult {
     return taskExecutionDuration;
   }
 
-  public void setTaskExecutionDuration( Duration aExecutionDuration ) {
+  public void setTaskExecutionDuration(Duration aExecutionDuration) {
     taskExecutionDuration = aExecutionDuration;
   }
 }

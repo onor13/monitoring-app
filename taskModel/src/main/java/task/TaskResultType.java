@@ -1,6 +1,6 @@
 package task;
 
-public enum TaskResultType{
+public enum TaskResultType {
   SUCCESS,
   ERROR,
   WARNING

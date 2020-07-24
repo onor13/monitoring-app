@@ -21,7 +21,7 @@ import java.io.IOException;
 public class MonitoringFXApp
     extends Application {
 
-  static Logger log = LoggerFactory.getLogger( MonitoringFXApp.class );
+  static Logger log = LoggerFactory.getLogger(MonitoringFXApp.class);
 
   private ConfigurableApplicationContext applicationContext;
 
@@ -29,24 +29,24 @@ public class MonitoringFXApp
   public void init() throws IOException {
     String javaVersion = System.getProperty("java.version");
     String javafxVersion = System.getProperty("javafx.version");
-    log.debug( "Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+    log.debug("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
 
-  ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
-      ac.registerBean( Application.class, () -> MonitoringFXApp.this );
-      ac.registerBean( Parameters.class, () -> getParameters() );
-      ac.registerBean( HostServices.class, () -> getHostServices() );
+    ApplicationContextInitializer<GenericApplicationContext> initializer = ac -> {
+      ac.registerBean(Application.class, () -> MonitoringFXApp.this);
+      ac.registerBean(Parameters.class, () -> getParameters());
+      ac.registerBean(HostServices.class, () -> getHostServices());
     };
 
     SpringApplicationBuilder applicationBuilder =
-        new SpringApplicationBuilder( MonitoringApplication.class).initializers( initializer );
+        new SpringApplicationBuilder(MonitoringApplication.class).initializers(initializer);
     String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 
-    this.applicationContext = applicationBuilder.run( args );
+    this.applicationContext = applicationBuilder.run(args);
   }
 
   @Override
-  public void start( Stage primaryStage ) throws Exception {
-    this.applicationContext.publishEvent( new StageReadyEvent( primaryStage ) );
+  public void start(Stage primaryStage) throws Exception {
+    this.applicationContext.publishEvent(new StageReadyEvent(primaryStage));
   }
 
   @Override
@@ -56,13 +56,13 @@ public class MonitoringFXApp
   }
 
 
-  class StageReadyEvent extends ApplicationEvent{
-    public Stage getStage(){
-      return Stage.class.cast( getSource() );
+  class StageReadyEvent extends ApplicationEvent {
+    public Stage getStage() {
+      return Stage.class.cast(getSource());
     }
 
-    public StageReadyEvent( Stage source ){
-      super( source );
+    public StageReadyEvent(Stage source) {
+      super(source);
     }
   }
 }

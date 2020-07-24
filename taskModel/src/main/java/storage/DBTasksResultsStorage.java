@@ -30,21 +30,21 @@ public class DBTasksResultsStorage implements TasksResultsStorage {
   }
 
   @Override
-  public void addTaskResult( @NonNull TaskResult taskResult ) {
+  public void addTaskResult(@NonNull TaskResult taskResult) {
     //TODO Cache result to avoid this query
-    ApplicationEntity appEntity = appDao.findByName( taskResult.getApplicationName() );
-    if ( appEntity == null ){
+    ApplicationEntity appEntity = appDao.findByName(taskResult.getApplicationName());
+    if (appEntity == null) {
       appEntity = new ApplicationEntity();
-      appEntity.setName( taskResult.getApplicationName() );
-      appEntity.setStartTime( taskResult.getTaskStartTime() );
-      appDao.save( appEntity );
+      appEntity.setName(taskResult.getApplicationName());
+      appEntity.setStartTime(taskResult.getTaskStartTime());
+      appDao.save(appEntity);
     }
-    TaskResultEntity tre = TaskResultEntityFactory.createInstanceFrom( appEntity, taskResult );
-    taskResultDao.save( tre );
+    TaskResultEntity tre = TaskResultEntityFactory.createInstanceFrom(appEntity, taskResult);
+    taskResultDao.save(tre);
   }
 
   @Override
-  public boolean contains( TaskResult taskResult ) {
+  public boolean contains(TaskResult taskResult) {
     throw new UnsupportedOperationException();
   }
 
@@ -54,14 +54,14 @@ public class DBTasksResultsStorage implements TasksResultsStorage {
   }
 
   @Override
-  public void removeOlderThan( LocalDateTime instant ) {
+  public void removeOlderThan(LocalDateTime instant) {
     throw new UnsupportedOperationException();
   }
 
   @Override
   public Iterator<TaskResult> iterator() {
     List<TaskResult> result = new ArrayList<>();
-    appDao.findAllWithTasksResults().forEach( ae -> result.addAll( ae.getTasksResults() ) );
+    appDao.findAllWithTasksResults().forEach(ae -> result.addAll(ae.getTasksResults()));
     return result.iterator();
   }
 }

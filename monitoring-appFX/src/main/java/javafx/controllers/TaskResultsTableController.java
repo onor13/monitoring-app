@@ -19,42 +19,47 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 @Component
 public class TaskResultsTableController implements Initializable {
 
-  @FXML TableView<TaskResultModel> tableView;
-  @FXML TableColumn applicationId;
-  @FXML TableColumn taskName;
-  @FXML TableColumn taskGroup;
-  @FXML TableColumn taskResult;
-  @FXML TableColumn taskStartTime;
-  @FXML TableColumn taskExecutionDuration;
+  @FXML
+  TableView<TaskResultModel> tableView;
+  @FXML
+  TableColumn applicationId;
+  @FXML
+  TableColumn taskName;
+  @FXML
+  TableColumn taskGroup;
+  @FXML
+  TableColumn taskResult;
+  @FXML
+  TableColumn taskStartTime;
+  @FXML
+  TableColumn taskExecutionDuration;
   ObservableList<TaskResultModel> tasksResults = FXCollections.observableArrayList();
 
-  ReadWriteLock lock      = new ReentrantReadWriteLock();
-  Lock          writeLock = lock.writeLock();
+  ReadWriteLock lock = new ReentrantReadWriteLock();
+  Lock writeLock = lock.writeLock();
 
   @Override
-  public void initialize( URL location, ResourceBundle resources ) {
-    tableView.setItems( tasksResults );
+  public void initialize(URL location, ResourceBundle resources) {
+    tableView.setItems(tasksResults);
   }
 
-  public void addTaskResult( TaskResult taskResult ){
-    try{
+  public void addTaskResult(TaskResult taskResult) {
+    try {
       writeLock.lock();
-      if ( ! tasksResults.contains( taskResult ) ){
-        tasksResults.add( new TaskResultModel( taskResult ) );
+      if (!tasksResults.contains(taskResult)) {
+        tasksResults.add(new TaskResultModel(taskResult));
       }
-    }
-    finally {
+    } finally {
       writeLock.unlock();
     }
   }
 
-  public void reloadFrom( Iterable<TaskResult> newTasksResults ){
-    try{
+  public void reloadFrom(Iterable<TaskResult> newTasksResults) {
+    try {
       writeLock.lock();
       this.tasksResults.clear();
-      newTasksResults.forEach( tr -> tasksResults.add( new TaskResultModel( tr ) ) );
-    }
-    finally {
+      newTasksResults.forEach(tr -> tasksResults.add(new TaskResultModel(tr)));
+    } finally {
       writeLock.unlock();
     }
   }

@@ -26,8 +26,8 @@ public class QueueLogProducer implements LogProducer {
   public QueueLogProducer(){}
 
   @Override
-  public void sendTaskResult( TaskResult taskResult ) {
+  public void sendTaskResult(TaskResult taskResult) {
     logger.atFine().log("Sending message...");
-    rabbitTemplate.convertAndSend( exchange, routingkey, taskResult );
+    rabbitTemplate.convertAndSend(exchange, routingkey, taskResult);
   }
 }

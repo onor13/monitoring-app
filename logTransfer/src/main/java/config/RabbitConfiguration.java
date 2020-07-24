@@ -14,7 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
 @org.springframework.context.annotation.Configuration
-@ComponentScan( basePackages = { "producers" })
+@ComponentScan(basePackages = {"producers"})
 @PropertySources({
     @PropertySource("classpath:application.properties"),
     @PropertySource("classpath:log4j.properties")
@@ -35,7 +35,7 @@ public class RabbitConfiguration {
   private String connectionFactoryAddress;
 
   @Bean Queue queue() {
-    return new Queue( queueName, false);
+    return new Queue(queueName, false);
   }
 
   @Bean
@@ -46,16 +46,16 @@ public class RabbitConfiguration {
   @Bean
   public ConnectionFactory connectionFactory() {
     CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-    connectionFactory.setAddresses( connectionFactoryAddress );
+    connectionFactory.setAddresses(connectionFactoryAddress);
     //connectionFactory.setUsername(username);
     // connectionFactory.setPassword(password);
     return connectionFactory;
   }
 
-  @Bean RabbitTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
-    RabbitTemplate template = new RabbitTemplate( connectionFactory );
-    template.setRoutingKey( routingkey );
-    template.setMessageConverter( jsonMessageConverter() );
+  @Bean RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    RabbitTemplate template = new RabbitTemplate(connectionFactory);
+    template.setRoutingKey(routingkey);
+    template.setMessageConverter(jsonMessageConverter());
     return template;
   }
 }

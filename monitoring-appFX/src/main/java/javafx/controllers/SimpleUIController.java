@@ -17,12 +17,12 @@ public class SimpleUIController {
   @FXML
   public Button button;
 
-  SimpleUIController( HostServices hostServices ){
+  SimpleUIController(HostServices hostServices){
     this.hostServices = hostServices;
   }
 
   @FXML
   public void initialize(){
-    this.button.setOnAction( actionEvent -> this.label.setText( this.hostServices.getDocumentBase() ) );
+    this.button.setOnAction(actionEvent -> this.label.setText(this.hostServices.getDocumentBase()));
   }
 }

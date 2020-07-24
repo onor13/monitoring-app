@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @JsonIdentityInfo(
-    generator= ObjectIdGenerators.IntSequenceGenerator.class,property="@id",
+    generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id",
     scope = JsonApplication.class)
 public class JsonApplication implements Application {
 
@@ -19,9 +19,10 @@ public class JsonApplication implements Application {
   private LocalDateTime startTime;
   private Set<TaskResult> tasksResults;
 
-  public JsonApplication(){ }
+  public JsonApplication() {
+  }
 
-  public JsonApplication( String name, LocalDateTime startTime ){
+  public JsonApplication(String name, LocalDateTime startTime) {
     this.name = name;
     this.startTime = startTime;
   }
@@ -31,7 +32,7 @@ public class JsonApplication implements Application {
     return name;
   }
 
-  public void setName( String aName ) {
+  public void setName(String aName) {
     name = aName;
   }
 
@@ -41,7 +42,7 @@ public class JsonApplication implements Application {
     return startTime;
   }
 
-  public void setStartTime( LocalDateTime aStartTime ) {
+  public void setStartTime(LocalDateTime aStartTime) {
     startTime = aStartTime;
   }
 
@@ -50,7 +51,7 @@ public class JsonApplication implements Application {
     return tasksResults;
   }
 
-  public void setTasksResults( Set<TaskResult> aTasksResults ) {
+  public void setTasksResults(Set<TaskResult> aTasksResults) {
     tasksResults = aTasksResults;
   }
 }

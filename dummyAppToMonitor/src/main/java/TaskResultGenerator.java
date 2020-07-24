@@ -10,18 +10,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TaskResultGenerator {
 
   final AtomicInteger counter = new AtomicInteger();
-  final Application   app;
-  final String        group = "Medical";
+  final Application app;
+  final String group = "Medical";
 
-  public enum Categories{
+  public enum Categories {
     Fracture,
     Flu,
     Cancer,
     Physical,
     Psychological,
     Unknown;
+
     public static Categories fromInteger(int nb) {
-      switch( nb ) {
+      switch (nb) {
         case 0:
           return Fracture;
         case 1:
@@ -37,28 +38,28 @@ public class TaskResultGenerator {
     }
   }
 
-  public TaskResultGenerator( Application application ){
+  public TaskResultGenerator(Application application) {
     this.app = application;
   }
 
-  public JsonTaskResult generateInstance(){
-    JsonTaskResult tr = new JsonTaskResult( app );
-    String taskName = Categories.fromInteger( getRandomBetweenRange( 0, Categories.values().length ) ).name()
+  public JsonTaskResult generateInstance() {
+    JsonTaskResult tr = new JsonTaskResult(app);
+    String taskName = Categories.fromInteger(getRandomBetweenRange(0, Categories.values().length)).name()
         + counter.incrementAndGet();
-    tr.setTaskName( taskName );
-    tr.setTaskGroup( group );
-    tr.setTaskResultType( getResultTypeFromInt( getRandomBetweenRange( 0, 10 ) ) );
-    tr.setTaskStartTime( LocalDateTime.now() );
-    tr.setTaskExecutionDuration( Duration.ofMinutes( getRandomBetweenRange( 1, 60 ) ) );
+    tr.setTaskName(taskName);
+    tr.setTaskGroup(group);
+    tr.setTaskResultType(getResultTypeFromInt(getRandomBetweenRange(0, 10)));
+    tr.setTaskStartTime(LocalDateTime.now());
+    tr.setTaskExecutionDuration(Duration.ofMinutes(getRandomBetweenRange(1, 60)));
     return tr;
   }
 
-  public static int getRandomBetweenRange(int min, int max){
-    return (int) ( ( Math.random() * ( ( max-min ) + 1 ) ) + min);
+  public static int getRandomBetweenRange(int min, int max) {
+    return (int) ((Math.random() * ((max - min) + 1)) + min);
   }
 
-  public TaskResultType getResultTypeFromInt( int nb ){
-    switch( nb ) {
+  public TaskResultType getResultTypeFromInt(int nb) {
+    switch (nb) {
       case 0:
         return TaskResultType.ERROR;
       case 1:

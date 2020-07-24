@@ -16,15 +16,15 @@ public class TaskResultModel {
 
   //TODO use converters instead for enum's and date related objects
   private final DateTimeFormatter DATE_TIME_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone( ZoneId.systemDefault());
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
 
-  public TaskResultModel( TaskResult taskResult ){
-    setApplicationId( taskResult.getApplicationName() );
-    setName( taskResult.getTaskName() );
-    setGroup( taskResult.getTaskGroup() );
-    setResult( taskResult.getTaskResultType().name() );
-    setStartTime( DATE_TIME_FORMATTER.format( taskResult.getTaskStartTime() ) );
-    setExecutionDuration( taskResult.getTaskExecutionDuration().toString() );
+  public TaskResultModel(TaskResult taskResult) {
+    setApplicationId(taskResult.getApplicationName());
+    setName(taskResult.getTaskName());
+    setGroup(taskResult.getTaskGroup());
+    setResult(taskResult.getTaskResultType().name());
+    setStartTime(DATE_TIME_FORMATTER.format(taskResult.getTaskStartTime()));
+    setExecutionDuration(taskResult.getTaskExecutionDuration().toString());
   }
 
   public String getApplicationId() {
@@ -35,8 +35,8 @@ public class TaskResultModel {
     return applicationId;
   }
 
-  public void setApplicationId( String aApplicationId ) {
-    this.applicationId.set( aApplicationId );
+  public void setApplicationId(String aApplicationId) {
+    this.applicationId.set(aApplicationId);
   }
 
   public String getName() {
@@ -47,8 +47,8 @@ public class TaskResultModel {
     return name;
   }
 
-  public void setName( String aName ) {
-    this.name.set( aName );
+  public void setName(String aName) {
+    this.name.set(aName);
   }
 
   public String getGroup() {
@@ -59,8 +59,8 @@ public class TaskResultModel {
     return group;
   }
 
-  public void setGroup( String aGroup ) {
-    this.group.set( aGroup );
+  public void setGroup(String aGroup) {
+    this.group.set(aGroup);
   }
 
   public String getResult() {
@@ -71,8 +71,8 @@ public class TaskResultModel {
     return result;
   }
 
-  public void setResult( String aResult ) {
-    this.result.set( aResult );
+  public void setResult(String aResult) {
+    this.result.set(aResult);
   }
 
   public String getStartTime() {
@@ -83,8 +83,8 @@ public class TaskResultModel {
     return startTime;
   }
 
-  public void setStartTime( String aStartTime ) {
-    this.startTime.set( aStartTime );
+  public void setStartTime(String aStartTime) {
+    this.startTime.set(aStartTime);
   }
 
   public String getExecutionDuration() {
@@ -95,7 +95,7 @@ public class TaskResultModel {
     return executionDuration;
   }
 
-  public void setExecutionDuration( String aExecutionDuration ) {
-    this.executionDuration.set( aExecutionDuration );
+  public void setExecutionDuration(String aExecutionDuration) {
+    this.executionDuration.set(aExecutionDuration);
   }
 }

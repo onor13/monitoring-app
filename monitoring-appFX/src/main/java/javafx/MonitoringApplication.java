@@ -29,11 +29,11 @@ import task.config.DBConfig;
 import java.util.HashMap;
 import java.util.Map;
 
-@ComponentScan( basePackages = {
+@ComponentScan(basePackages = {
     "javafx",
     "queue",
     "task"},
-basePackageClasses = DBConfig.class)
+    basePackageClasses = DBConfig.class)
 @SpringBootApplication
 @EnableScheduling
 public class MonitoringApplication  {
@@ -48,7 +48,7 @@ public class MonitoringApplication  {
   private String routingkey;
 
   @Bean Queue queue() {
-    return new Queue( queueName, false);
+    return new Queue(queueName, false);
   }
 
 
@@ -58,22 +58,23 @@ public class MonitoringApplication  {
   @Bean
   public ConnectionFactory connectionFactory() {
     CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-    connectionFactory.setAddresses( connectionFactoryAddress );
+    connectionFactory.setAddresses(connectionFactoryAddress);
     //connectionFactory.setUsername(username);
     // connectionFactory.setPassword(password);
     return connectionFactory;
   }
 
-  @Bean RabbitTemplate rabbitTemplate( ConnectionFactory connectionFactory ) {
-    RabbitTemplate template = new RabbitTemplate( connectionFactory );
-    template.setRoutingKey( routingkey );
-    template.setMessageConverter( jsonMessageConverter() );
+  @Bean
+  RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    RabbitTemplate template = new RabbitTemplate(connectionFactory);
+    template.setRoutingKey(routingkey);
+    template.setMessageConverter(jsonMessageConverter());
     //TODO use anonymous Queues instead, so on start we do not receive old messages
     return template;
   }
 
   @Bean
-  public MessageConverter jsonMessageConverter(){
+  public MessageConverter jsonMessageConverter() {
     Jackson2JsonMessageConverter jsonMessageConverter = new Jackson2JsonMessageConverter();
     jsonMessageConverter.setClassMapper(classMapper());
     return jsonMessageConverter;
@@ -84,34 +85,37 @@ public class MonitoringApplication  {
     DefaultClassMapper classMapper = new DefaultClassMapper();
     Map<String, Class<?>> idClassMapping = new HashMap<>();
     idClassMapping.put("task.JsonTaskResult", JsonTaskResult.class);
-    classMapper.setIdClassMapping( idClassMapping );
+    classMapper.setIdClassMapping(idClassMapping);
     return classMapper;
   }
 
   @Bean
   @Primary
-  public ObjectMapper objectMapper( Jackson2ObjectMapperBuilder builder) {
+  public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
     ObjectMapper objectMapper = builder.build();
-    objectMapper.registerModule( new JavaTimeModule() );
-    objectMapper.configure( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     return objectMapper;
   }
 
-  @Bean TopicExchange exchange() {
-    return new TopicExchange( exchange );
+  @Bean
+  TopicExchange exchange() {
+    return new TopicExchange(exchange);
   }
 
-  @Bean Binding binding(Queue queue, TopicExchange exchange) {
-    return BindingBuilder.bind(queue).to(exchange).with( routingkey );
+  @Bean
+  Binding binding(Queue queue, TopicExchange exchange) {
+    return BindingBuilder.bind(queue).to(exchange).with(routingkey);
   }
 
-  @Bean TasksResultsStorage tasksResultsStorage(){
+  @Bean
+  TasksResultsStorage tasksResultsStorage() {
     TasksResultsStorage storage = new DBTasksResultsStorage();
     return storage;
   }
 
   public static void main(String[] args) {
-    Application.launch( MonitoringFXApp.class, args);
+    Application.launch(MonitoringFXApp.class, args);
   }
 
 }
