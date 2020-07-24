@@ -9,15 +9,16 @@ import serializer.CustomLocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class,property="@id", scope = JsonApplication.class)
+@JsonIdentityInfo(
+    generator= ObjectIdGenerators.IntSequenceGenerator.class,property="@id",
+    scope = JsonApplication.class)
 public class JsonApplication implements Application {
 
   private String name;
   private LocalDateTime startTime;
   private Set<TaskResult> tasksResults;
 
-  public JsonApplication(){
-  }
+  public JsonApplication(){ }
 
   public JsonApplication( String name, LocalDateTime startTime ){
     this.name = name;

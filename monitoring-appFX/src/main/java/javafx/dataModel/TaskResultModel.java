@@ -15,7 +15,8 @@ public class TaskResultModel {
   private final SimpleStringProperty executionDuration = new SimpleStringProperty("");
 
   //TODO use converters instead for enum's and date related objects
-  private final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone( ZoneId.systemDefault());
+  private final DateTimeFormatter DATE_TIME_FORMATTER =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone( ZoneId.systemDefault());
 
   public TaskResultModel( TaskResult taskResult ){
     setApplicationId( taskResult.getApplicationName() );

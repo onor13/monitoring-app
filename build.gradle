@@ -14,6 +14,7 @@ allprojects {
 subprojects {
     version = '1.0'
 	apply plugin: 'java'
+	apply plugin: 'checkstyle'
 	
 	compileJava.options.encoding = "UTF-8"
 	compileTestJava.options.encoding = "UTF-8"
@@ -21,6 +22,15 @@ subprojects {
 	java {
 		sourceCompatibility = JavaVersion.VERSION_14
 		targetCompatibility = JavaVersion.VERSION_14
+	}
+
+	checkstyle {
+		toolVersion = "8.30"
+		// checkstyle.xml copy from:
+		// https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.6/src/main/resources/google_checks.xml
+		// the version should be as same as plugin version
+		configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+		checkstyleTest.enabled = false
 	}
 	
 	ext{

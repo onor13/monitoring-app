@@ -30,8 +30,10 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   final public static String PARAM_APP_ID = "appId";
   final public static String PARAM_TASK_NAME = "taskName";
   final public static String PARAM_TASK_START_TIME = "taskStartTime";
-  public static final String FIND_TASK_RESULT_BY_ID                               = "TaskResult.findById";
-  public static final String FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME = "TaskResult.findByAppIdTaskNameTaskStartTime";
+  public static final String FIND_TASK_RESULT_BY_ID =
+      "TaskResult.findById";
+  public static final String FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME =
+      "TaskResult.findByAppIdTaskNameTaskStartTime";
 
   @ManyToOne
   @JoinColumn(name = "APPLICATION_ID")
@@ -112,7 +114,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
   @Override
   public String toString() {
-    return String.format("TaskResult - id: %d, Application id: %d, Name: %s, Group: %s, Start DateTime: %s, Duration: %d",
+    return String.format(
+        "TaskResult - id: %d, Application id: %d, Name: %s, Group: %s, Start DateTime: %s, Duration: %d",
         id,
         (application != null && application.getId() != null) ? application.getId() :  0,
         taskName,
@@ -138,7 +141,9 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 13 * result + ( taskName == null ? 0 : taskName.hashCode() ) + ( (application == null || application.id == null) ? 0 : application.id.hashCode()) ;
+    result = 13 * result
+        + ( taskName == null ? 0 : taskName.hashCode() )
+        + ( (application == null || application.id == null) ? 0 : application.id.hashCode()) ;
     result = 13 * result + (startTime == null ? 0 : startTime.hashCode() );
     return result;
   }

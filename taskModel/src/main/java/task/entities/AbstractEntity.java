@@ -15,9 +15,11 @@ public abstract class AbstractEntity implements Serializable {
   private int version;
 
   /**
-   * Returns the entity identifier. This identifier is unique per entity. It is used by persistence frameworks used in a project,
+   * Returns the entity identifier. This identifier is unique per entity.
+   * It is used by persistence frameworks used in a project,
    * and although is public, it should not be used by application code.
-   * This identifier is mapped by ORM (Object Relational Mapper) to the database primary key of the Person record to which
+   * This identifier is mapped by ORM (Object Relational Mapper)
+   * to the database primary key of the Person record to which
    * the entity instance is mapped.
    *
    * @return the unique entity identifier

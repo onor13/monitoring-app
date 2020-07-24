@@ -38,7 +38,10 @@ public class TaskResultDaoImpl implements TaskResultDao {
   }
 
   @Override public TaskResultEntity find( Long appId, String taskName, LocalDateTime startTaskTime ) {
-    logger.atFine().log( "find taskResult by appId %d, taskName %s, taskStartTime %s", appId, taskName, lazy(()-> Formats.FORMATTER.format( startTaskTime ) ) );
+    logger.atFine().log( "find taskResult by appId %d, taskName %s, taskStartTime %s",
+        appId,
+        taskName,
+        lazy(()-> Formats.FORMATTER.format( startTaskTime ) ) );
     return  (TaskResultEntity) sessionFactory.getCurrentSession().
         getNamedQuery( TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME).
         setParameter(TaskResultEntity.PARAM_APP_ID, appId).

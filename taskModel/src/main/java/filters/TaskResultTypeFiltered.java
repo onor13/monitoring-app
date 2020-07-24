@@ -10,7 +10,9 @@ public class TaskResultTypeFiltered
   {
 
   public TaskResultTypeFiltered( TaskResultType taskResultType, Iterable<TaskResult> iterable ) {
-    super( new IterableOf<>( () -> new org.cactoos.iterator.Filtered<>( input -> input.getTaskResultType() == taskResultType, iterable.iterator() ) )
+    super( new IterableOf<>(
+        () -> new org.cactoos.iterator.Filtered<>(
+            input -> input.getTaskResultType() == taskResultType, iterable.iterator() ) )
     );
   }
 }

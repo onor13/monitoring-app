@@ -31,7 +31,8 @@ public class DBTasksResultsStorage implements TasksResultsStorage {
 
   @Override
   public void addTaskResult( @NonNull TaskResult taskResult ) {
-    ApplicationEntity appEntity = appDao.findByName( taskResult.getApplicationName() ); //TODO Cache result to avoid this query
+    //TODO Cache result to avoid this query
+    ApplicationEntity appEntity = appDao.findByName( taskResult.getApplicationName() );
     if ( appEntity == null ){
       appEntity = new ApplicationEntity();
       appEntity.setName( taskResult.getApplicationName() );

@@ -39,7 +39,8 @@ public class TaskDataDistributor {
   @Scheduled(fixedDelay = 1000)
   public void scheduleUpdate(){
     logger.atFine().log( "scheduling update " );
-    //List<TaskResult> l_taskResults = StreamSupport.stream(dataConnector.pollNewData().spliterator(), false).collect( Collectors.toList() );
+    //List<TaskResult> l_taskResults =
+    // StreamSupport.stream(dataConnector.pollNewData().spliterator(), false).collect( Collectors.toList() );
     //TODO use batch to add multiple tasks results at the same time to avoid creating extra queries
     Queue<TaskResult> tasksResults = dataConnector.pollNewData();
     while ( ! tasksResults.isEmpty() ){

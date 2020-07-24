@@ -40,7 +40,9 @@ public class TaskResultGenerator {
 
   public JsonTaskResult generateInstance(){
     JsonTaskResult tr = new JsonTaskResult( app );
-    tr.setTaskName( Categories.fromInteger( getRandomBetweenRange( 0, Categories.values().length ) ).name() + counter.incrementAndGet() );
+    String taskName = Categories.fromInteger( getRandomBetweenRange( 0, Categories.values().length ) ).name()
+        + counter.incrementAndGet();
+    tr.setTaskName( taskName );
     tr.setTaskGroup( group );
     tr.setTaskResultType( getResultTypeFromInt( getRandomBetweenRange( 0, 10 ) ) );
     tr.setTaskStartTime( LocalDateTime.now() );

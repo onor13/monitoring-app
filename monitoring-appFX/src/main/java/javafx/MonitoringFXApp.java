@@ -37,7 +37,8 @@ public class MonitoringFXApp
       ac.registerBean( HostServices.class, () -> getHostServices() );
     };
 
-    SpringApplicationBuilder applicationBuilder =  new SpringApplicationBuilder( MonitoringApplication.class).initializers( initializer );
+    SpringApplicationBuilder applicationBuilder =
+        new SpringApplicationBuilder( MonitoringApplication.class).initializers( initializer );
     String[] args = getParameters().getRaw().stream().toArray(String[]::new);
 
     this.applicationContext = applicationBuilder.run( args );
