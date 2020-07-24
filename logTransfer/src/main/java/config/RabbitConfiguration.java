@@ -39,7 +39,7 @@ public class RabbitConfiguration {
   }
 
   @Bean
-  public MessageConverter jsonMessageConverter(){
+  public MessageConverter jsonMessageConverter() {
     return new Jackson2JsonMessageConverter();
   }
 

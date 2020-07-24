@@ -14,7 +14,7 @@ public class Runner  {
     ApplicationGenerator appGen = new ApplicationGenerator();
     Application app = appGen.generateInstance();
     TaskResultGenerator generator = new TaskResultGenerator(app);
-    for (int i = 0; i < 5; i++){
+    for (int i = 0; i < 5; i++) {
       JsonTaskResult tr = generator.generateInstance();
       System.out.println("Sending task: " + tr.getTaskName());
       lp.sendTaskResult(tr);

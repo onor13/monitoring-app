@@ -8,7 +8,7 @@ public class ApplicationGenerator {
 
   AtomicInteger counter = new AtomicInteger();
 
-  public Application generateInstance(){
+  public Application generateInstance() {
     Application app = new JsonApplication(
         "doctor" + counter.incrementAndGet(),
         LocalDateTime.now().minus(14, ChronoUnit.MINUTES));
