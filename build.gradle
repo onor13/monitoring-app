@@ -15,6 +15,7 @@ subprojects {
     version = '1.0'
 	apply plugin: 'java'
 	apply plugin: 'checkstyle'
+	apply plugin: 'pmd'
 	
 	compileJava.options.encoding = "UTF-8"
 	compileTestJava.options.encoding = "UTF-8"
@@ -32,15 +33,22 @@ subprojects {
 		configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 		checkstyleTest.enabled = false
 	}
+
+	pmd {
+		consoleOutput = true
+		toolVersion = "6.25.0"
+		rulePriority = 3
+		ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+	}
 	
 	ext{
 		springVersion = '5.2.7.RELEASE'
 		springBootVersion = '2.3.1.RELEASE'
 		springAmqpVersion = '2.2.8.RELEASE'
 		hibernateVersion = '5.4.18.Final'
-
 		hibernateJpaVersion = '1.0.0.Final'
 		fasterXmlJacksonVersion = '2.11.1'
+		jupiterVersion = '5.6.2'
 		floggerVersion = '0.5.1'
 	}
 	

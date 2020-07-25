@@ -31,6 +31,7 @@ import task.TaskResult;
         query = "select distinct a from Application a"
             + " join fetch a.tasksResults t "),
 })
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class ApplicationEntity
     extends AbstractEntity implements Application {
 
@@ -38,6 +39,7 @@ public class ApplicationEntity
   public static final String FIND_APPLICATION_BY_ID = "Application.findById";
   public static final String FIND_APPLICATION_BY_NAME = "Application.findByName";
   public static final String FIND_ALL_WITH_TASKS_RESULTS = "Application.findAllWithTasksResults";
+  private static final long serialVersionUID = -5884907756474896718L;
 
   @Column(name = "NAME")
   @NotNull
@@ -50,6 +52,7 @@ public class ApplicationEntity
   @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<TaskResultEntity> tasksResults = new HashSet<>();
 
+  @Override
   public String getName() {
     return name;
   }
@@ -58,6 +61,7 @@ public class ApplicationEntity
     this.name = name;
   }
 
+  @Override
   public LocalDateTime getStartTime() {
     return startTime;
   }
@@ -75,6 +79,7 @@ public class ApplicationEntity
     tasksResults.add(taskResult);
   }
 
+  @Override
   public String toString() {
     return String.format("Application - id: %d, name: %s, startDateTime: %s",
         id, name, startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime));

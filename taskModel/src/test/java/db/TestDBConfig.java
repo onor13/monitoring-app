@@ -26,6 +26,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db/jdbc.properties")
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TestDBConfig {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();

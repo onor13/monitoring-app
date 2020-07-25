@@ -14,6 +14,7 @@ import task.TaskDataDistributor;
 import task.TaskResult;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class MainController
     implements Initializable {
 

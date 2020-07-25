@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+@SuppressWarnings("PMD")
 public class FakeApplication implements Application {
 
   private LocalDateTime startTime = LocalDateTime.now();

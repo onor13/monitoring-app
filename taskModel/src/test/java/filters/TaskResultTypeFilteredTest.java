@@ -1,42 +1,43 @@
 package filters;
 
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
 import mock.MockFakeTaskResult;
 import mock.MockTasksResultsStorage;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import storage.TasksResultsStorage;
 import task.TaskResult;
 import task.TaskResultType;
-import filters.TaskResultTypeFiltered;
-import storage.TasksResultsStorage;
-
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class TaskResultTypeFilteredTest {
-  @Test
-  public void testResultTypeFiltering(){
-    testResultTypeFiltering( TaskResultType.SUCCESS, TaskResultType.WARNING );
-    testResultTypeFiltering( TaskResultType.ERROR, TaskResultType.WARNING );
-  }
 
-  private void testResultTypeFiltering( TaskResultType correctResultType, TaskResultType incorrectResultType ){
+  @ParameterizedTest
+  @EnumSource(value = TaskResultType.class, names = {"SUCCESS, ERROR"})
+  public void testResultTypeFiltering(TaskResultType resultType){
     AtomicLong taskResultSequenceNumber = new AtomicLong();
     TasksResultsStorage tasksResultsStorage = new MockTasksResultsStorage();
-    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), correctResultType ) );
-    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), correctResultType ) );
-    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), incorrectResultType ) );
-    tasksResultsStorage.addTaskResult( new MockFakeTaskResult( taskResultSequenceNumber.getAndIncrement(), incorrectResultType ) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult(taskResultSequenceNumber.getAndIncrement(), resultType) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult(taskResultSequenceNumber.getAndIncrement(), resultType) );
+    TaskResultType incorrectResultType = getOpposite(resultType);
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult(taskResultSequenceNumber.getAndIncrement(), incorrectResultType) );
+    tasksResultsStorage.addTaskResult( new MockFakeTaskResult(taskResultSequenceNumber.getAndIncrement(), incorrectResultType) );
     int expectedFilteredSize = 2;
 
-    Iterable<TaskResult> filteredTasksResults = new TaskResultTypeFiltered( correctResultType, tasksResultsStorage);
+    Iterable<TaskResult> filteredTasksResults = new TaskResultTypeFiltered( resultType, tasksResultsStorage);
     Iterator<TaskResult> iterator = filteredTasksResults.iterator();
 
     int counter = 0;
-    while ( iterator.hasNext() ){
+    while (iterator.hasNext()){
       ++counter;
       TaskResult taskResult = iterator.next();
-      Assert.assertTrue( "test taskName", taskResult.getTaskResultType() == correctResultType );
+      Assert.assertTrue( "test taskName", taskResult.getTaskResultType() == resultType );
     }
     Assert.assertEquals( "taskName filtered size", expectedFilteredSize, counter );
+  }
+
+  private TaskResultType getOpposite(TaskResultType taskResultType){
+    return taskResultType == TaskResultType.SUCCESS ? TaskResultType.ERROR : TaskResultType.SUCCESS;
   }
 }

@@ -38,13 +38,13 @@ import task.config.DbConfig;
 public class MonitoringApplication  {
 
   @Value("${jsa.rabbitmq.queue}")
-  String queueName;
+  private transient String queueName;
 
   @Value("${jsa.rabbitmq.exchange}")
-  private String exchange;
+  private transient String rabbitExchange;
 
   @Value("${jsa.rabbitmq.routingKey}")
-  private String routingkey;
+  private transient String routingkey;
 
   @Bean Queue queue() {
     return new Queue(queueName, false);
@@ -52,7 +52,7 @@ public class MonitoringApplication  {
 
 
   @Value("${jsa.rabbitmq.connectionFactory.address}")
-  private String connectionFactoryAddress;
+  private transient String connectionFactoryAddress;
 
   @Bean
   public ConnectionFactory connectionFactory() {
@@ -97,7 +97,7 @@ public class MonitoringApplication  {
 
   @Bean
   TopicExchange exchange() {
-    return new TopicExchange(exchange);
+    return new TopicExchange(rabbitExchange);
   }
 
   @Bean

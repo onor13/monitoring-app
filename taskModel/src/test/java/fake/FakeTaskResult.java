@@ -8,6 +8,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@SuppressWarnings("PMD")
 public class FakeTaskResult
     implements TaskResult {
   private String         taskName;
@@ -29,7 +30,6 @@ public class FakeTaskResult
     this.taskStartTime = startExecutionTime;
     this.taskExecutionDuration = executionDuration;
   }
-
 
   @Override
   public String getApplicationName() {

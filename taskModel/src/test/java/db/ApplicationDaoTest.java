@@ -17,6 +17,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
 public class ApplicationDaoTest {
 
   private GenericApplicationContext ctx;
@@ -26,25 +27,25 @@ public class ApplicationDaoTest {
   public void setUp(){
     ctx = new AnnotationConfigApplicationContext( TestDBConfig.class );
     appDao = ctx.getBean(ApplicationDao.class);
-    assertNotNull( appDao );
+    assertNotNull( "bean should be initialized", appDao );
   }
 
   @Test
   public void testFindAll(){
     List<ApplicationEntity> appEntities = appDao.findAll();
-    assertTrue(appEntities.size() > 0);
+    assertFalse("should not be empty", appEntities.isEmpty());
   }
 
   @Test
   public void testFindAllWithTasksResults(){
     List<ApplicationEntity> apps = appDao.findAllWithTasksResults();
-    assertTrue(apps.size() > 0);
+    assertFalse("ApplicationEntity", apps.isEmpty());
     for( ApplicationEntity app : apps ){
       if ( app.getTasksResults() == null ){
         fail( "no tasks results found" );
       }
       else{
-        assertTrue( app.getTasksResults().size() > 0 );
+        assertFalse("should be at least one task", app.getTasksResults().isEmpty() );
       }
     }
   }
@@ -52,7 +53,7 @@ public class ApplicationDaoTest {
   @Test
   public void testFindByID(){
     Application app = appDao.findById(1L);
-    assertNotNull(app);
+    assertNotNull("ApplicationEntity exists", app);
   }
 
   @Test
@@ -74,22 +75,21 @@ public class ApplicationDaoTest {
 
     app.addTaskResult( trt );
 
-
     appDao.save(app);
-    assertNotNull( app.getId() );
+    assertNotNull( "ApplicationEntity saved in database", app.getId() );
 
     List<ApplicationEntity> apps = appDao.findAllWithTasksResults();
-    assertTrue(apps.size() > 0 );
+    assertFalse("ApplicationEntity", apps.isEmpty() );
     //LocalDateTime will not be exactly the same due to approximation when stored in the DB
     Optional<ApplicationEntity> dbApp = apps.stream().filter( myApp -> myApp.getName().equals( expectedAppName ) && Duration.between( myApp.getStartTime(), expectedTime).getSeconds() < 1 ).findFirst();
-    assertTrue( dbApp.isPresent() );
-    assertEquals( dbApp.get().getTasksResults().size(), 1 );
+    assertTrue( "applicationEntity", dbApp.isPresent() );
+    assertEquals( "number of tasks",dbApp.get().getTasksResults().size(), 1 );
   }
 
   @Test
   public void testUpdate(){
     ApplicationEntity app = appDao.findById(1L);
-    assertNotNull(app);
+    assertNotNull("ApplicationEntity", app);
     String oldAppName = app.getName();
 
     String newAppName = "new" + oldAppName;
@@ -97,6 +97,6 @@ public class ApplicationDaoTest {
 
     appDao.save( app );
     ApplicationEntity updatedApp = appDao.findById(1L);
-    assertEquals( newAppName, updatedApp.getName() );
+    assertEquals( "ApplicationEntity name", newAppName, updatedApp.getName() );
   }
 }

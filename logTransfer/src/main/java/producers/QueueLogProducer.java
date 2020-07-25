@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 import task.TaskResult;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class QueueLogProducer implements LogProducer {
   @Autowired
-  RabbitTemplate rabbitTemplate;
+  private transient RabbitTemplate rabbitTemplate;
 
-  @Value("${jsa.rabbitmq.queue}")
-  String queueName;
+  //@Value("${jsa.rabbitmq.queue}")
+  //private String queueName;
 
   @Value("${jsa.rabbitmq.exchange}")
-  private String exchange;
+  private String rabbitExchange;
 
   @Value("${jsa.rabbitmq.routingKey}")
   private String routingkey;
@@ -26,6 +27,6 @@ public class QueueLogProducer implements LogProducer {
   @Override
   public void sendTaskResult(TaskResult taskResult) {
     logger.atFine().log("Sending message...");
-    rabbitTemplate.convertAndSend(exchange, routingkey, taskResult);
+    rabbitTemplate.convertAndSend(rabbitExchange, routingkey, taskResult);
   }
 }

@@ -8,6 +8,7 @@ import task.TaskResultType;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@SuppressWarnings("PMD")
 public class MockFakeTaskResult
     extends FakeTaskResult {
 

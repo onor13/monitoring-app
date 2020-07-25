@@ -1,13 +1,11 @@
 package javafx;
 
-import com.google.common.flogger.FluentLogger;
 import java.io.IOException;
 import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,11 +18,9 @@ import org.springframework.stereotype.Component;
 @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class StageListener implements ApplicationListener<MonitoringFxApp.StageReadyEvent> {
 
-  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
-
-  private final String applicationTitle;
-  private final Resource           fxml;
-  private final ApplicationContext applicationContext;
+  private final transient String applicationTitle;
+  private final transient Resource           fxml;
+  private final transient ApplicationContext applicationContext;
 
   public StageListener(
       @Value("${spring.application.ui.title}") String applicationTitle,
@@ -33,11 +29,6 @@ public class StageListener implements ApplicationListener<MonitoringFxApp.StageR
     this.applicationTitle = applicationTitle;
     this.fxml = resource;
     this.applicationContext = ac;
-  }
-
-  @PostConstruct
-  private void postConstruct() {
-    logger.atFine().log("PostConstruct of " + this.getClass().getSimpleName());
   }
 
   @Override
@@ -53,8 +44,7 @@ public class StageListener implements ApplicationListener<MonitoringFxApp.StageR
       stage.setTitle(this.applicationTitle);
       stage.show();
     } catch (IOException e) {
-      e.printStackTrace();
-      new RuntimeException("failed to initalize" + e.toString());
+      throw new RuntimeException("failed to initalize" + e.toString(), e);
     }
   }
 

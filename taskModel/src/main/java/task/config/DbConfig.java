@@ -25,13 +25,13 @@ public class DbConfig {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   @Value("${driverClassName}")
-  private String driverClassName;
+  private transient String driverClassName;
   @Value("${url}")
-  private String url;
+  private transient String url;
   @Value("${username}")
-  private String username;
+  private transient String username;
   @Value("${password}")
-  private String password;
+  private transient String password;
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

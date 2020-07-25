@@ -16,7 +16,7 @@ public class MonitoringFxApp extends Application {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private ConfigurableApplicationContext applicationContext;
+  private transient ConfigurableApplicationContext applicationContext;
 
   @Override
   public void init() throws IOException {
@@ -50,6 +50,8 @@ public class MonitoringFxApp extends Application {
 
 
   class StageReadyEvent extends ApplicationEvent {
+    private static final long serialVersionUID = -3484158214116705816L;
+
     public Stage getStage() {
       return Stage.class.cast(getSource());
     }

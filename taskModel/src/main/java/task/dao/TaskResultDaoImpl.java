@@ -19,7 +19,7 @@ public class TaskResultDaoImpl implements TaskResultDao {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private SessionFactory sessionFactory;
-  private LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
+  private final transient LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
 
   @Override
   @Transactional(readOnly = true)

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import storage.TasksResultsStorage;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TaskDataDistributor {
   @Autowired
   TaskDataConnector dataConnector;
@@ -25,11 +26,11 @@ public class TaskDataDistributor {
     logger.atConfig().log("Bean " + TaskDataDistributor.class.getSimpleName() + " created");
   }
 
-  public void setDataConnector(TaskDataConnector dataConnector) {
+  public void setTasksDataConnector(TaskDataConnector dataConnector) {
     this.dataConnector = dataConnector;
   }
 
-  public void setResultsStorage(TasksResultsStorage storage) {
+  public void setTasksResultsStorage(TasksResultsStorage storage) {
     resultsStorage = storage;
   }
 

@@ -14,6 +14,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.time.LocalDateTime;
 
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class JsonLocalDateTimeSerializerTest {
 
   private ObjectMapper mapper;
@@ -33,10 +34,14 @@ public class JsonLocalDateTimeSerializerTest {
 
     Writer jsonWriter = new StringWriter();
     JsonGenerator jsonGenerator = new JsonFactory().createGenerator(jsonWriter);
-    SerializerProvider serializerProvider = mapper.getSerializerProvider();
-    serializer.serialize( expected , jsonGenerator, serializerProvider);
-    jsonGenerator.flush();
-
+    try{
+      SerializerProvider serializerProvider = mapper.getSerializerProvider();
+      serializer.serialize( expected , jsonGenerator, serializerProvider);
+      jsonGenerator.flush();
+    }
+    finally {
+      jsonGenerator.close();
+    }
     String ldcSerialized = jsonWriter.toString();
     Assert.assertEquals( ldcSerialized, testObject.getLocalDateTimeStr() );
   }

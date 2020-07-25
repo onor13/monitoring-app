@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import task.TaskResult;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TaskResultsTableController implements Initializable {
 
   @FXML

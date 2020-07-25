@@ -1,5 +1,9 @@
 package db;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -11,14 +15,10 @@ import task.dao.TaskResultDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
+@SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
 public class TaskResultDaoTest {
   private GenericApplicationContext ctx;
   private TaskResultDao  taskResultDao;
@@ -29,23 +29,23 @@ public class TaskResultDaoTest {
     ctx = new AnnotationConfigApplicationContext( TestDBConfig.class );
     taskResultDao = ctx.getBean(TaskResultDao.class);
     appDao = ctx.getBean(ApplicationDao.class);
-    assertNotNull( taskResultDao );
+    assertNotNull( "ApplicationDao", taskResultDao );
   }
 
   @Test
   public void testFindAll(){
     List<TaskResultEntity> taskResultEntities = taskResultDao.findAll();
-    assertTrue(taskResultEntities.size() > 0);
+    assertFalse("TaskResultEntities size", taskResultEntities.isEmpty());
     for( TaskResultEntity tre : taskResultEntities ){
       //make sure that a join with Application table was applied
-      assertNotNull( tre.getApplicationStartTime() );
+      assertNotNull( "TaskResultEntity->applicationStartTime", tre.getApplicationStartTime() );
     }
   }
 
   @Test
   public void testFindByID(){
     TaskResult tr = taskResultDao.findById(2L);
-    assertNotNull(tr);
+    assertNotNull("TaskResult", tr);
   }
 
   @Test
@@ -53,7 +53,7 @@ public class TaskResultDaoTest {
     String taskName = DBInitializer.firstTaskName;
     LocalDateTime taskStartTime = DBInitializer.firstTaskStartTime;
     TaskResultEntity tre = taskResultDao.find( 1L, taskName, taskStartTime );
-    assertNotNull(tre);
+    assertNotNull("TaskResultEntity", tre);
   }
 
   @Test
@@ -71,19 +71,19 @@ public class TaskResultDaoTest {
     app.addTaskResult( trt );
 
     taskResultDao.save( trt );
-    assertNotNull( app.getId() );
+    assertNotNull( "ApplicationEntity saved in database", app.getId() );
 
     List<TaskResultEntity> trEntities = taskResultDao.findAll();
-    assertTrue(trEntities.size() > 0 );
+    assertFalse("TaskResultEntity size", trEntities.isEmpty() );
     Optional<TaskResultEntity> dbTaskResultEntities = trEntities.stream().filter( tr -> tr.getTaskName().equals( expectedTaskName ) ).findFirst();
-    assertTrue( dbTaskResultEntities.isPresent() );
-    assertNotNull( dbTaskResultEntities.get().getApplicationStartTime() );
+    assertTrue( "TasksResultsEntities are saved too", dbTaskResultEntities.isPresent() );
+    assertNotNull( "TaskResultEntity->applicationStartTime", dbTaskResultEntities.get().getApplicationStartTime() );
   }
 
   @Test
   public void testUpdate(){
     TaskResultEntity tre = taskResultDao.findById(2L);
-    assertNotNull(tre);
+    assertNotNull("TaskResultEntity", tre);
     String oldTaskName = tre.getTaskName();
 
     String newTaskName = "new" + oldTaskName;
@@ -91,6 +91,6 @@ public class TaskResultDaoTest {
 
     taskResultDao.save( tre );
     TaskResultEntity updatedTaskResultEntity = taskResultDao.findById(2L);
-    assertEquals( newTaskName, updatedTaskResultEntity.getTaskName() );
+    assertEquals( "TaskResultEntity taskName change", newTaskName, updatedTaskResultEntity.getTaskName() );
   }
 }

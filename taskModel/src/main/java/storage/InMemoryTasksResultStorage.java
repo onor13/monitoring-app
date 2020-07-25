@@ -6,13 +6,12 @@ import java.util.Iterator;
 import java.util.Set;
 import task.TaskResult;
 
-public class InMemoryTasksResultStorage
-    implements TasksResultsStorage {
-  Set<TaskResult> taskResults = new HashSet<>();
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
+public class InMemoryTasksResultStorage implements TasksResultsStorage {
+  private Set<TaskResult> taskResults = new HashSet<>();
 
   public InMemoryTasksResultStorage() {
   }
-
 
   @Override
   public int size() {

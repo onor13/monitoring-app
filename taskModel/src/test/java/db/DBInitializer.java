@@ -1,5 +1,9 @@
 package db;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task.TaskResultType;
@@ -7,13 +11,8 @@ import task.dao.ApplicationDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
-import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 @Service
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DBInitializer {
 
   @Autowired

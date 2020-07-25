@@ -8,6 +8,8 @@ import java.time.Duration;
 
 public class CustomDurationSerializer extends StdSerializer<Duration> {
 
+  private static final long serialVersionUID = -8026468255058961958L;
+
   public CustomDurationSerializer() {
     this(null);
   }

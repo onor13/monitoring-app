@@ -8,8 +8,9 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import org.springframework.stereotype.Component;
 
-@SuppressWarnings("unchecked")
+
 @Component
+@SuppressWarnings({"PMD.BeanMembersShouldSerialize", "unchecked"})
 public class ChartController {
 
   @FXML

@@ -6,7 +6,7 @@ import task.JsonApplication;
 
 public class ApplicationGenerator {
 
-  AtomicInteger counter = new AtomicInteger();
+  static final AtomicInteger counter = new AtomicInteger();
 
   public Application generateInstance() {
     Application app = new JsonApplication(

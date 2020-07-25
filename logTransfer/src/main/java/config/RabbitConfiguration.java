@@ -20,13 +20,11 @@ import org.springframework.context.annotation.PropertySources;
     @PropertySource("classpath:log4j.properties")
 })
 @EnableRabbit
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class RabbitConfiguration {
 
   @Value("${jsa.rabbitmq.queue}")
-  String queueName;
-
-  @Value("${jsa.rabbitmq.exchange}")
-  private String exchange;
+  private String queueName;
 
   @Value("${jsa.rabbitmq.routingKey}")
   private String routingkey;

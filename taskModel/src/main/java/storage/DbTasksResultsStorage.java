@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DbTasksResultsStorage implements TasksResultsStorage {
 
   @Autowired
@@ -25,7 +27,7 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
 
   @Override
   public int size() {
-    return 0;
+    throw new NotYetImplementedException();
   }
 
   @Override

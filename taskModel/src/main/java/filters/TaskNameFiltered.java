@@ -4,7 +4,6 @@ import org.cactoos.iterable.IterableEnvelope;
 import org.cactoos.iterable.IterableOf;
 import task.TaskResult;
 
-
 public class TaskNameFiltered
     extends IterableEnvelope<TaskResult> {
 

@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+@SuppressWarnings({"PMD.UnusedLocalVariable", "PMD.UnusedPrivateField"})
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
+  private static final long serialVersionUID = -2795710048195775073L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(updatable = false)

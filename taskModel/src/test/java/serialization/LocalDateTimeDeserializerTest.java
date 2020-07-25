@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class LocalDateTimeDeserializerTest {
 
   private ObjectMapper mapper;

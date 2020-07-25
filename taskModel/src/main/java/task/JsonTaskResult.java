@@ -16,8 +16,8 @@ import serializer.CustomLocalDateTimeSerializer;
     scope = JsonTaskResult.class)
 public class JsonTaskResult implements TaskResult {
 
-  private String applicationName;
-  private LocalDateTime applicationStartTime;
+  private transient String applicationName;
+  private transient LocalDateTime applicationStartTime;
   private String taskName;
   private String taskGroup;
   private TaskResultType taskResultType;

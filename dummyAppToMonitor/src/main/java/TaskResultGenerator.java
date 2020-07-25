@@ -7,9 +7,9 @@ import task.TaskResultType;
 
 public class TaskResultGenerator {
 
-  final AtomicInteger counter = new AtomicInteger();
-  final Application app;
-  final String group = "Medical";
+  static final AtomicInteger counter = new AtomicInteger();
+  final transient Application app;
+  static final String group = "Medical";
 
   public enum Category {
     Fracture,

@@ -1,16 +1,15 @@
 package filters;
 
+import java.util.Iterator;
+import java.util.concurrent.atomic.AtomicLong;
 import mock.MockFakeTaskResult;
 import mock.MockTasksResultsStorage;
 import org.junit.Assert;
 import org.junit.Test;
-import task.TaskResult;
-import filters.TaskNameFiltered;
 import storage.TasksResultsStorage;
+import task.TaskResult;
 
-import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicLong;
-
+@SuppressWarnings("PMD.JUnitTestContainsTooManyAsserts")
 public class TaskNameFilteredTest {
   @Test
   public void testNameFiltering(){

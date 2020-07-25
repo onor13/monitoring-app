@@ -8,6 +8,8 @@ import java.time.Duration;
 
 public class CustomDurationDeserializer extends StdDeserializer<Duration> {
 
+  private static final long serialVersionUID = 1769017841765844469L;
+
   public CustomDurationDeserializer() {
     this(null);
   }

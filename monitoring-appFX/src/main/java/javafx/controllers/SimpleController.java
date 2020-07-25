@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import org.springframework.stereotype.Component;
 
 @Component
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class SimpleController {
 
   private final HostServices hostServices;

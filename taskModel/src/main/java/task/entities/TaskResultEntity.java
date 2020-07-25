@@ -31,6 +31,7 @@ import task.TaskResultType;
             + " and tr.taskName = :" + TaskResultEntity.PARAM_TASK_NAME
             + " and tr.startTime = :" + TaskResultEntity.PARAM_TASK_START_TIME)
 })
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
   public static final String FIND_TASK_RESULT_BY_ID =
@@ -41,6 +42,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   public static final String PARAM_APP_ID = "appId";
   public static final String PARAM_TASK_NAME = "taskName";
   public static final String PARAM_TASK_START_TIME = "taskStartTime";
+  private static final long serialVersionUID = -4760477593367753944L;
 
   @ManyToOne
   @JoinColumn(name = "APPLICATION_ID")
@@ -65,6 +67,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   @Column(name = "EXECUTION_DURATION")
   private Duration executionDuration;
 
+  @Override
   public String getApplicationName() {
     return application.getName();
   }
@@ -78,7 +81,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     this.application = application;
   }
 
-
+  @Override
   public LocalDateTime getTaskStartTime() {
     return startTime;
   }
@@ -114,6 +117,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
     this.taskResultType = taskResultType;
   }
 
+  @Override
   public Duration getTaskExecutionDuration() {
     return executionDuration;
   }

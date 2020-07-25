@@ -13,15 +13,15 @@ public class TaskResultModel {
   private final SimpleStringProperty executionDuration = new SimpleStringProperty("");
 
   //TODO use converters instead for enum's and date related objects
-  private final LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
+  private final transient LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
 
   public TaskResultModel(TaskResult taskResult) {
-    setApplicationId(taskResult.getApplicationName());
-    setName(taskResult.getTaskName());
-    setGroup(taskResult.getTaskGroup());
-    setResult(taskResult.getTaskResultType().name());
-    setStartTime(ldcFormatter.format(taskResult.getTaskStartTime()));
-    setExecutionDuration(taskResult.getTaskExecutionDuration().toString());
+    applicationId.set(taskResult.getApplicationName());
+    name.set(taskResult.getTaskName());
+    group.set(taskResult.getTaskGroup());
+    result.set(taskResult.getTaskResultType().name());
+    startTime.set(ldcFormatter.format(taskResult.getTaskStartTime()));
+    executionDuration.set(taskResult.getTaskExecutionDuration().toString());
   }
 
   public String getApplicationId() {

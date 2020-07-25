@@ -47,5 +47,8 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
-
+    // https://mvnrepository.com/artifact/pl.pragmatists/JUnitParams
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$jupiterVersion"
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
 }

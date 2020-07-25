@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DurationSerializerTest {
   private ObjectMapper             mapper;
   private CustomDurationSerializer serializer;
@@ -27,13 +28,17 @@ public class DurationSerializerTest {
   public void testDurationSerializer() throws IOException {
     DurationSerializationHelper helper = new DurationSerializationHelper();
     Writer jsonWriter = new StringWriter();
-    JsonGenerator jsonGenerator = new JsonFactory().createGenerator(jsonWriter);
     SerializerProvider serializerProvider = mapper.getSerializerProvider();
-    serializer.serialize( helper.getDuration(), jsonGenerator, serializerProvider);
-    jsonGenerator.flush();
+    JsonGenerator jsonGenerator = new JsonFactory().createGenerator(jsonWriter);
+    try{
+      serializer.serialize( helper.getDuration(), jsonGenerator, serializerProvider);
+      jsonGenerator.flush();
+    }
+    finally {
+      jsonGenerator.close();
+    }
 
-    String ldcSerialized = jsonWriter.toString();
     String expectedSerializerDurationInMilliseconds = helper.getSerializedDurationValue();
-    Assert.assertEquals( ldcSerialized, expectedSerializerDurationInMilliseconds );
+    Assert.assertEquals( "LocalDateTime serialization", jsonWriter.toString(), expectedSerializerDurationInMilliseconds );
   }
 }

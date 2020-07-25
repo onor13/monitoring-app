@@ -1,3 +1,4 @@
+import com.google.common.flogger.FluentLogger;
 import config.RabbitConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -7,6 +8,8 @@ import task.Application;
 import task.JsonTaskResult;
 
 public class Runner  {
+
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   /***
    * <p>Project entry point. generates and sends tasksResults</p>
@@ -21,7 +24,7 @@ public class Runner  {
     TaskResultGenerator generator = new TaskResultGenerator(app);
     for (int i = 0; i < 5; i++) {
       JsonTaskResult tr = generator.generateInstance();
-      System.out.println("Sending task: " + tr.getTaskName());
+      logger.atFine().log("Sending task: " + tr.getTaskName());
       lp.sendTaskResult(tr);
       Thread.sleep(2000);
     }

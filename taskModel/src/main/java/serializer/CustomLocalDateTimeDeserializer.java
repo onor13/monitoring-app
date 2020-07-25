@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class CustomLocalDateTimeDeserializer
     extends StdDeserializer<LocalDateTime> {
 
-  LocalDateTimeConverter ldcParser = new LocalDateTimeConverter();
+  private static final long serialVersionUID = -6393963298727586570L;
+  private final transient LocalDateTimeConverter ldcParser = new LocalDateTimeConverter();
 
   public CustomLocalDateTimeDeserializer() {
     this(null);

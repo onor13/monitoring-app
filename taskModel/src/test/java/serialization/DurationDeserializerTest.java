@@ -1,14 +1,13 @@
 package serialization;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.time.Duration;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-
+@SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DurationDeserializerTest {
 
   private ObjectMapper mapper;

@@ -37,6 +37,7 @@ public class JsonApplication implements Application {
 
   @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
   @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+  @Override
   public LocalDateTime getStartTime() {
     return startTime;
   }
