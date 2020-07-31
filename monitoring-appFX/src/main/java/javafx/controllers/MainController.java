@@ -1,6 +1,7 @@
 package javafx.controllers;
 
 import com.google.common.flogger.FluentLogger;
+import distributors.TaskDataDistributor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -10,13 +11,13 @@ import javafx.fxml.Initializable;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import task.TaskDataDistributor;
 import task.TaskResult;
+import view.Presenter;
 
 @Component
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class MainController
-    implements Initializable {
+    implements Initializable, Presenter {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -50,11 +51,12 @@ public class MainController
     });
   }
 
+  @Override
   public void addTaskResult(TaskResult taskResult) {
     tableViewController.addTaskResult(taskResult);
   }
 
-  public void reloadTasksResults() {
+  protected void reloadTasksResults() {
     tableViewController.reloadFrom(dataDistributor.getAllTasksResults());
   }
 }

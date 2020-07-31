@@ -1,12 +1,14 @@
-package task;
+package distributors;
 
 import com.google.common.flogger.FluentLogger;
 import java.util.Queue;
-import javafx.controllers.MainController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import storage.TasksResultsStorage;
+import task.TaskDataConnector;
+import task.TaskResult;
+import view.Presenter;
 
 @Component
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
@@ -18,7 +20,7 @@ public class TaskDataDistributor {
   TasksResultsStorage resultsStorage;
 
   @Autowired
-  MainController uiController;
+  Presenter presenter;
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -50,7 +52,7 @@ public class TaskDataDistributor {
       logger.atFine().log("Adding taskResult " + tr.getTaskName());
       resultsStorage.addTaskResult(tr);
       if (dataConnector.isConnectedToUI()) {
-        uiController.addTaskResult(tr);
+        presenter.addTaskResult(tr);
       }
 
     }

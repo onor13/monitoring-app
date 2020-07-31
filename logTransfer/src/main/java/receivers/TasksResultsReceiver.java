@@ -1,4 +1,4 @@
-package queue;
+package receivers;
 
 import com.google.common.flogger.FluentLogger;
 import java.util.Queue;

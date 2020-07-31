@@ -3,6 +3,7 @@ package javafx;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import distributors.TaskDataDistributor;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.application.Application;
@@ -23,16 +24,19 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import receivers.TasksResultsReceiver;
 import storage.DbTasksResultsStorage;
 import storage.TasksResultsStorage;
 import task.JsonTaskResult;
 import task.config.DbConfig;
 
-@ComponentScan(basePackages = {
-    "javafx",
-    "queue",
-    "task"},
-    basePackageClasses = DbConfig.class)
+@ComponentScan(
+    basePackages = {
+      "javafx",
+      "queue",
+      "task"},
+    basePackageClasses = {
+      DbConfig.class, TaskDataDistributor.class, TasksResultsReceiver.class})
 @SpringBootApplication
 @EnableScheduling
 public class MonitoringApplication  {
