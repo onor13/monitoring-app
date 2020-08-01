@@ -1,14 +1,16 @@
 package receivers;
 
 import com.google.common.flogger.FluentLogger;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task.TaskDataConnector;
 import task.TaskResult;
+
 
 @Service
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
@@ -18,22 +20,44 @@ public class TasksResultsReceiver implements TaskDataConnector {
 
   private AtomicBoolean isUIupdatesEnabled = new AtomicBoolean(true);
 
-  ConcurrentLinkedDeque<TaskResult> messageQueue = new ConcurrentLinkedDeque<>();
+  ConcurrentLinkedQueue<TaskResult> messageQueue = new ConcurrentLinkedQueue<>();
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  public TasksResultsReceiver() {
+  Queue autoDeleteQueue1;
+  Queue autoDeleteQueue2;
+
+  @Autowired
+  public TasksResultsReceiver(Queue queue1, Queue queue2) {
     logger.atConfig().log("Bean " + TasksResultsReceiver.class.getSimpleName() + " created ");
+    autoDeleteQueue1 = queue1;
+    autoDeleteQueue2 = queue2;
   }
 
-  @RabbitListener(queues = "${jsa.rabbitmq.queue}")
+
+
+  @RabbitListener(queues = "#{autoDeleteQueue1.name}")
   public void receiveMessage(TaskResult taskResult) {
-    messageQueue.add(taskResult);
+    receive(taskResult);
+  }
+
+  @RabbitListener(queues = "#{autoDeleteQueue2.name}")
+  public void receiveMessage2(TaskResult taskResult) {
+    receive(taskResult);
+  }
+
+  protected void receive(TaskResult taskResult) {
     logger.atFine().log("Received task [%s]", taskResult.getTaskName());
+    messageQueue.add(taskResult);
     logger.atFine().log("internal queue size %d", messageQueue.size());
 
     latch.countDown();
   }
+
+  /*@RabbitListener(queues = "${jsa.rabbitmq.deadLetterQueue}")
+  public void receiveFailedMessage(Message message) {
+    logger.atInfo().log("Received failed message [%s]", message.toString());
+  }*/
 
   public CountDownLatch getLatch() {
     return latch;
@@ -55,7 +79,7 @@ public class TasksResultsReceiver implements TaskDataConnector {
   }
 
   @Override
-  public Queue<TaskResult> pollNewData() {
+  public java.util.Queue<TaskResult> pollNewData() {
     return messageQueue;
   }
 }

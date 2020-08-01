@@ -16,7 +16,6 @@ processResources {
 }
 
 dependencies {
-
     implementation project(':taskModel')
     implementation project(':logTransfer')
 
@@ -65,7 +64,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
     implementation "org.hibernate:hibernate-entitymanager:$hibernateVersion"
-    implementation "org.hibernate:hibernate-core:$hibernateVersion"
     implementation "org.hibernate:hibernate-core:$hibernateVersion"
 
     // https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.1-api

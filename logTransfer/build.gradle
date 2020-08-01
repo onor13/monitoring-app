@@ -19,6 +19,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.amqp/spring-rabbit
     implementation "org.springframework.amqp:spring-rabbit:$springAmqpVersion"
 
+    // https://mvnrepository.com/artifact/org.springframework/spring-web
+    implementation "org.springframework:spring-web:$springVersion"
+
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation "com.fasterxml.jackson.core:jackson-core:$fasterXmlJacksonVersion"
 
@@ -33,6 +36,10 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-tx
     implementation "org.springframework:spring-tx:$springVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.3.1.RELEASE'
+
 
     // https://mvnrepository.com/artifact/javax.validation/validation-api
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
