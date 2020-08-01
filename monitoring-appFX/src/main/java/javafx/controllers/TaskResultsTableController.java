@@ -46,7 +46,7 @@ public class TaskResultsTableController implements Initializable {
   public void addTaskResult(TaskResult taskResult) {
     try {
       writeLock.lock();
-      if (!tasksResults.contains(taskResult)) {
+      if (!tasksResults.stream().filter(trm -> trm.getTaskResult().equals(taskResult)).findAny().isPresent()) {
         tasksResults.add(new TaskResultModel(taskResult));
       }
     } finally {

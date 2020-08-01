@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import serializer.CustomDurationDeserializer;
 import serializer.CustomDurationSerializer;
 import serializer.CustomLocalDateTimeDeserializer;
@@ -92,5 +93,46 @@ public class JsonTaskResult implements TaskResult {
 
   public void setTaskExecutionDuration(Duration taskExecutionDuration) {
     this.taskExecutionDuration = taskExecutionDuration;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    JsonTaskResult that = (JsonTaskResult) o;
+
+    if (!applicationName.equals(that.applicationName)) {
+      return false;
+    }
+
+    if (!taskName.equals(that.taskName)) {
+      return false;
+    }
+    if (!Objects.equals(taskGroup, that.taskGroup)) {
+      return false;
+    }
+    if (taskResultType != that.taskResultType) {
+      return false;
+    }
+    if (!taskStartTime.equals(that.taskStartTime)) {
+      return false;
+    }
+    return taskExecutionDuration.getSeconds() == that.taskExecutionDuration.getSeconds();
+  }
+
+  @Override
+  public int hashCode() {
+    int result = applicationName.hashCode();
+    result = 31 * result + taskName.hashCode();
+    result = 31 * result + (taskGroup != null ? taskGroup.hashCode() : 0);
+    result = 31 * result + taskResultType.hashCode();
+    result = 31 * result + taskStartTime.hashCode();
+    result = 31 * result + (taskExecutionDuration != null ? taskExecutionDuration.hashCode() : 0);
+    return result;
   }
 }
