@@ -46,17 +46,17 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
   @Override
   public boolean contains(TaskResult taskResult) {
     ApplicationEntity appEntity = appDao.findByName(taskResult.getApplicationName());
-    return taskResultDao.find(appEntity.getId(), taskResult.getTaskName(), taskResult.getTaskStartTime()) != null;
+    return taskResultDao.find(appEntity.getName(), taskResult.getTaskName(), taskResult.getTaskStartTime()) != null;
   }
 
   @Override
   public void removeAll() {
-    throw new UnsupportedOperationException();
+    taskResultDao.deleteAll();
   }
 
   @Override
   public void removeOlderThan(LocalDateTime instant) {
-    throw new UnsupportedOperationException();
+    taskResultDao.deleteOlderThan(instant);
   }
 
   @Override

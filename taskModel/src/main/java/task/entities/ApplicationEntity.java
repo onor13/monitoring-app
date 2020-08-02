@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -20,10 +22,6 @@ import task.TaskResult;
 @Entity(name = "Application")
 @Table(name = ApplicationEntity.TABLE_NAME)
 @NamedQueries({
-    @NamedQuery(name = ApplicationEntity.FIND_APPLICATION_BY_ID,
-        query = "select a from Application a"
-            + " join fetch a.tasksResults t"
-            + " where a.id = :id"),
     @NamedQuery(name = ApplicationEntity.FIND_APPLICATION_BY_NAME,
         query = "select a from Application a "
             + " where a.name = :name"),
@@ -32,24 +30,23 @@ import task.TaskResult;
             + " join fetch a.tasksResults t "),
 })
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
-public class ApplicationEntity
-    extends AbstractEntity implements Application {
+public class ApplicationEntity implements Application {
 
   public static final String TABLE_NAME = "application";
-  public static final String FIND_APPLICATION_BY_ID = "Application.findById";
   public static final String FIND_APPLICATION_BY_NAME = "Application.findByName";
   public static final String FIND_ALL_WITH_TASKS_RESULTS = "Application.findAllWithTasksResults";
   private static final long serialVersionUID = -5884907756474896718L;
 
   @Column(name = "NAME")
   @NotNull
+  @Id
   private String name;
 
   @Column(name = "START_DATE_TIME")
   @NotNull
   private LocalDateTime startTime;
 
-  @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "application", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<TaskResultEntity> tasksResults = new HashSet<>();
 
   @Override
@@ -81,8 +78,8 @@ public class ApplicationEntity
 
   @Override
   public String toString() {
-    return String.format("Application - id: %d, name: %s, startDateTime: %s",
-        id, name, startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime));
+    return String.format("Application - name: %s, startDateTime: %s",
+      name, startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime));
   }
 
   @Override
@@ -105,10 +102,7 @@ public class ApplicationEntity
 
   @Override
   public int hashCode() {
-    int result = super.hashCode();
-    result = 31 * result + (name == null ? 0 : name.hashCode());
-    result = 31 * result + (startTime == null ? 0 : startTime.hashCode());
-    return result;
+    return 31 * name.hashCode();
   }
 
 }

@@ -9,11 +9,15 @@ public interface TaskResultDao {
 
   TaskResultEntity findById(Long id);
 
-  TaskResultEntity find(Long appId, String taskName, LocalDateTime startTaskTime);
+  TaskResultEntity find(String appName, String taskName, LocalDateTime startTaskTime);
 
   TaskResultEntity save(TaskResultEntity app);
 
   void delete(TaskResultEntity app);
+
+  void deleteOlderThan(LocalDateTime taskStartTime);
+
+  void deleteAll();
 
   long size();
 }

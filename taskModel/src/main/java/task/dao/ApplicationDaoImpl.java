@@ -32,15 +32,6 @@ public class ApplicationDaoImpl implements ApplicationDao {
 
   @Override
   @Transactional(readOnly = true)
-  public ApplicationEntity findById(Long id) {
-    logger.atFine().log("find application by %d", id);
-    return (ApplicationEntity) sessionFactory.getCurrentSession()
-        .getNamedQuery(ApplicationEntity.FIND_APPLICATION_BY_ID)
-        .setParameter("id", id).uniqueResult();
-  }
-
-  @Override
-  @Transactional(readOnly = true)
   public ApplicationEntity findByName(String name) {
     logger.atFine().log("find application by name %s", name);
     return (ApplicationEntity) sessionFactory.getCurrentSession()
@@ -51,14 +42,14 @@ public class ApplicationDaoImpl implements ApplicationDao {
   @Override
   public ApplicationEntity save(ApplicationEntity app) {
     sessionFactory.getCurrentSession().saveOrUpdate(app);
-    logger.atFine().log("Application saved with id %s", app.getId());
+    logger.atFine().log("Application %s was saved", app.getName());
     return app;
   }
 
   @Override
   public void delete(ApplicationEntity app) {
     sessionFactory.getCurrentSession().delete(app);
-    logger.atFine().log("Application deleted with id %s", app.getId());
+    logger.atFine().log("Application %s was deleted", app.getName());
   }
 
   public SessionFactory getSessionFactory() {

@@ -20,12 +20,12 @@ public class DBInitializer {
 
   public static final String firstTaskName = "prostateExam";
   public static final LocalDateTime firstTaskStartTime = LocalDateTime.of( 2020, 07, 12, 10, 00, 00 );
+  public static final String appName = "yourDoctorApp";
 
   @PostConstruct
   public void initDB(){
-
     ApplicationEntity app = new ApplicationEntity();
-    app.setName( "yourDoctorApp" );
+    app.setName(appName);
     app.setStartTime( LocalDateTime.now().minus( 10, ChronoUnit.MINUTES ) );
 
     {

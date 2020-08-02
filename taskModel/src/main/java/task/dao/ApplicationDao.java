@@ -9,8 +9,6 @@ public interface ApplicationDao {
 
   List<ApplicationEntity> findAllWithTasksResults();
 
-  ApplicationEntity findById(Long id);
-
   ApplicationEntity findByName(String name);
 
   ApplicationEntity save(ApplicationEntity app);

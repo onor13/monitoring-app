@@ -24,28 +24,34 @@ import task.TaskResultType;
         query = "select tr from TaskResult tr"
             + " join fetch tr.application a"
             + " where tr.id = :id"),
-    @NamedQuery(name = TaskResultEntity.FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME,
+    @NamedQuery(name = TaskResultEntity.FIND_TASK_RESULT_BY_APP_NAME_TASK_NAME_TASK_START_TIME,
         query = "select tr from TaskResult tr"
             + " join fetch tr.application app"
-            + " where app.id = :" + TaskResultEntity.PARAM_APP_ID
+            + " where app.name = :" + TaskResultEntity.PARAM_APP_NAME
             + " and tr.taskName = :" + TaskResultEntity.PARAM_TASK_NAME
-            + " and tr.startTime = :" + TaskResultEntity.PARAM_TASK_START_TIME)
+            + " and tr.startTime = :" + TaskResultEntity.PARAM_TASK_START_TIME),
+    @NamedQuery(name = TaskResultEntity.DELETE_TASK_RESULT_OLDER_THAN,
+        query = "delete from TaskResult tr where"
+            + " tr.startTime < :" + TaskResultEntity.PARAM_TASK_START_TIME
+    )
 })
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
   public static final String FIND_TASK_RESULT_BY_ID =
       "TaskResult.findById";
-  public static final String FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME =
-      "TaskResult.findByAppIdTaskNameTaskStartTime";
+  public static final String FIND_TASK_RESULT_BY_APP_NAME_TASK_NAME_TASK_START_TIME =
+      "TaskResult.findByAppNameTaskNameTaskStartTime";
+
+  public static final String DELETE_TASK_RESULT_OLDER_THAN = "TaskResult.deleteTaskResultOlderThan";
   public static final String TABLE_NAME = "TaskResult";
-  public static final String PARAM_APP_ID = "appId";
+  public static final String PARAM_APP_NAME = "appName";
   public static final String PARAM_TASK_NAME = "taskName";
   public static final String PARAM_TASK_START_TIME = "taskStartTime";
   private static final long serialVersionUID = -4760477593367753944L;
 
   @ManyToOne
-  @JoinColumn(name = "APPLICATION_ID")
+  @JoinColumn(name = "APPLICATION_NAME")
   private ApplicationEntity application;
 
   @Column(name = "NAME")
@@ -129,9 +135,9 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   @Override
   public String toString() {
     return String.format(
-        "TaskResult - id: %d, Application id: %d, Name: %s, Group: %s, Start DateTime: %s, Duration: %d",
+        "TaskResult - id: %d, Application name: %s, Name: %s, Group: %s, Start DateTime: %s, Duration: %d",
         id,
-        (application != null && application.getId() != null) ? application.getId() : 0,
+        (application != null && application.getName() != null) ? application.getName() : 0,
         taskName,
         taskGroup,
         startTime == null ? "<unknown>" : new LocalDateTimeConverter().format(startTime),
@@ -158,10 +164,8 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
 
   @Override
   public int hashCode() {
-    int result = super.hashCode();
-    result = 13 * result
-        + (taskName == null ? 0 : taskName.hashCode())
-        + ((application == null || application.id == null) ? 0 : application.id.hashCode());
+    int result = (taskName == null ? 0 : taskName.hashCode())
+        + ((application == null || application.getName() == null) ? 0 : application.hashCode());
     result = 13 * result + (startTime == null ? 0 : startTime.hashCode());
     return result;
   }

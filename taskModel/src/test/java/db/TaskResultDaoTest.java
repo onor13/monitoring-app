@@ -52,13 +52,13 @@ public class TaskResultDaoTest {
   public void testFindByAppIdTaskNameTaskStartTime(){
     String taskName = DBInitializer.firstTaskName;
     LocalDateTime taskStartTime = DBInitializer.firstTaskStartTime;
-    TaskResultEntity tre = taskResultDao.find( 1L, taskName, taskStartTime );
+    TaskResultEntity tre = taskResultDao.find( DBInitializer.appName, taskName, taskStartTime );
     assertNotNull("TaskResultEntity", tre);
   }
 
   @Test
   public void testInsert(){
-    ApplicationEntity app = appDao.findById( 1L );
+    ApplicationEntity app = appDao.findByName(DBInitializer.appName);
     TaskResultEntity trt = new TaskResultEntity();
     String expectedTaskName = "testTask";
     trt.setTaskName( expectedTaskName );
@@ -69,9 +69,7 @@ public class TaskResultDaoTest {
     trt.setTaskExecutionDuration( Duration.ofMinutes( 6 ) );
     trt.setApplication( app );
     app.addTaskResult( trt );
-
     taskResultDao.save( trt );
-    assertNotNull( "ApplicationEntity saved in database", app.getId() );
 
     List<TaskResultEntity> trEntities = taskResultDao.findAll();
     assertFalse("TaskResultEntity size", trEntities.isEmpty() );
