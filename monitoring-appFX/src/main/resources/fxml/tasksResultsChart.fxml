@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.layout.VBox?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      spacing="30"
       fx:controller="javafx.controllers.TasksResultsChartController">
-    <LineChart prefHeight="600" fx:id="chart">
-        <xAxis>
-            <CategoryAxis label="Time"/>
-        </xAxis>
-        <yAxis>
-            <NumberAxis label="Price"/>
-        </yAxis>
-    </LineChart>
+    <children>
+        <StackedBarChart prefHeight="600" fx:id="chart" title="tasks by group" animated="false">
+            <xAxis>
+                <CategoryAxis label="Groups" animated="false"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis label="Total amount" animated="false" tickUnit="1"/>
+            </yAxis>
+        </StackedBarChart>
+    </children>
+
 </VBox>

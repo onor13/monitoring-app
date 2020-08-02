@@ -3,7 +3,12 @@ package javafx.controllers;
 import com.google.common.flogger.FluentLogger;
 import distributors.TaskDataDistributor;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import org.controlsfx.control.ToggleSwitch;
@@ -28,6 +33,11 @@ public class MainController
   @Autowired
   TaskDataDistributor dataDistributor;
 
+  ReadWriteLock lock = new ReentrantReadWriteLock();
+  Lock writeLock = lock.writeLock();
+
+  Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     updatesOnOff.setSelected(true);
@@ -47,10 +57,25 @@ public class MainController
 
   @Override
   public void addTaskResult(TaskResult taskResult) {
-    tasksResultsController.addTaskResult(taskResult);
+    try {
+      writeLock.lock();
+      if (!alreadyAddedTaskResults.contains(taskResult)) {
+        alreadyAddedTaskResults.add(taskResult);
+        tasksResultsController.addTaskResult(taskResult);
+      }
+    } finally {
+      writeLock.unlock();
+    }
   }
 
   protected void reloadTasksResults() {
-    tasksResultsController.reloadFrom(dataDistributor.getAllTasksResults());
+    try {
+      writeLock.lock();
+      alreadyAddedTaskResults.clear();
+      dataDistributor.getAllTasksResults().forEach(tr -> alreadyAddedTaskResults.add(tr));
+      tasksResultsController.reloadFrom(alreadyAddedTaskResults);
+    } finally {
+      writeLock.unlock();
+    }
   }
 }

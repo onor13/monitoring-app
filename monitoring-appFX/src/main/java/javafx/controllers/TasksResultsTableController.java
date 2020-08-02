@@ -2,9 +2,6 @@ package javafx.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javafx.TasksResultsPresenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,9 +33,6 @@ public class TasksResultsTableController implements Initializable, TasksResultsP
   TableColumn taskExecutionDuration;
   ObservableList<TaskResultModel> tasksResults = FXCollections.observableArrayList();
 
-  ReadWriteLock lock = new ReentrantReadWriteLock();
-  Lock writeLock = lock.writeLock();
-
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     tableView.setItems(tasksResults);
@@ -46,24 +40,11 @@ public class TasksResultsTableController implements Initializable, TasksResultsP
 
   @Override
   public void addTaskResult(TaskResult taskResult) {
-    try {
-      writeLock.lock();
-      if (!tasksResults.stream().filter(trm -> trm.getTaskResult().equals(taskResult)).findAny().isPresent()) {
-        tasksResults.add(new TaskResultModel(taskResult));
-      }
-    } finally {
-      writeLock.unlock();
-    }
+    tasksResults.add(new TaskResultModel(taskResult));
   }
 
   @Override
   public void reloadFrom(Iterable<TaskResult> newTasksResults) {
-    try {
-      writeLock.lock();
-      this.tasksResults.clear();
-      newTasksResults.forEach(tr -> tasksResults.add(new TaskResultModel(tr)));
-    } finally {
-      writeLock.unlock();
-    }
+    newTasksResults.forEach(tr -> tasksResults.add(new TaskResultModel(tr)));
   }
 }
