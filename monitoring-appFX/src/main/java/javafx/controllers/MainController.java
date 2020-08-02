@@ -8,6 +8,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,9 @@ public class MainController
   ToggleSwitch updatesOnOff;
 
   @FXML
+  ComboBox<ViewType> viewSelector;
+
+  @FXML
   TaskResultsTableController tableViewController;
 
   @Autowired
@@ -32,21 +37,27 @@ public class MainController
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    updatesOnOff.setStyle("-fx-font-weight: bold;");
     updatesOnOff.setSelected(true);
-    updatesOnOff.selectedProperty().addListener(new ChangeListener<Boolean>() {
-      @Override
-      public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-        if (newValue == Boolean.TRUE) {
-          if (oldValue == Boolean.FALSE) {
-            reloadTasksResults();
-            logger.atInfo().log("UI updates are now enabled");
-            dataDistributor.enableUIupdates();
-          }
-        } else {
-          logger.atInfo().log("UI updates are now disabled");
-          dataDistributor.disconnectFromUI();
+    updatesOnOff.selectedProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue == Boolean.TRUE) {
+        if (oldValue == Boolean.FALSE) {
+          reloadTasksResults();
+          logger.atInfo().log("UI updates are now enabled");
+          dataDistributor.enableUIupdates();
         }
+      } else {
+        logger.atInfo().log("UI updates are now disabled");
+        dataDistributor.disconnectFromUI();
+      }
+    });
+
+    viewSelector.getItems().addAll(ViewType.values());
+    viewSelector.valueProperty().setValue(ViewType.Table);
+    viewSelector.valueProperty().addListener(new ChangeListener<ViewType>() {
+      @Override
+      public void changed(ObservableValue<? extends ViewType> observable, ViewType oldValue, ViewType newValue) {
+        logger.atInfo().log(String.format("Changing view from %s to %s", oldValue.type, newValue.type));
+        showNotSupportedFeature("Changing view type");
       }
     });
   }
@@ -58,5 +69,21 @@ public class MainController
 
   protected void reloadTasksResults() {
     tableViewController.reloadFrom(dataDistributor.getAllTasksResults());
+  }
+
+  protected void showNotSupportedFeature(String featureName){
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Not supported");
+    alert.setHeaderText(featureName + " is not implemented yet");
+    alert.showAndWait();
+  }
+
+  public enum ViewType{
+    Table("Table"), Chart("Chart");
+    private String type;
+
+    ViewType(String type){
+      this.type = type;
+    }
   }
 }
