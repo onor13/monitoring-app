@@ -30,7 +30,7 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
   }
 
   @Override
-  public void addTaskResult(@NonNull TaskResult taskResult) {
+  public synchronized void addTaskResult(@NonNull TaskResult taskResult) {
     //TODO Cache result to avoid this query
     ApplicationEntity appEntity = appDao.findByName(taskResult.getApplicationName());
     if (appEntity == null) {
