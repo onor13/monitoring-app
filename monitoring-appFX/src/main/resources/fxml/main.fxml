@@ -10,16 +10,13 @@
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="javafx.controllers.MainController"
-      prefHeight="400.0" prefWidth="600.0">
-    <HBox spacing="50">
-        <children>
-            <ComboBox fx:id="viewSelector"/>
-            <ToggleSwitch fx:id="updatesOnOff" text="ui update">
-                <style>
-                    -fx-font-weight: bold;
-                </style>
-            </ToggleSwitch>
-        </children>
-    </HBox>
-    <fx:include fx:id="tableView" source="taskResultsTable.fxml"></fx:include>
+      prefHeight="400.0" prefWidth="600.0" spacing="30">
+    <children>
+        <ToggleSwitch fx:id="updatesOnOff" text="ui update">
+            <style>
+                -fx-font-weight: bold;
+            </style>
+        </ToggleSwitch>
+        <fx:include fx:id="tasksResults" source="tasksResultsView.fxml"></fx:include>
+    </children>
 </VBox>

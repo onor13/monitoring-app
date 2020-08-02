@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import javafx.TasksResultsPresenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.datamodel.TaskResultModel;
@@ -17,7 +18,7 @@ import task.TaskResult;
 
 @Component
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
-public class TaskResultsTableController implements Initializable {
+public class TasksResultsTableController implements Initializable, TasksResultsPresenter {
 
   @FXML
   TableView<TaskResultModel> tableView;
@@ -43,6 +44,7 @@ public class TaskResultsTableController implements Initializable {
     tableView.setItems(tasksResults);
   }
 
+  @Override
   public void addTaskResult(TaskResult taskResult) {
     try {
       writeLock.lock();
@@ -54,6 +56,7 @@ public class TaskResultsTableController implements Initializable {
     }
   }
 
+  @Override
   public void reloadFrom(Iterable<TaskResult> newTasksResults) {
     try {
       writeLock.lock();

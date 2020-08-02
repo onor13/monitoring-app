@@ -1,5 +1,6 @@
 package javafx.controllers;
 
+import javafx.TasksResultsPresenter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,16 +8,17 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import org.springframework.stereotype.Component;
+import task.TaskResult;
 
 
 @Component
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "unchecked"})
-public class ChartController {
+public class TasksResultsChartController implements TasksResultsPresenter {
 
   @FXML
   public LineChart<String, Double> chart;
 
-  public ChartController() {
+  public TasksResultsChartController() {
   }
 
   /***
@@ -39,4 +41,11 @@ public class ChartController {
 
   }
 
+  @Override
+  public void addTaskResult(TaskResult taskResult) {
+  }
+
+  @Override
+  public void reloadFrom(Iterable<TaskResult> newTasksResults) {
+  }
 }
