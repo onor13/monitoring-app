@@ -9,9 +9,8 @@ public class TaskResultGenerator {
 
   static final AtomicInteger counter = new AtomicInteger();
   final transient Application app;
-  static final String group = "Medical";
 
-  public enum Category {
+  public enum Group {
     Fracture,
     Flu,
     Cancer,
@@ -24,7 +23,7 @@ public class TaskResultGenerator {
      * @param nb integer used for choosing a category
      * @return one of the existing Categories
      */
-    public static Category fromInteger(int nb) {
+    public static Group fromInteger(int nb) {
       switch (nb) {
         case 0:
           return Fracture;
@@ -48,9 +47,8 @@ public class TaskResultGenerator {
 
   public JsonTaskResult generateInstance() {
     JsonTaskResult tr = new JsonTaskResult(app);
-    String taskName = Category.fromInteger(getRandomBetweenRange(0, Category.values().length)).name()
-        + counter.incrementAndGet();
-    tr.setTaskName(taskName);
+    String group = Group.fromInteger(getRandomBetweenRange(0, Group.values().length)).name();
+    tr.setTaskName("give medicine for " + group);
     tr.setTaskGroup(group);
     tr.setTaskResultType(getResultTypeFromInt(getRandomBetweenRange(0, 10)));
     tr.setTaskStartTime(LocalDateTime.now());
