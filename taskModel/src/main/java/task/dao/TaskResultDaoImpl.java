@@ -63,6 +63,14 @@ public class TaskResultDaoImpl implements TaskResultDao {
     logger.atFine().log("TaskResult deleted with id %s", tr.getId());
   }
 
+  @Override
+  public long size() {
+    long rowCount = (long) sessionFactory.getCurrentSession().createQuery(
+        "SELECT count(*) from " + TaskResultEntity.TABLE_NAME).getSingleResult();
+    logger.atFine().log("row count of TaskResult table: " + rowCount);
+    return rowCount;
+  }
+
   public SessionFactory getSessionFactory() {
     return sessionFactory;
   }

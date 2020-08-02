@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import task.TaskResult;
 
 public interface TasksResultsStorage extends Iterable<TaskResult> {
-  int size();
+  long size();
 
   void addTaskResult(TaskResult taskResult);
 

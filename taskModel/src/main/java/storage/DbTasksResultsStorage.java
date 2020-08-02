@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
@@ -26,8 +25,8 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
   TaskResultDao taskResultDao;
 
   @Override
-  public int size() {
-    throw new NotYetImplementedException();
+  public long size() {
+    return taskResultDao.size();
   }
 
   @Override
@@ -46,7 +45,8 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
 
   @Override
   public boolean contains(TaskResult taskResult) {
-    throw new UnsupportedOperationException();
+    ApplicationEntity appEntity = appDao.findByName(taskResult.getApplicationName());
+    return taskResultDao.find(appEntity.getId(), taskResult.getTaskName(), taskResult.getTaskStartTime()) != null;
   }
 
   @Override
@@ -64,5 +64,13 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
     List<TaskResult> result = new ArrayList<>();
     appDao.findAllWithTasksResults().forEach(ae -> result.addAll(ae.getTasksResults()));
     return result.iterator();
+  }
+
+  public void setAppDao(ApplicationDao appDao) {
+    this.appDao = appDao;
+  }
+
+  public void setTaskResultDao(TaskResultDao taskResultDao) {
+    this.taskResultDao = taskResultDao;
   }
 }

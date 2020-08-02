@@ -14,7 +14,7 @@ public class InMemoryTasksResultStorage implements TasksResultsStorage {
   }
 
   @Override
-  public int size() {
+  public long size() {
     return taskResults.size();
   }
 

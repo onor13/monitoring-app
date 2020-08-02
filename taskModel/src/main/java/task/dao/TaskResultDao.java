@@ -14,4 +14,6 @@ public interface TaskResultDao {
   TaskResultEntity save(TaskResultEntity app);
 
   void delete(TaskResultEntity app);
+
+  long size();
 }

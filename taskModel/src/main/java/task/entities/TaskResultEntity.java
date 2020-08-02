@@ -38,7 +38,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
       "TaskResult.findById";
   public static final String FIND_TASK_RESULT_BY_APP_ID_TASK_NAME_TASK_START_TIME =
       "TaskResult.findByAppIdTaskNameTaskStartTime";
-  public static final String TABLE_NAME = "taskResult";
+  public static final String TABLE_NAME = "TaskResult";
   public static final String PARAM_APP_ID = "appId";
   public static final String PARAM_TASK_NAME = "taskName";
   public static final String PARAM_TASK_START_TIME = "taskStartTime";
