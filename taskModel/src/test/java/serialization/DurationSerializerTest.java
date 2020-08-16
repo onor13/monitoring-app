@@ -1,24 +1,24 @@
 package serialization;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import serializer.CustomDurationSerializer;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import serializer.CustomDurationSerializer;
 
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DurationSerializerTest {
   private ObjectMapper             mapper;
   private CustomDurationSerializer serializer;
 
-  @Before
+  @BeforeAll
   public void setup() {
     serializer = new CustomDurationSerializer();
     mapper = new ObjectMapper();
@@ -39,6 +39,6 @@ public class DurationSerializerTest {
     }
 
     String expectedSerializerDurationInMilliseconds = helper.getSerializedDurationValue();
-    Assert.assertEquals( "LocalDateTime serialization", jsonWriter.toString(), expectedSerializerDurationInMilliseconds );
+    assertEquals(jsonWriter.toString(), expectedSerializerDurationInMilliseconds, "LocalDateTime serialization");
   }
 }

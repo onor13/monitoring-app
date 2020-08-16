@@ -33,4 +33,8 @@ monitoring-appFX/build
 taskModel/build
 dummyAppToMonitor/build
 logTransfer/build
+inMemoryStorage/build
+dbStorage/build
+taskFiltering/build
+testHelper/build
 

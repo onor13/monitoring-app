@@ -1,5 +1,7 @@
 package serialization;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +10,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.time.LocalDateTime;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import serializer.CustomLocalDateTimeSerializer;
 
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
@@ -19,7 +20,7 @@ public class JsonLocalDateTimeSerializerTest {
   private ObjectMapper mapper;
   private CustomLocalDateTimeSerializer serializer;
 
-  @Before
+  @BeforeAll
   public void setup() {
     serializer = new CustomLocalDateTimeSerializer();
     mapper = new ObjectMapper();
@@ -42,13 +43,13 @@ public class JsonLocalDateTimeSerializerTest {
       jsonGenerator.close();
     }
     String ldcSerialized = jsonWriter.toString();
-    Assert.assertEquals( ldcSerialized, testObject.getLocalDateTimeStr() );
+    assertEquals(ldcSerialized, testObject.getLocalDateTimeStr(), "localDateTime serialization");
   }
 
   @Test
   public void ldcTest(){
     LocalDateTime ldc1 = LocalDateTime.of( 2020, 07, 12, 10, 00, 00 );
     LocalDateTime ldc2 = LocalDateTime.of( 2020, 07, 12, 10, 00, 00 );
-    Assert.assertEquals(ldc1.hashCode(), ldc2.hashCode());
+    assertEquals(ldc1.hashCode(), ldc2.hashCode(), "localDateTime");
   }
 }

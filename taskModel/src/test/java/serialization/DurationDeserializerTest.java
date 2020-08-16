@@ -1,18 +1,19 @@
 package serialization;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.time.Duration;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DurationDeserializerTest {
 
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeAll
   public void setup() {
     mapper = new ObjectMapper();
   }
@@ -22,8 +23,10 @@ public class DurationDeserializerTest {
     DurationSerializationHelper testObject = new DurationSerializationHelper();
     Duration expected = testObject.getDuration();
 
-    DurationSerializationHelper actualLocalDateTime = mapper.readValue("{\"" + testObject.getAttributeForSerializationName()+"\":" + testObject.getSerializedDurationValue()+ "}", DurationSerializationHelper.class);
-    Assert.assertEquals( expected.getSeconds(), actualLocalDateTime.getDuration().getSeconds() );
+    DurationSerializationHelper actualLocalDateTime = mapper.readValue(
+        "{\"" + testObject.getAttributeForSerializationName()+"\":" + testObject.getSerializedDurationValue()
+            + "}", DurationSerializationHelper.class);
+    assertEquals(expected.getSeconds(), actualLocalDateTime.getDuration().getSeconds(), "deserialization");
   }
 
 }
