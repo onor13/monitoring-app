@@ -17,6 +17,7 @@ processResources {
 
 dependencies {
     implementation project(':taskModel')
+    implementation project(':dbStorage')
     implementation project(':logTransfer')
 
     implementation "org.controlsfx:controlsfx:11.0.2"
@@ -44,6 +45,9 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
     implementation "org.springframework:spring-jdbc:$springVersion"
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-orm
+    implementation "org.springframework:spring-orm:$springVersion"
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
     implementation "org.springframework.boot:spring-boot-starter-parent:$springBootVersion"

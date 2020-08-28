@@ -93,14 +93,14 @@ public class TestDBConfig {
   @Bean
   public ApplicationDao applicationDao(){
     ApplicationDaoImpl appDao = new ApplicationDaoImpl();
-    appDao.setSessionFactory( sessionFactory() );
+    appDao.setSessionFactory(sessionFactory());
     return appDao;
   }
 
   @Bean
   public TaskResultDao taskResultDao(){
     TaskResultDaoImpl trDao = new TaskResultDaoImpl();
-    trDao.setSessionFactory( sessionFactory() );
+    trDao.setSessionFactory(sessionFactory());
     return trDao;
   }
 

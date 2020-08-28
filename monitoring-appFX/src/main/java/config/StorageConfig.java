@@ -1,4 +1,4 @@
-package task.config;
+package config;
 
 import com.google.common.flogger.FluentLogger;
 import java.io.IOException;
@@ -16,11 +16,14 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import storage.DbTasksResultsStorage;
+import storage.TasksResultsStorage;
+import task.config.CleanUp;
 
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db/jdbc.properties")
-public class DbConfig {
+public class StorageConfig {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
@@ -32,6 +35,12 @@ public class DbConfig {
   private transient String username;
   @Value("${password}")
   private transient String password;
+
+  @Bean
+  TasksResultsStorage tasksResultsStorage() {
+    TasksResultsStorage storage = new DbTasksResultsStorage();
+    return storage;
+  }
 
   @Bean
   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
