@@ -22,11 +22,13 @@ public class Runner  {
     ApplicationGenerator appGen = new ApplicationGenerator();
     Application app = appGen.generateInstance();
     TaskResultGenerator generator = new TaskResultGenerator(app);
-    for (int i = 0; i < 5; i++) {
+    int taskCounter = 1;
+    while (true) {
       JsonTaskResult tr = generator.generateInstance();
-      logger.atFine().log(String.format("Sending task %d: %s", i, tr.getTaskName()));
+      logger.atFine().log(String.format("Sending task %d: %s", taskCounter, tr.getTaskName()));
       lp.sendTaskResult(tr);
       Thread.sleep(1000);
+      ++taskCounter;
     }
   }
 }
