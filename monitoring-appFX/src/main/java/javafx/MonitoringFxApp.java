@@ -58,6 +58,7 @@ public class MonitoringFxApp extends Application {
 
     public StageReadyEvent(Stage source) {
       super(source);
+      source.setMaximized(true);
     }
   }
 }
