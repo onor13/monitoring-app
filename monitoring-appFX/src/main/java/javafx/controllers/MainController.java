@@ -9,8 +9,13 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,6 +35,9 @@ public class MainController
   @FXML
   TasksResultsViewController tasksResultsController;
 
+  @FXML
+  ComboBox<FilterType> filterTypeChoice;
+
   @Autowired
   TaskDataDistributor dataDistributor;
 
@@ -38,8 +46,13 @@ public class MainController
 
   Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
 
+  ObservableList<FilterType> filterTypes = FXCollections.observableArrayList(
+      FilterType.ApplicationName, FilterType.ResultType, FilterType.TaskGroup);
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    filterTypeChoice.setItems(filterTypes);
+    resetSelectionOnFilterTypes();
     updatesOnOff.setSelected(true);
     updatesOnOff.selectedProperty().addListener((observable, oldValue, newValue) -> {
       if (newValue == Boolean.TRUE) {
@@ -55,6 +68,17 @@ public class MainController
     });
   }
 
+  protected void reloadTasksResults() {
+    try {
+      writeLock.lock();
+      alreadyAddedTaskResults.clear();
+      dataDistributor.getAllTasksResults().forEach(tr -> alreadyAddedTaskResults.add(tr));
+      tasksResultsController.reloadFrom(alreadyAddedTaskResults);
+    } finally {
+      writeLock.unlock();
+    }
+  }
+
   @Override
   public void addTaskResult(TaskResult taskResult) {
     try {
@@ -68,14 +92,38 @@ public class MainController
     }
   }
 
-  protected void reloadTasksResults() {
-    try {
-      writeLock.lock();
-      alreadyAddedTaskResults.clear();
-      dataDistributor.getAllTasksResults().forEach(tr -> alreadyAddedTaskResults.add(tr));
-      tasksResultsController.reloadFrom(alreadyAddedTaskResults);
-    } finally {
-      writeLock.unlock();
+  @FXML
+  protected void handleAddFilterAction(ActionEvent event) {
+    logger.atInfo().log("Add filter button clicked " + event.getSource());
+    filterTypes.remove(filterTypeChoice.getValue());
+    resetSelectionOnFilterTypes();
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Not implemented yet");
+    alert.setContentText("Not supported functionality yet");
+    alert.show();
+  }
+
+  private void resetSelectionOnFilterTypes() {
+    if (filterTypes.size() > 0) {
+      filterTypeChoice.getSelectionModel().select(0);
     }
   }
+
+  public enum FilterType {
+    ApplicationName("Application name"), ResultType("Result type"), TaskGroup("Task group");
+
+    private String name;
+
+    FilterType(String theType) {
+      this.name = theType;
+    }
+
+    @Override
+    public String toString() {
+      return name;
+    }
+
+  }
+
+
 }

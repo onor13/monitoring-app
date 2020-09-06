@@ -18,5 +18,11 @@
             </style>
         </ToggleSwitch>
         <fx:include fx:id="tasksResults" source="tasksResultsView.fxml"></fx:include>
+        <HBox>
+            <children>
+                <ComboBox fx:id="filterTypeChoice"></ComboBox>
+                <Button text="Add filter" onAction="#handleAddFilterAction"></Button>
+            </children>
+        </HBox>
     </children>
 </VBox>
