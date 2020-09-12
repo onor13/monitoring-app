@@ -9,17 +9,20 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import javafx.TaskFilterType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.listeners.TaskFilterChangeListener;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import org.controlsfx.control.ToggleSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
+import task.TaskResultType;
 import view.Presenter;
 
 @Component
@@ -32,11 +35,16 @@ public class MainController
   @FXML
   ToggleSwitch updatesOnOff;
 
+  //For included controllers the name has to be fx:id from include followed by Controller
+  //Example  <fx:include fx:id="tasksResults" -> taskResultsController
   @FXML
   TasksResultsViewController tasksResultsController;
 
   @FXML
-  ComboBox<FilterType> filterTypeChoice;
+  TasksFiltersController tasksFiltersController;
+
+  @FXML
+  ComboBox<TaskFilterType> filterTypeChoice;
 
   @Autowired
   TaskDataDistributor dataDistributor;
@@ -46,12 +54,34 @@ public class MainController
 
   Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
 
-  ObservableList<FilterType> filterTypes = FXCollections.observableArrayList(
-      FilterType.ApplicationName, FilterType.ResultType, FilterType.TaskGroup);
+  ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
+      TaskFilterType.ApplicationName, TaskFilterType.ResultType, TaskFilterType.TaskGroup);
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     filterTypeChoice.setItems(filterTypes);
+    tasksFiltersController.addTaskFilterChangeListener(new TaskFilterChangeListener() {
+      @Override
+      public void onApplicationNameFilterChange(String applicationName) {
+        showNotImplementedAlert("Filter on applicationName");
+      }
+
+      @Override
+      public void onTaskGroupFilterChange(String taskGroupF) {
+        showNotImplementedAlert("Filter on taskGroup");
+      }
+
+      @Override
+      public void onTaskResultTypeFilterChange(TaskResultType taskResultType) {
+        showNotImplementedAlert("Filter on taskResultType");
+      }
+
+      @Override
+      public void onFilterRemove(TaskFilterType taskFilterType) {
+        filterTypeChoice.getItems().add(taskFilterType);
+        resetSelectionOnFilterTypes();
+      }
+    });
     resetSelectionOnFilterTypes();
     updatesOnOff.setSelected(true);
     updatesOnOff.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -66,6 +96,13 @@ public class MainController
         dataDistributor.disconnectFromUI();
       }
     });
+  }
+
+  private void showNotImplementedAlert(String feature) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Not implemented yet");
+    alert.setContentText(String.format("Feature %s is not supported", feature));
+    alert.show();
   }
 
   protected void reloadTasksResults() {
@@ -95,12 +132,10 @@ public class MainController
   @FXML
   protected void handleAddFilterAction(ActionEvent event) {
     logger.atInfo().log("Add filter button clicked " + event.getSource());
-    filterTypes.remove(filterTypeChoice.getValue());
+    TaskFilterType selectedFilterType = filterTypeChoice.getValue();
+    tasksFiltersController.addFilter(selectedFilterType);
+    filterTypes.remove(selectedFilterType);
     resetSelectionOnFilterTypes();
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Not implemented yet");
-    alert.setContentText("Not supported functionality yet");
-    alert.show();
   }
 
   private void resetSelectionOnFilterTypes() {
@@ -108,22 +143,5 @@ public class MainController
       filterTypeChoice.getSelectionModel().select(0);
     }
   }
-
-  public enum FilterType {
-    ApplicationName("Application name"), ResultType("Result type"), TaskGroup("Task group");
-
-    private String name;
-
-    FilterType(String theType) {
-      this.name = theType;
-    }
-
-    @Override
-    public String toString() {
-      return name;
-    }
-
-  }
-
 
 }

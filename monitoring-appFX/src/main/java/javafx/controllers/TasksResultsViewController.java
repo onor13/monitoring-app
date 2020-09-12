@@ -1,5 +1,6 @@
 package javafx.controllers;
 
+import com.google.common.flogger.FluentLogger;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.TasksResultsPresenter;
@@ -12,6 +13,8 @@ import task.TaskResult;
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class TasksResultsViewController implements Initializable, TasksResultsPresenter {
 
+  private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+
   @FXML
   TasksResultsTableController tableViewController;
 
@@ -20,7 +23,7 @@ public class TasksResultsViewController implements Initializable, TasksResultsPr
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
+    logger.atInfo().log("initialize " + TasksResultsViewController.class.getSimpleName());
   }
 
   @Override
