@@ -191,6 +191,7 @@ public class TasksFiltersController implements Initializable {
       taskResultTypeIndex.put(1, TaskResultType.SUCCESS);
       taskResultTypeIndex.put(2, TaskResultType.ERROR);
       taskResultTypeIndex.put(3, TaskResultType.WARNING);
+      filterValue.getItems().add("Any");
       filterValue.getItems().addAll(taskResultTypeIndex.values().stream().map(
           taskResultType -> taskResultType.toString()).collect(Collectors.toList()));
       filterValue.getSelectionModel().select(0);
