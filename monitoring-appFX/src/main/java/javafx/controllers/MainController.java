@@ -1,8 +1,10 @@
 package javafx.controllers;
 
 import com.google.common.flogger.FluentLogger;
+import converters.LocalDateTimeConverter;
 import distributors.TaskDataDistributor;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class MainController
     implements Initializable, Presenter {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private static final LocalDateTimeConverter formatter = new LocalDateTimeConverter();
 
   @FXML
   ToggleSwitch updatesOnOff;
@@ -55,7 +58,8 @@ public class MainController
   Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
 
   ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
-      TaskFilterType.ApplicationName, TaskFilterType.ResultType, TaskFilterType.TaskGroup);
+      TaskFilterType.ApplicationName, TaskFilterType.ResultType,
+      TaskFilterType.TaskGroup, TaskFilterType.TaskStartTime);
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -64,16 +68,25 @@ public class MainController
       @Override
       public void onApplicationNameFilterChange(String applicationName) {
         showNotImplementedAlert("Filter on applicationName");
+        logger.atInfo().log("New applicationName filter %s", applicationName);
       }
 
       @Override
-      public void onTaskGroupFilterChange(String taskGroupF) {
+      public void onTaskGroupFilterChange(String taskGroup) {
         showNotImplementedAlert("Filter on taskGroup");
+        logger.atInfo().log("New taskGroup filter %s", taskGroup);
       }
 
       @Override
       public void onTaskResultTypeFilterChange(TaskResultType taskResultType) {
-        showNotImplementedAlert("Filter on taskResultType");
+        showNotImplementedAlert("Filter on taskResultType ");
+        logger.atInfo().log("New taskResultType filter %s", taskResultType.toString());
+      }
+
+      @Override
+      public void onTaskStartTimeFilterChange(LocalDateTime dateTime) {
+        showNotImplementedAlert("Filter on taskStartTime");
+        logger.atInfo().log("New dateTime filter %s", formatter.format(dateTime));
       }
 
       @Override

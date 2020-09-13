@@ -1,7 +1,8 @@
 package javafx;
 
 public enum TaskFilterType {
-  ApplicationName("Application name"), ResultType("Result type"), TaskGroup("Task group");
+  ApplicationName("Application name"), ResultType("Result type"),
+  TaskGroup("Task group"), TaskStartTime("Task start datetime");
 
   private String name;
 

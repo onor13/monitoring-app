@@ -2,6 +2,7 @@ package javafx.controllers;
 
 import com.google.common.flogger.FluentLogger;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.listeners.DateTimeChangeListener;
 import javafx.listeners.TaskFilterChangeListener;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -26,6 +28,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.view.DateTimePicker;
 import org.springframework.stereotype.Component;
 import task.TaskResultType;
 
@@ -43,6 +46,7 @@ public class TasksFiltersController implements Initializable {
   private final TaskFilterTypeViewPane applicationNameFilterView = new ApplicationNameFilterView();
   private final TaskFilterTypeViewPane taskGroupFilterView = new TaskGroupFilterView();
   private final TaskFilterTypeViewPane taskResultTypeView  = new TaskResultTypeView();
+  private final TaskStartTimeTypeView taskStartTimeTypeView = new TaskStartTimeTypeView();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -52,6 +56,12 @@ public class TasksFiltersController implements Initializable {
 
   public void addTaskFilterChangeListener(TaskFilterChangeListener taskFilterChangeListener) {
     changeListeners.add(taskFilterChangeListener);
+    taskStartTimeTypeView.addChangeListener(new DateTimeChangeListener() {
+      @Override
+      public void onDateTimeChange(LocalDateTime dateTime) {
+        taskFilterChangeListener.onTaskStartTimeFilterChange(dateTime);
+      }
+    });
   }
 
   /***
@@ -66,6 +76,8 @@ public class TasksFiltersController implements Initializable {
       pane = taskGroupFilterView;
     } else if (filterType == TaskFilterType.ResultType) {
       pane = taskResultTypeView;
+    } else if (filterType == TaskFilterType.TaskStartTime) {
+      pane = taskStartTimeTypeView;
     } else {
       showError("Not implemented yet", String.format("Filter %s is not supported", filterType.toString()));
       return;
@@ -212,6 +224,24 @@ public class TasksFiltersController implements Initializable {
     @Override
     public TaskFilterType getFilterType() {
       return TaskFilterType.ResultType;
+    }
+  }
+
+  class TaskStartTimeTypeView extends TaskFilterTypeView {
+    final DateTimePicker dateTimePicker = new DateTimePicker();
+
+    protected TaskStartTimeTypeView() {
+      super();
+      addExtraNode(dateTimePicker);
+    }
+
+    public void addChangeListener(DateTimeChangeListener changeListener) {
+      dateTimePicker.addChangeListener(changeListener);
+    }
+
+    @Override
+    public TaskFilterType getFilterType() {
+      return TaskFilterType.TaskStartTime;
     }
   }
 
