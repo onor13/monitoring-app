@@ -3,13 +3,12 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.StackedBarChart?>
-<?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      spacing="30"
-      fx:controller="javafx.controllers.TasksResultsChartController">
-    <children>
-        <StackedBarChart prefHeight="600" fx:id="chart" title="tasks by group" animated="false">
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="javafx.controllers.TasksResultsChartController">
+        <StackedBarChart AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+                         fx:id="chart" title="tasks by group" animated="false">
             <xAxis>
                 <CategoryAxis label="Groups" animated="false"/>
             </xAxis>
@@ -17,6 +16,5 @@
                 <NumberAxis label="Total amount" animated="false" tickUnit="1"/>
             </yAxis>
         </StackedBarChart>
-    </children>
 
-</VBox>
+</AnchorPane>

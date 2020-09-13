@@ -5,15 +5,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import org.controlsfx.control.ToggleSwitch?>
+<?import javafx.geometry.Insets?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="javafx.controllers.MainController"
-      prefHeight="400.0" prefWidth="600.0" spacing="30">
+      prefHeight="600.0" prefWidth="1000.0" spacing="30">
     <children>
-        <ToggleSwitch fx:id="updatesOnOff" text="ui update">
+        <ToggleSwitch fx:id="updatesOnOff" text="ui refresh">
             <style>
                 -fx-font-weight: bold;
             </style>
+            <VBox.margin>
+                <Insets top="20" left="20"/>
+            </VBox.margin>
         </ToggleSwitch>
         <fx:include fx:id="tasksResults" source="tasksResultsView.fxml"></fx:include>
         <HBox>
