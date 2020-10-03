@@ -12,7 +12,7 @@ import task.TaskResultType;
 public class MockFakeTaskResult
     extends FakeTaskResult {
 
-  private static Application app = new FakeApplication();
+  private static Application app = new FakeApplication("doctor");
   private static AtomicInteger seqNumber = new AtomicInteger();
 
   public MockFakeTaskResult() {

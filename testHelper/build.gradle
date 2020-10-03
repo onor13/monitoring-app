@@ -31,3 +31,7 @@ dependencies {
 
     implementation "org.springframework:spring-test:$springVersion"
 }
+
+test {
+    useJUnitPlatform()
+}
