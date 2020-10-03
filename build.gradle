@@ -73,7 +73,6 @@ subprojects {
 		implementation "org.springframework:spring-core:$springVersion"
 		// https://mvnrepository.com/artifact/org.springframework/spring-context
 		implementation "org.springframework:spring-context:$springVersion"
-
 	}
 
 }

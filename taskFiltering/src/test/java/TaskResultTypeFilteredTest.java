@@ -1,3 +1,6 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import filter.TaskResultTypeFiltered;
 import java.util.Iterator;
 import mock.MockFakeTaskResult;
@@ -8,14 +11,11 @@ import storage.TasksResultsStorage;
 import task.TaskResult;
 import task.TaskResultType;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
 public class TaskResultTypeFilteredTest {
 
   @ParameterizedTest
-  @EnumSource(value = TaskResultType.class, names = {"SUCCESS, ERROR"})
+  @EnumSource(value = TaskResultType.class, names = {"SUCCESS", "ERROR"})
   public void testResultTypeFiltering(TaskResultType resultType){
     TasksResultsStorage tasksResultsStorage = new MockTasksResultsStorage();
     tasksResultsStorage.addTaskResult(new MockFakeTaskResult(resultType));
