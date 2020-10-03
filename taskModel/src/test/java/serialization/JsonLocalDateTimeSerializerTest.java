@@ -17,11 +17,11 @@ import serializer.CustomLocalDateTimeSerializer;
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class JsonLocalDateTimeSerializerTest {
 
-  private ObjectMapper mapper;
-  private CustomLocalDateTimeSerializer serializer;
+  private static ObjectMapper mapper;
+  private static CustomLocalDateTimeSerializer serializer;
 
   @BeforeAll
-  public void setup() {
+  public static void setup() {
     serializer = new CustomLocalDateTimeSerializer();
     mapper = new ObjectMapper();
 

@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class LocalDateTimeDeserializerTest {
 
-  private ObjectMapper mapper;
+  private static ObjectMapper mapper;
 
   @BeforeAll
-  public void setup() {
+  public static void setup() {
     mapper = new ObjectMapper();
   }
 

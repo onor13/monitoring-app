@@ -15,11 +15,11 @@ import serializer.CustomDurationSerializer;
 
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class DurationSerializerTest {
-  private ObjectMapper             mapper;
-  private CustomDurationSerializer serializer;
+  private static ObjectMapper             mapper;
+  private static CustomDurationSerializer serializer;
 
   @BeforeAll
-  public void setup() {
+  public static void setup() {
     serializer = new CustomDurationSerializer();
     mapper = new ObjectMapper();
   }
