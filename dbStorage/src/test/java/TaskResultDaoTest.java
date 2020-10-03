@@ -1,10 +1,15 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import config.DBInitializer;
 import config.TestDBConfig;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -15,18 +20,13 @@ import task.dao.TaskResultDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
 public class TaskResultDaoTest {
   private GenericApplicationContext ctx;
   private TaskResultDao  taskResultDao;
   private ApplicationDao appDao;
 
-  @BeforeAll
+  @BeforeEach
   public void setUp(){
     ctx = new AnnotationConfigApplicationContext( TestDBConfig.class );
     taskResultDao = ctx.getBean(TaskResultDao.class);
