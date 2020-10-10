@@ -39,7 +39,8 @@ public class TaskResultDaoTest {
   @Test
   public void testFindAll(){
     List<TaskResultEntity> taskResultEntities = taskResultDao.findAll();
-    assertFalse(taskResultEntities.isEmpty(), "at least one taskResult should be present");
+    assertEquals( taskResultEntities.size(), TestDatabaseInitializer.totalNumberOfTasks,
+        "all tasks results should be present");
     for( TaskResultEntity tre : taskResultEntities ){
       //make sure that a join with Application table was applied
       assertNotNull(tre.getApplicationStartTime(),  "applicationStartTime != null");
@@ -54,15 +55,15 @@ public class TaskResultDaoTest {
 
   @Test
   public void testFindByAppIdTaskNameTaskStartTime(){
-    String taskName = TestDatabaseInitializer.firstTaskName;
+    String taskName = TestDatabaseInitializer.firstDoctorAppTaskName;
     LocalDateTime taskStartTime = TestDatabaseInitializer.firstTaskStartTime;
-    TaskResultEntity tre = taskResultDao.find( TestDatabaseInitializer.appName, taskName, taskStartTime );
+    TaskResultEntity tre = taskResultDao.find( TestDatabaseInitializer.doctorAppName, taskName, taskStartTime );
     assertNotNull(tre, "taskResult find result");
   }
 
   @Test
   public void testInsert(){
-    ApplicationEntity app = appDao.findByName(TestDatabaseInitializer.appName);
+    ApplicationEntity app = appDao.findByName(TestDatabaseInitializer.doctorAppName);
     TaskResultEntity trt = new TaskResultEntity();
     String expectedTaskName = "testTask";
     trt.setTaskName( expectedTaskName );
