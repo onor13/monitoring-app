@@ -1,10 +1,12 @@
+package dao;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import config.DBInitializer;
 import config.TestDBConfig;
+import config.TestDatabaseInitializer;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,15 +54,15 @@ public class TaskResultDaoTest {
 
   @Test
   public void testFindByAppIdTaskNameTaskStartTime(){
-    String taskName = DBInitializer.firstTaskName;
-    LocalDateTime taskStartTime = DBInitializer.firstTaskStartTime;
-    TaskResultEntity tre = taskResultDao.find( DBInitializer.appName, taskName, taskStartTime );
+    String taskName = TestDatabaseInitializer.firstTaskName;
+    LocalDateTime taskStartTime = TestDatabaseInitializer.firstTaskStartTime;
+    TaskResultEntity tre = taskResultDao.find( TestDatabaseInitializer.appName, taskName, taskStartTime );
     assertNotNull(tre, "taskResult find result");
   }
 
   @Test
   public void testInsert(){
-    ApplicationEntity app = appDao.findByName(DBInitializer.appName);
+    ApplicationEntity app = appDao.findByName(TestDatabaseInitializer.appName);
     TaskResultEntity trt = new TaskResultEntity();
     String expectedTaskName = "testTask";
     trt.setTaskName( expectedTaskName );

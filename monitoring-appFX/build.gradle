@@ -19,6 +19,7 @@ dependencies {
     implementation project(':taskModel')
     implementation project(':dbStorage')
     implementation project(':logTransfer')
+    implementation project(':taskFiltering')
 
     implementation "org.controlsfx:controlsfx:11.0.2"
 
@@ -94,7 +95,7 @@ javafx {
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
     maxHeapSize = '1G'
 }
 
