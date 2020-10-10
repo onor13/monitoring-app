@@ -23,10 +23,11 @@ public class SingleTaskResultFilteringSystem {
     singleTaskResultFilterByResultType.addAcceptedResultType(taskResultType);
   }
 
-  public void removeApplicationNameFilter(){
+  public void removeApplicationNameFilter() {
     singeTaskResultFilterByAppName.resetFilter();
   }
-  public void removeTaskResultTypeFilter(){
+
+  public void removeTaskResultTypeFilter() {
     singleTaskResultFilterByResultType.resetFilter();
   }
 

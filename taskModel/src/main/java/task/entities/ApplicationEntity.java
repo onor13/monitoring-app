@@ -33,6 +33,7 @@ import task.TaskResult;
 public class ApplicationEntity implements Application {
 
   public static final String TABLE_NAME = "application";
+  public static final String CRITERIA_NAME = "name";
   public static final String FIND_APPLICATION_BY_NAME = "Application.findByName";
   public static final String FIND_ALL_WITH_TASKS_RESULTS = "Application.findAllWithTasksResults";
   private static final long serialVersionUID = -5884907756474896718L;

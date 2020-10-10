@@ -48,6 +48,9 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   public static final String PARAM_APP_NAME = "appName";
   public static final String PARAM_TASK_NAME = "taskName";
   public static final String PARAM_TASK_START_TIME = "taskStartTime";
+  public static final String CRITERIA_APPLICATION = "application";
+  public static final String CRITERIA_TASK_RESULT_TYPE = "taskResultType";
+  public static final String CRITERIA_TASK_GROUP = "taskGroup";
   private static final long serialVersionUID = -4760477593367753944L;
 
   @ManyToOne

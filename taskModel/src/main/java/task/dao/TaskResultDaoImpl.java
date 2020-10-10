@@ -4,11 +4,22 @@ import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.LazyArgs;
 import converters.LocalDateTimeConverter;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import task.criteria.FilterCriteria;
+import task.criteria.FilterCriteriaType;
+import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 
@@ -20,6 +31,50 @@ public class TaskResultDaoImpl implements TaskResultDao {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
   private SessionFactory sessionFactory;
   private final transient LocalDateTimeConverter ldcFormatter = new LocalDateTimeConverter();
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<TaskResultEntity> findByCriteria(Collection<FilterCriteria> criteria) {
+    logger.atFine().log("find taskResult by critiria: %s",
+        LazyArgs.lazy(() -> criteria.stream().map(cr ->
+            String.format("criteriaType: %s, value: %s", cr.getType().toString(), cr.getCriteriaValue().toString()))
+            .collect(Collectors.joining(","))));
+    if (criteria.isEmpty()) {
+      return findAll();
+    }
+
+    CriteriaBuilder criteriaBuilder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+    CriteriaQuery<TaskResultEntity> criteriaQuery = criteriaBuilder.createQuery(TaskResultEntity.class);
+    Root<TaskResultEntity> root = criteriaQuery.from(TaskResultEntity.class);
+    Predicate[] predicates = createPredicates(criteria, root, criteriaBuilder);
+    criteriaQuery.select(root).where(predicates);
+    return sessionFactory.getCurrentSession().createQuery(criteriaQuery).getResultList();
+  }
+
+  private Predicate[] createPredicates(Collection<FilterCriteria> criteria,
+                                       Root<TaskResultEntity> root, CriteriaBuilder criteriaBuilder) {
+    Predicate[] predicates = new Predicate[criteria.size()];
+    Iterator<FilterCriteria> criteriaIterator = criteria.iterator();
+    int predicateIndex = 0;
+    while (criteriaIterator.hasNext()) {
+      predicates[predicateIndex] = predicateFromCriteria(criteriaIterator.next(), root, criteriaBuilder);
+      ++predicateIndex;
+    }
+    return predicates;
+  }
+
+  private Predicate predicateFromCriteria(FilterCriteria criteria,
+                                          Root<TaskResultEntity> root, CriteriaBuilder criteriaBuilder) {
+    if (criteria.getType() == FilterCriteriaType.ApplicationName) {
+      return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_APPLICATION)
+          .get(ApplicationEntity.CRITERIA_NAME), criteria.getCriteriaValue());
+    } else if (criteria.getType() == FilterCriteriaType.ResultType) {
+      return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_TASK_RESULT_TYPE), criteria.getCriteriaValue());
+    } else if (criteria.getType() == FilterCriteriaType.TaskGroup) {
+      return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_TASK_GROUP), criteria.getCriteriaValue());
+    }
+    throw new NotYetImplementedException("not supported criteria type " + criteria.getType().name());
+  }
 
   @Override
   @Transactional(readOnly = true)

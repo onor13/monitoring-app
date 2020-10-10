@@ -1,10 +1,15 @@
 package task.dao;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import task.criteria.FilterCriteria;
 import task.entities.TaskResultEntity;
 
 public interface TaskResultDao {
+
+  List<TaskResultEntity> findByCriteria(Collection<FilterCriteria> criteria);
+
   List<TaskResultEntity> findAll();
 
   TaskResultEntity findById(Long id);
