@@ -121,6 +121,14 @@ public class TasksFiltersController implements Initializable {
     void updateLabel();
 
     TaskFilterType getFilterType();
+
+    void resetView();
+  }
+
+  protected final void removePane(TaskFilterTypeViewPane pane) {
+    pane.resetView();
+    tasksFilters.getItems().remove(pane);
+    changeListeners.stream().forEach(cl -> cl.onFilterRemove(pane.getFilterType()));
   }
 
   abstract class TaskFilterTypeView implements TaskFilterTypeViewPane {
@@ -135,8 +143,7 @@ public class TasksFiltersController implements Initializable {
         Optional<TaskFilterTypeViewPane> paneToRemove = tasksFilters.getItems().stream()
             .filter(pane -> pane.getFilterType() == getFilterType()).findFirst();
         if (paneToRemove.isPresent()) {
-          tasksFilters.getItems().remove(paneToRemove.get());
-          changeListeners.stream().forEach(cl -> cl.onFilterRemove(paneToRemove.get().getFilterType()));
+          removePane(paneToRemove.get());
         }
       });
       hbox.getChildren().addAll(button, label);
@@ -178,6 +185,11 @@ public class TasksFiltersController implements Initializable {
       });
       addExtraNode(filterValue);
     }
+
+    @Override
+    public void resetView() {
+      filterValue.textProperty().setValue("");
+    }
   }
 
   class ApplicationNameFilterView extends TaskTextFilterTypeView {
@@ -206,7 +218,7 @@ public class TasksFiltersController implements Initializable {
       filterValue.getItems().add("Any");
       filterValue.getItems().addAll(taskResultTypeIndex.values().stream().map(
           taskResultType -> taskResultType.toString()).collect(Collectors.toList()));
-      filterValue.getSelectionModel().select(0);
+      resetSelection();
       filterValue.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -225,6 +237,15 @@ public class TasksFiltersController implements Initializable {
     public TaskFilterType getFilterType() {
       return TaskFilterType.ResultType;
     }
+
+    private final void resetSelection() {
+      filterValue.getSelectionModel().select(0);
+    }
+
+    @Override
+    public void resetView() {
+      resetSelection();
+    }
   }
 
   class TaskStartTimeTypeView extends TaskFilterTypeView {
@@ -242,6 +263,11 @@ public class TasksFiltersController implements Initializable {
     @Override
     public TaskFilterType getFilterType() {
       return TaskFilterType.TaskStartTime;
+    }
+
+    @Override
+    public void resetView() {
+      dateTimePicker.getEditor().clear();
     }
   }
 
