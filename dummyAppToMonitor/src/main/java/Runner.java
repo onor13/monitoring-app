@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import producers.LogProducer;
 import producers.QueueLogProducer;
-import task.Application;
 import task.JsonTaskResult;
 
 public class Runner  {
@@ -23,9 +22,6 @@ public class Runner  {
   public static void main(String[] args) throws InterruptedException {
     ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
     LogProducer lp = context.getBean(QueueLogProducer.class);
-
-    Application app2 = appGen.generateInstance();
-    TaskResultGenerator generator2 = new TaskResultGenerator(app2);
     int taskCounter = 1;
     while (true) {
       JsonTaskResult tr = generateTask();
@@ -36,9 +32,9 @@ public class Runner  {
     }
   }
 
-  public static JsonTaskResult generateTask(){
-     int random = getRandomNumberUsingNextInt(0, 10);
-     return random > 5 ? generator1.generateInstance() : generator2.generateInstance();
+  public static JsonTaskResult generateTask() {
+    int random = getRandomNumberUsingNextInt(0, 10);
+    return random > 5 ? generator1.generateInstance() : generator2.generateInstance();
   }
 
   private static int getRandomNumberUsingNextInt(int min, int max) {
