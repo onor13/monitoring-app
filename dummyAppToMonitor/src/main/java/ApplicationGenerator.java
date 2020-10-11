@@ -9,8 +9,12 @@ public class ApplicationGenerator {
   static final AtomicInteger counter = new AtomicInteger();
 
   public Application generateInstance() {
+    return createApplication("doctor" + counter.incrementAndGet());
+  }
+
+  public Application createApplication(String applicationName) {
     Application app = new JsonApplication(
-        "doctor" + counter.incrementAndGet(),
+        applicationName,
         LocalDateTime.now().minus(14, ChronoUnit.MINUTES));
     return app;
   }
