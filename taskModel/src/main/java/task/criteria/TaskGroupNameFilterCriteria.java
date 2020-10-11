@@ -1,5 +1,7 @@
 package task.criteria;
 
+import task.TaskResult;
+
 public class TaskGroupNameFilterCriteria implements FilterCriteria<String> {
 
   private final transient String groupName;
@@ -16,6 +18,11 @@ public class TaskGroupNameFilterCriteria implements FilterCriteria<String> {
   @Override
   public String getCriteriaValue() {
     return groupName;
+  }
+
+  @Override
+  public boolean isAccepted(TaskResult taskResult) {
+    return groupName.equals(taskResult.getTaskGroup());
   }
 
   @Override

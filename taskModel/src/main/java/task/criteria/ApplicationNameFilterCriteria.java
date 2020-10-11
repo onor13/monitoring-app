@@ -1,5 +1,7 @@
 package task.criteria;
 
+import task.TaskResult;
+
 public class ApplicationNameFilterCriteria implements FilterCriteria<String> {
 
   final transient String applicationName;
@@ -16,6 +18,11 @@ public class ApplicationNameFilterCriteria implements FilterCriteria<String> {
   @Override
   public String getCriteriaValue() {
     return applicationName;
+  }
+
+  @Override
+  public boolean isAccepted(TaskResult taskResult) {
+    return taskResult.getApplicationName().equals(applicationName);
   }
 
   @Override

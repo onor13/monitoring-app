@@ -1,5 +1,6 @@
 package task.criteria;
 
+import task.TaskResult;
 import task.TaskResultType;
 
 public class TaskResultTypeFilterCriteria implements FilterCriteria<TaskResultType> {
@@ -18,6 +19,11 @@ public class TaskResultTypeFilterCriteria implements FilterCriteria<TaskResultTy
   @Override
   public TaskResultType getCriteriaValue() {
     return taskResultType;
+  }
+
+  @Override
+  public boolean isAccepted(TaskResult taskResult) {
+    return taskResultType.equals(taskResult.getTaskResultType());
   }
 
   @Override
