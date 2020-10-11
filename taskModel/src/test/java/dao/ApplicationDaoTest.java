@@ -2,7 +2,6 @@ package dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -11,28 +10,25 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import task.TaskResultType;
 import task.dao.ApplicationDao;
 import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes=TestDBConfig.class, loader=AnnotationConfigContextLoader.class)
 public class ApplicationDaoTest {
 
-  private GenericApplicationContext ctx;
+  @Autowired
   private ApplicationDao            appDao;
-
-  @BeforeEach
-  public void setUp(){
-    ctx = new AnnotationConfigApplicationContext( TestDBConfig.class );
-    appDao = ctx.getBean(ApplicationDao.class);
-    assertNotNull(appDao, "ApplicationDao should be initalizer");
-  }
 
   @Test
   public void testFindAll(){

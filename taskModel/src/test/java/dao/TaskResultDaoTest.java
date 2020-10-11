@@ -14,8 +14,12 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import task.TaskResult;
 import task.TaskResultType;
 import task.criteria.ApplicationNameFilterCriteria;
@@ -28,6 +32,8 @@ import task.entities.ApplicationEntity;
 import task.entities.TaskResultEntity;
 
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes=TestDBConfig.class, loader= AnnotationConfigContextLoader.class)
 public class TaskResultDaoTest {
   private GenericApplicationContext ctx;
   private TaskResultDao  taskResultDao;
