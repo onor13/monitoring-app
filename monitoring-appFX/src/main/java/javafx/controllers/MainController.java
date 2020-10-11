@@ -66,6 +66,7 @@ public class MainController
   ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
       TaskFilterType.ApplicationName, TaskFilterType.ResultType,
       TaskFilterType.TaskGroup, TaskFilterType.TaskStartTime);
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     filteringSystem.addChangeListener(new FilterChangeListener() {
@@ -84,8 +85,8 @@ public class MainController
 
       @Override
       public void onTaskGroupFilterChange(String taskGroup) {
-        showNotImplementedAlert("Filter on taskGroup");
         logger.atInfo().log("New taskGroup filter %s", taskGroup);
+        filteringSystem.updateFilterByTaskGroupName(taskGroup);
       }
 
       @Override
@@ -129,6 +130,8 @@ public class MainController
       filteringSystem.removeApplicationNameFilter();
     } else if (taskFilterType == TaskFilterType.ResultType) {
       filteringSystem.removeTaskResultTypeFilter();
+    } else if (taskFilterType == TaskFilterType.TaskGroup) {
+      filteringSystem.removeTaskGroupNameFilter();
     } else {
       showNotImplementedAlert(String.format("removing filter %s is not supported"));
     }

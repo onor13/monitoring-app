@@ -1,6 +1,7 @@
 package filter;
 
 import filter.single.SingeTaskResultFilterByAppName;
+import filter.single.SingleTaskResultFilterByGroupName;
 import filter.single.SingleTaskResultFilterByResultType;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +12,7 @@ import task.TaskResultType;
 import task.criteria.ApplicationNameFilterCriteria;
 import task.criteria.FilterCriteria;
 import task.criteria.FilterCriteriaType;
+import task.criteria.TaskGroupNameFilterCriteria;
 import task.criteria.TaskResultTypeFilterCriteria;
 
 @Component
@@ -22,12 +24,24 @@ public class TaskResultFilteringSystem {
   @Autowired
   private transient SingleTaskResultFilterByResultType singleTaskResultFilterByResultType;
 
+  @Autowired
+  private transient SingleTaskResultFilterByGroupName singleTaskResultFilterByGroupName;
+
   private final transient Collection<FilterChangeListener> filterChangeListeners = new ArrayList<>();
 
   private final Collection<FilterCriteria> filterCriteria = new ArrayList<>();
 
   public void addChangeListener(FilterChangeListener filterChangeListener) {
     filterChangeListeners.add(filterChangeListener);
+  }
+
+  public void updateFilterByTaskGroupName(String taskGroupName) {
+    singleTaskResultFilterByGroupName.setTaskGroupFilter(taskGroupName);
+
+    removeFilterCriteria(FilterCriteriaType.TaskGroup);
+    filterCriteria.add(new TaskGroupNameFilterCriteria(taskGroupName));
+    filterChangeListeners.stream().forEach(filterChangeListener ->
+        filterChangeListener.onFilterChange(FilterCriteriaType.TaskGroup));
   }
 
   public void updateFilterByAppName(String applicationName) {
@@ -54,6 +68,13 @@ public class TaskResultFilteringSystem {
     removeFilterCriteria(FilterCriteriaType.ApplicationName);
     filterChangeListeners.stream().forEach(filterChangeListener ->
         filterChangeListener.onFilterChange(FilterCriteriaType.ApplicationName));
+  }
+
+  public void removeTaskGroupNameFilter() {
+    singleTaskResultFilterByGroupName.resetFilter();
+    removeFilterCriteria(FilterCriteriaType.TaskGroup);
+    filterChangeListeners.stream().forEach(filterChangeListener ->
+        filterChangeListener.onFilterChange(FilterCriteriaType.TaskGroup));
   }
 
   public void removeTaskResultTypeFilter() {
