@@ -45,6 +45,7 @@ public class TasksResultsTableController implements Initializable, TasksResultsP
 
   @Override
   public void reloadFrom(Iterable<TaskResult> newTasksResults) {
+    tasksResults.clear();
     newTasksResults.forEach(tr -> tasksResults.add(new TaskResultModel(tr)));
   }
 }

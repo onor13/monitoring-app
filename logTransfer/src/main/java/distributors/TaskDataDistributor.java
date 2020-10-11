@@ -1,6 +1,7 @@
 package distributors;
 
 import com.google.common.flogger.FluentLogger;
+import java.util.Collection;
 import java.util.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import storage.TasksResultsStorage;
 import task.TaskDataConnector;
 import task.TaskResult;
+import task.criteria.FilterCriteria;
 import view.Presenter;
 
 @Component
@@ -59,7 +61,11 @@ public class TaskDataDistributor {
   }
 
   public Iterable<TaskResult> getAllTasksResults() {
-    return this.resultsStorage;
+    return resultsStorage;
+  }
+
+  public Collection<TaskResult> getFilteredTasksResults(Collection<FilterCriteria> criteria) {
+    return resultsStorage.filter(criteria);
   }
 
   public void disconnectFromUI() {

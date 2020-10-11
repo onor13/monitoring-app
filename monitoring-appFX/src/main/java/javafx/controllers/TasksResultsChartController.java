@@ -89,6 +89,7 @@ public class TasksResultsChartController implements TasksResultsPresenter {
   private void updateDataSeries(
       Map<String, Integer> numberOfTasksResultsByGroup,
       XYChart.Series<String, Integer> dataSeries) {
+    dataSeries.getData().clear();
     for (Map.Entry<String, Integer> entry : numberOfTasksResultsByGroup.entrySet()) {
       Platform.runLater(
           () -> {

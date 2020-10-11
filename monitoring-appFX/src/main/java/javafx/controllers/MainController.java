@@ -3,6 +3,8 @@ package javafx.controllers;
 import com.google.common.flogger.FluentLogger;
 import converters.LocalDateTimeConverter;
 import distributors.TaskDataDistributor;
+import filter.FilterChangeListener;
+import filter.TaskResultFilteringSystem;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
 import task.TaskResultType;
+import task.criteria.FilterCriteriaType;
 import view.Presenter;
 
 @Component
@@ -52,6 +55,9 @@ public class MainController
   @Autowired
   TaskDataDistributor dataDistributor;
 
+  @Autowired
+  TaskResultFilteringSystem filteringSystem;
+
   ReadWriteLock lock = new ReentrantReadWriteLock();
   Lock writeLock = lock.writeLock();
 
@@ -60,15 +66,20 @@ public class MainController
   ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
       TaskFilterType.ApplicationName, TaskFilterType.ResultType,
       TaskFilterType.TaskGroup, TaskFilterType.TaskStartTime);
-
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    filteringSystem.addChangeListener(new FilterChangeListener() {
+      @Override
+      public void onFilterChange(FilterCriteriaType changedCriteriaType) {
+        reloadTasksResults();
+      }
+    });
     filterTypeChoice.setItems(filterTypes);
     tasksFiltersController.addTaskFilterChangeListener(new TaskFilterChangeListener() {
       @Override
       public void onApplicationNameFilterChange(String applicationName) {
-        showNotImplementedAlert("Filter on applicationName");
         logger.atInfo().log("New applicationName filter %s", applicationName);
+        filteringSystem.updateFilterByAppName(applicationName);
       }
 
       @Override
@@ -79,8 +90,9 @@ public class MainController
 
       @Override
       public void onTaskResultTypeFilterChange(TaskResultType taskResultType) {
-        showNotImplementedAlert("Filter on taskResultType ");
+        //showNotImplementedAlert("Filter on taskResultType ");
         logger.atInfo().log("New taskResultType filter %s", taskResultType.toString());
+        filteringSystem.updateFilterByResultType(taskResultType);
       }
 
       @Override
@@ -93,6 +105,7 @@ public class MainController
       public void onFilterRemove(TaskFilterType taskFilterType) {
         filterTypeChoice.getItems().add(taskFilterType);
         resetSelectionOnFilterTypes();
+        removeFilter(taskFilterType);
       }
     });
     resetSelectionOnFilterTypes();
@@ -111,6 +124,16 @@ public class MainController
     });
   }
 
+  private void removeFilter(TaskFilterType taskFilterType) {
+    if (taskFilterType == TaskFilterType.ApplicationName) {
+      filteringSystem.removeApplicationNameFilter();
+    } else if (taskFilterType == TaskFilterType.ResultType) {
+      filteringSystem.removeTaskResultTypeFilter();
+    } else {
+      showNotImplementedAlert(String.format("removing filter %s is not supported"));
+    }
+  }
+
   private void showNotImplementedAlert(String feature) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle("Not implemented yet");
@@ -122,7 +145,8 @@ public class MainController
     try {
       writeLock.lock();
       alreadyAddedTaskResults.clear();
-      dataDistributor.getAllTasksResults().forEach(tr -> alreadyAddedTaskResults.add(tr));
+      dataDistributor.getFilteredTasksResults(filteringSystem.getFilterCriteria())
+          .forEach(tr -> alreadyAddedTaskResults.add(tr));
       tasksResultsController.reloadFrom(alreadyAddedTaskResults);
     } finally {
       writeLock.unlock();
@@ -135,7 +159,9 @@ public class MainController
       writeLock.lock();
       if (!alreadyAddedTaskResults.contains(taskResult)) {
         alreadyAddedTaskResults.add(taskResult);
-        tasksResultsController.addTaskResult(taskResult);
+        if (filteringSystem.isAcceptedByAllFilters(taskResult)) {
+          tasksResultsController.addTaskResult(taskResult);
+        }
       }
     } finally {
       writeLock.unlock();
