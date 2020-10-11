@@ -12,7 +12,7 @@ public class FakeApplication implements Application {
   private LocalDateTime startTime = LocalDateTime.now();
   private String appName;
 
-  public FakeApplication(String appName){
+  public FakeApplication(String appName) {
     this.appName = appName;
   }
 

@@ -5,14 +5,12 @@ import fake.FakeTaskResult;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
-import task.Application;
 import task.TaskResultType;
 
 @SuppressWarnings("PMD")
 public class MockFakeTaskResult
     extends FakeTaskResult {
 
-  private static Application app = new FakeApplication("doctor");
   private static AtomicInteger seqNumber = new AtomicInteger();
 
   public MockFakeTaskResult() {
@@ -33,7 +31,15 @@ public class MockFakeTaskResult
 
   public MockFakeTaskResult(String taskName, LocalDateTime creationTime, TaskResultType taskResultType) {
     //When we use JsonSerialization we never store millisenconds, so reset it here too
-    super(app, taskName, null, taskResultType,
+    super(new FakeApplication("doctor"), taskName, null, taskResultType,
         creationTime.withNano(0), Duration.ofMinutes((int) Math.random()));
+  }
+
+  public void setTaskGroup(String taskGroup) {
+    this.taskGroup = taskGroup;
+  }
+
+  public void setApplicationName(String applicationName) {
+    this.app = new FakeApplication(applicationName);
   }
 }

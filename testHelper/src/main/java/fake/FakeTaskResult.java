@@ -9,12 +9,12 @@ import task.TaskResultType;
 
 @SuppressWarnings("PMD")
 public class FakeTaskResult implements TaskResult {
-  private String         taskName;
-  private String         taskGroup;
-  private TaskResultType taskResultType;
-  private LocalDateTime taskStartTime;
-  private Duration      taskExecutionDuration;
-  private Application   app;
+  protected String         taskName;
+  protected String         taskGroup;
+  protected TaskResultType taskResultType;
+  protected LocalDateTime taskStartTime;
+  protected Duration      taskExecutionDuration;
+  protected Application   app;
 
   public FakeTaskResult(Application application, String taskName, String taskGroup, TaskResultType taskResultType,
                         LocalDateTime startExecutionTime, Duration executionDuration) {
