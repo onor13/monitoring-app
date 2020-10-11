@@ -3,6 +3,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 import mock.MockFakeTaskResult;
 import org.hamcrest.MatcherAssert;
@@ -10,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.RunsInThreads;
 import storage.TasksResultsStorage;
 import task.TaskResult;
+import task.criteria.ApplicationNameFilterCriteria;
+import task.criteria.FilterCriteria;
+import task.criteria.TaskGroupNameFilterCriteria;
 
 @SuppressWarnings("PMD")
 public abstract class TasksResultsStorageTest {
@@ -86,6 +91,70 @@ public abstract class TasksResultsStorageTest {
     assertFalse(tasksResultsStorage.contains(taskResult2), "contains");
     assertTrue(tasksResultsStorage.contains(taskResult3), "contains");
     assertTrue(tasksResultsStorage.contains(taskResult4), "contains");
+  }
+
+  @Test
+  public void testAcceptedSingleFilterCriteria() {
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    final String expectedTaskGroup = "expectedTaskGroupWow";
+    MockFakeTaskResult expectedTaskResult = new MockFakeTaskResult("");
+    expectedTaskResult.setTaskGroup(expectedTaskGroup);
+    tasksResultsStorage.addTaskResult(expectedTaskResult);
+    Collection<FilterCriteria> criteria = new ArrayList<>();
+    criteria.add(new TaskGroupNameFilterCriteria(expectedTaskGroup));
+    Collection<TaskResult> filteredTaskResults = tasksResultsStorage.filter(criteria);
+    assertEquals(filteredTaskResults.size(), 1, "filtered by taskGroupName size");
+    assertEquals(expectedTaskGroup, filteredTaskResults.iterator().next().getTaskGroup(), "filter by taskGroupName");
+  }
+
+  @Test
+  public void testAcceptedRejectedFilterCriteria() {
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    final String unexpectedTaskGroup = "should not exist";
+    Collection<FilterCriteria> criteria = new ArrayList<>();
+    criteria.add(new TaskGroupNameFilterCriteria(unexpectedTaskGroup));
+    Collection<TaskResult> filteredTaskResults = tasksResultsStorage.filter(criteria);
+    assertEquals(filteredTaskResults.size(), 0, "filtered by taskGroupName size");
+  }
+
+  @Test
+  public void testAcceptedMultipleFilterCriteria() {
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    final String expectedTaskGroup = "expectedTaskGroupWow";
+    final String expectedApplicationName = "expectAppNameWow";
+    MockFakeTaskResult expectedTaskResult = new MockFakeTaskResult("");
+    expectedTaskResult.setTaskGroup(expectedTaskGroup);
+    expectedTaskResult.setApplicationName(expectedApplicationName);
+    tasksResultsStorage.addTaskResult(expectedTaskResult);
+
+    Collection<FilterCriteria> criteria = new ArrayList<>();
+    criteria.add(new TaskGroupNameFilterCriteria(expectedTaskGroup));
+    criteria.add(new ApplicationNameFilterCriteria(expectedApplicationName));
+    Collection<TaskResult> filteredTaskResults = tasksResultsStorage.filter(criteria);
+    assertEquals(filteredTaskResults.size(), 1,
+        "filtered by taskGroupName and applicationName size");
+    assertEquals(expectedApplicationName, filteredTaskResults.iterator().next().getApplicationName(),
+        "filter by applicationName");
+    assertEquals(expectedTaskGroup, filteredTaskResults.iterator().next().getTaskGroup(),
+        "filter by taskGroupName");
+  }
+
+  @Test
+  public void testRejectedMultipleFilterCriteria() {
+    TasksResultsStorage tasksResultsStorage = createStorage();
+    final String expectedTaskGroup = "expectedTaskGroupWow";
+    final String applicationName = "appName";
+    MockFakeTaskResult expectedTaskResult = new MockFakeTaskResult("");
+    expectedTaskResult.setTaskGroup(expectedTaskGroup);
+    expectedTaskResult.setApplicationName(applicationName);
+    tasksResultsStorage.addTaskResult(expectedTaskResult);
+
+    Collection<FilterCriteria> criteria = new ArrayList<>();
+    criteria.add(new TaskGroupNameFilterCriteria(expectedTaskGroup));
+    criteria.add(new ApplicationNameFilterCriteria("should not match anything"));
+    Collection<TaskResult> filteredTaskResults = tasksResultsStorage.filter(criteria);
+    assertEquals(filteredTaskResults.size(), 0,
+        "filtered by taskGroupName and applicationName size");
   }
 
 }

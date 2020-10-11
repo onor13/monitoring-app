@@ -3,12 +3,15 @@ package storage;
 import factory.TaskResultEntityFactory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
+import task.criteria.FilterCriteria;
 import task.dao.ApplicationDao;
 import task.dao.TaskResultDao;
 import task.entities.ApplicationEntity;
@@ -57,6 +60,11 @@ public class DbTasksResultsStorage implements TasksResultsStorage {
   @Override
   public void removeOlderThan(LocalDateTime instant) {
     taskResultDao.deleteOlderThan(instant);
+  }
+
+  @Override
+  public Collection<TaskResult> filter(Collection<FilterCriteria> criteria) {
+    return taskResultDao.findByCriteria(criteria).stream().collect(Collectors.toCollection(ArrayList::new));
   }
 
   @Override
