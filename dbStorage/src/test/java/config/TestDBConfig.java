@@ -104,8 +104,8 @@ public class TestDBConfig {
     return trDao;
   }
 
-  @Bean DBInitializer dbInitializer(){
-    DBInitializer dbInit = new DBInitializer();
+  @Bean TestDatabaseInitializer dbInitializer(){
+    TestDatabaseInitializer dbInit = new TestDatabaseInitializer();
     return dbInit;
   }
 }
