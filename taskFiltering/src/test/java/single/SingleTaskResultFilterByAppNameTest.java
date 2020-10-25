@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import fake.FakeApplication;
 import fake.FakeTaskResult;
 import filter.single.SingeTaskResultFilterByAppName;
+import filter.single.SingleTaskResultFilter;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +16,7 @@ import task.TaskResult;
 import task.TaskResultType;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.BeanMembersShouldSerialize"})
-public class SingleTaskResultFilterByAppNameTest {
+public class SingleTaskResultFilterByAppNameTest extends SingleTaskFilterTest {
 
   private static final String app1Name = "app1";
   private static final Application app1 = new FakeApplication(app1Name);
@@ -38,37 +39,27 @@ public class SingleTaskResultFilterByAppNameTest {
 
   @Test
   public void testFilterMatching(){
-    SingeTaskResultFilterByAppName filterByAppName = new SingeTaskResultFilterByAppName();
-    filterByAppName.setApplicationNameFilter(app1Name);
+    SingleTaskResultFilter filterByAppName = createInitializedFilter();
     assertTrue(filterByAppName.isAccepted(taskResultApp1), "filter should accept");
   }
 
   @Test
   public void testFilterNonMatching(){
-    SingeTaskResultFilterByAppName filterByAppName = new SingeTaskResultFilterByAppName();
-    filterByAppName.setApplicationNameFilter(app1Name);
+    SingleTaskResultFilter filterByAppName = createInitializedFilter();
     assertFalse(filterByAppName.isAccepted(nonMatchingTaskResult), "filter should not accept");
   }
 
-  @Test
-  public void testFilterDefaultEmpty(){
-    SingeTaskResultFilterByAppName filterByAppName = new SingeTaskResultFilterByAppName();
-    assertTrue(filterByAppName.isEmptyFilter(), "filter was never set, so should be empty");
+
+  @Override
+  public SingleTaskResultFilter createEmptyFilter() {
+    return new SingeTaskResultFilterByAppName();
   }
 
-  @Test
-  public void testFilterNonEmpty(){
+  @Override
+  public SingleTaskResultFilter createInitializedFilter() {
     SingeTaskResultFilterByAppName filterByAppName = new SingeTaskResultFilterByAppName();
     filterByAppName.setApplicationNameFilter(app1Name);
-    assertFalse(filterByAppName.isEmptyFilter(), "filter should not be empty");
+    return filterByAppName;
   }
 
-  @Test
-  public void testFilterReset(){
-    SingeTaskResultFilterByAppName filterByAppName = new SingeTaskResultFilterByAppName();
-    filterByAppName.setApplicationNameFilter(app1Name);
-    assertFalse(filterByAppName.isEmptyFilter(), "filter should not be empty");
-    filterByAppName.resetFilter();
-    assertTrue(filterByAppName.isEmptyFilter(), "after reset filter should be empty");
-  }
 }

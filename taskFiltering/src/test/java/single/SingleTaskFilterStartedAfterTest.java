@@ -11,13 +11,13 @@ public class SingleTaskFilterStartedAfterTest extends SingleTaskFilterStartTime 
 
   @Test
   public void testFilterMatching(){
-    SingleTaskResultFilter filter = createFilterStartedAtReferenceTime();
+    SingleTaskResultFilter filter = createInitializedFilter();
     assertTrue(filter.isAccepted(taskResultStartedAfterReferenceTime), "filter should accept");
   }
 
   @Test
   public void testFilterNonMatching(){
-    SingleTaskResultFilter filter = createFilterStartedAtReferenceTime();
+    SingleTaskResultFilter filter = createInitializedFilter();
     assertFalse(filter.isAccepted(taskResultStartedBeforeReferenceTime), "filter should not accept");
   }
 
@@ -27,7 +27,7 @@ public class SingleTaskFilterStartedAfterTest extends SingleTaskFilterStartTime 
   }
 
   @Override
-  public SingleTaskResultFilter createFilterStartedAtReferenceTime() {
+  public SingleTaskResultFilter createInitializedFilter() {
     SingleTaskFilterStartedAfter filter = new SingleTaskFilterStartedAfter();
     filter.setStartedAfterFilter(referenceTime);
     return filter;

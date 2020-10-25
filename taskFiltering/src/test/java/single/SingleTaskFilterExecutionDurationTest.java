@@ -1,6 +1,5 @@
 package single;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fake.FakeApplication;
@@ -15,7 +14,7 @@ import task.TaskResult;
 import task.TaskResultType;
 
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "PMD.JUnitTestContainsTooManyAsserts"})
-public abstract class SingleTaskFilterExecutionDurationTest {
+public abstract class SingleTaskFilterExecutionDurationTest extends SingleTaskFilterTest{
 
   protected static final Application app1 = new FakeApplication("app1");
   protected static TaskResult taskResultDurationAbove;
@@ -37,28 +36,11 @@ public abstract class SingleTaskFilterExecutionDurationTest {
   }
 
   @Test
+  @Override
   public void testFilterDefaultEmpty(){
     SingleTaskResultFilter filter = createEmptyFilter();
     assertTrue(filter.isEmptyFilter(), "filter was never set, so should be empty");
     assertTrue(filter.isAccepted(taskResultDurationAbove), "empty filter should always accept");
     assertTrue(filter.isAccepted(taskResultDurationBelow), "empty filter should always accept");
   }
-
-  @Test
-  public void testFilterNonEmpty(){
-    SingleTaskResultFilter filter = createInitializedFilter();
-    assertFalse(filter.isEmptyFilter(), "filter should not be empty");
-  }
-
-  @Test
-  public void testFilterReset(){
-    SingleTaskResultFilter filter = createInitializedFilter();
-    assertFalse(filter.isEmptyFilter(), "filter should not be empty");
-    filter.resetFilter();
-    assertTrue(filter.isEmptyFilter(), "after reset filter should be empty");
-  }
-
-  public abstract SingleTaskResultFilter createEmptyFilter();
-
-  public abstract SingleTaskResultFilter createInitializedFilter();
 }

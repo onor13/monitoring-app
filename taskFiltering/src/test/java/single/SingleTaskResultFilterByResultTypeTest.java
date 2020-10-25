@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fake.FakeApplication;
 import fake.FakeTaskResult;
+import filter.single.SingleTaskResultFilter;
 import filter.single.SingleTaskResultFilterByResultType;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import task.TaskResult;
 import task.TaskResultType;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.BeanMembersShouldSerialize"})
-public class SingleTaskResultFilterByResultTypeTest {
+public class SingleTaskResultFilterByResultTypeTest extends SingleTaskFilterTest {
 
   private static final Application app1 = new FakeApplication("app1");
   private static TaskResult matchingTaskResult;
@@ -47,25 +48,15 @@ public class SingleTaskResultFilterByResultTypeTest {
     assertFalse(filter.isAccepted(nonMatchingTaskResult), "filter should not accept");
   }
 
-  @Test
-  public void testFilterDefaultEmpty(){
-    SingleTaskResultFilterByResultType filter = new SingleTaskResultFilterByResultType();
-    assertTrue(filter.isEmptyFilter(), "filter was never set, so should be empty");
+  @Override
+  public SingleTaskResultFilter createEmptyFilter() {
+    return new SingleTaskResultFilterByResultType();
   }
 
-  @Test
-  public void testFilterNonEmpty(){
+  @Override
+  public SingleTaskResultFilter createInitializedFilter() {
     SingleTaskResultFilterByResultType filter = new SingleTaskResultFilterByResultType();
     filter.addAcceptedResultType(matchingResultType);
-    assertFalse(filter.isEmptyFilter(), "filter should not be empty");
-  }
-
-  @Test
-  public void testFilterReset(){
-    SingleTaskResultFilterByResultType filter = new SingleTaskResultFilterByResultType();
-    filter.addAcceptedResultType(matchingResultType);
-    assertFalse(filter.isEmptyFilter(), "filter should not be empty");
-    filter.resetFilter();
-    assertTrue(filter.isEmptyFilter(), "after reset filter should be empty");
+    return filter;
   }
 }
