@@ -9,7 +9,7 @@ import task.TaskResult;
 @SuppressWarnings("PMD.BeanMembersShouldSerialize")
 public class SingleTaskFilterStartedAfter implements SingleTaskResultFilter {
 
-  Optional<LocalDateTime> startedAfterFilter = Optional.ofNullable(null);
+  Optional<LocalDateTime> startedAfterFilter = Optional.empty();
 
   @Override
   public boolean isAccepted(TaskResult taskResult) {
@@ -29,7 +29,7 @@ public class SingleTaskFilterStartedAfter implements SingleTaskResultFilter {
 
   @Override
   public void resetFilter() {
-    startedAfterFilter = Optional.ofNullable(null);
+    startedAfterFilter = Optional.empty();
   }
 
   public void setStartedAfterFilter(LocalDateTime startedBefore) {

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fake.FakeApplication;
 import fake.FakeTaskResult;
-import filter.single.SingleTaskFilterStartedBefore;
 import filter.single.SingleTaskResultFilter;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -39,7 +38,7 @@ public abstract class SingleTaskFilterStartTime {
 
   @Test
   public void testFilterDefaultEmpty(){
-    SingleTaskFilterStartedBefore filter = new SingleTaskFilterStartedBefore();
+    SingleTaskResultFilter filter = createEmptyFilter();
     assertTrue(filter.isEmptyFilter(), "filter was never set, so should be empty");
     assertTrue(filter.isAccepted(taskResultStartedBeforeReferenceTime), "empty filter should always accept");
     assertTrue(filter.isAccepted(taskResultStartedAfterReferenceTime), "empty filter should always accept");

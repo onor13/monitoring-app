@@ -21,7 +21,6 @@ public class FakeTaskResult implements TaskResult {
     Objects.requireNonNull(application);
     Objects.requireNonNull(taskResultType);
     Objects.requireNonNull(startExecutionTime);
-    Objects.requireNonNull(executionDuration);
     this.app = application;
     this.taskName = taskName;
     this.taskGroup = taskGroup;
