@@ -3,7 +3,9 @@ package task.criteria;
 public enum FilterCriteriaType {
   ApplicationName("Application name"),
   ResultType("Result type"),
-  TaskGroup("Task group");
+  TaskGroup("Task group"),
+  ExecutionDurationBelow("Execution duration below"),
+  ExecutionDurationAbove("Execution duration above");
 
   private String name;
 
