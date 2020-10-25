@@ -3,11 +3,13 @@ package criteria;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import fake.FakeApplication;
+import fake.FakeTaskResult;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import task.Application;
-import task.JsonApplication;
-import task.JsonTaskResult;
+import task.TaskResult;
+import task.TaskResultType;
 import task.criteria.ApplicationNameFilterCriteria;
 import task.criteria.FilterCriteria;
 
@@ -17,18 +19,22 @@ public class ApplicationNameFilterCriteriaTest {
 
   @Test
   public void testAcceptedApplicationNameFilter(){
-    Application app = new JsonApplication(expectedAppName, LocalDateTime.now());
+    Application app = new FakeApplication(expectedAppName);
     FilterCriteria criteria = new ApplicationNameFilterCriteria(expectedAppName);
-    JsonTaskResult taskResult = new JsonTaskResult(app);
+    TaskResult taskResult = createTaskResult(app);
     assertTrue(criteria.isAccepted(taskResult), "application name comparison");
   }
 
   @Test
   public void testRejectedApplicationNameFilter(){
-
-    Application app = new JsonApplication(expectedAppName, LocalDateTime.now());
+    Application app = new FakeApplication(expectedAppName);
     FilterCriteria criteria = new ApplicationNameFilterCriteria("fakeValue");
-    JsonTaskResult taskResult = new JsonTaskResult(app);
+    TaskResult taskResult = createTaskResult(app);
     assertFalse(criteria.isAccepted(taskResult), "application name comparison");
+  }
+
+  private TaskResult createTaskResult(Application app) {
+    return new FakeTaskResult(app, "any", "any",
+        TaskResultType.SUCCESS, LocalDateTime.now(), null);
   }
 }

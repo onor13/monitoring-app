@@ -3,11 +3,12 @@ package criteria;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import fake.FakeApplication;
+import fake.FakeTaskResult;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import task.Application;
-import task.JsonApplication;
-import task.JsonTaskResult;
+import task.TaskResult;
 import task.TaskResultType;
 import task.criteria.FilterCriteria;
 import task.criteria.TaskResultTypeFilterCriteria;
@@ -20,20 +21,22 @@ public class TaskResultTypeFilterCriteriaTest {
 
   @Test
   public void testAcceptedTaskResultTypeFilter(){
-    Application app = new JsonApplication(appName, LocalDateTime.now());
+    Application app = new FakeApplication(appName);
     FilterCriteria criteria = new TaskResultTypeFilterCriteria(expectedTaskResultType);
-    JsonTaskResult taskResult = new JsonTaskResult(app);
-    taskResult.setTaskResultType(expectedTaskResultType);
+    TaskResult taskResult = createTaskResult(app, expectedTaskResultType);
     assertTrue(criteria.isAccepted(taskResult), "taskResultType comparison");
   }
 
   @Test
   public void testRejectedTaskResultTypeFilter(){
-
-    Application app = new JsonApplication(appName, LocalDateTime.now());
+    Application app = new FakeApplication(appName);
     FilterCriteria criteria = new TaskResultTypeFilterCriteria(expectedTaskResultType);
-    JsonTaskResult taskResult = new JsonTaskResult(app);
-    taskResult.setTaskResultType(unexpected);
+    TaskResult taskResult = createTaskResult(app, unexpected);
     assertFalse(criteria.isAccepted(taskResult), "taskResultType comparison");
+  }
+
+  private TaskResult createTaskResult(Application app, TaskResultType taskResultType) {
+    return new FakeTaskResult(app, "any", "any",
+        taskResultType, LocalDateTime.now(), null);
   }
 }
