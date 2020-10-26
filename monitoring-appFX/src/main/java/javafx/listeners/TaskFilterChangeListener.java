@@ -2,8 +2,8 @@ package javafx.listeners;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import javafx.TaskFilterType;
 import task.TaskResultType;
+import task.criteria.FilterCriteriaType;
 
 public interface TaskFilterChangeListener {
   void onApplicationNameFilterChange(String applicationName);
@@ -18,5 +18,5 @@ public interface TaskFilterChangeListener {
 
   void onExecutionDurationAboveFilterChange(Duration duration);
 
-  void onFilterRemove(TaskFilterType taskFilterType);
+  void onFilterRemove(FilterCriteriaType taskFilterType);
 }

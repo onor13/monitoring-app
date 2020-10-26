@@ -1,7 +1,7 @@
 package javafx.view;
 
-import javafx.TaskFilterType;
+import task.criteria.FilterCriteriaType;
 
 public interface RemoveFilterViewListener {
-  void onRemoveFilterView(TaskFilterType taskFilterType);
+  void onRemoveFilterView(FilterCriteriaType taskFilterType);
 }

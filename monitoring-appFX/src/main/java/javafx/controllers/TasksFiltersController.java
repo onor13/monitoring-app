@@ -3,7 +3,6 @@ package javafx.controllers;
 import com.google.common.flogger.FluentLogger;
 import java.net.URL;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,25 +10,23 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javafx.TaskFilterType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.listeners.DateTimeChangeListener;
 import javafx.listeners.TaskFilterChangeListener;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.view.DateTimePicker;
 import javafx.view.RemoveFilterViewListener;
 import javafx.view.TaskExecutionDurationTypeView;
 import javafx.view.TaskFilterTypeView;
 import javafx.view.TaskFilterTypeViewPane;
 import org.springframework.stereotype.Component;
 import task.TaskResultType;
+import task.criteria.FilterCriteriaType;
 
 @Component
 @SuppressWarnings({"PMD.BeanMembersShouldSerialize", "unchecked"})
@@ -44,7 +41,7 @@ public class TasksFiltersController implements Initializable {
 
   private final RemoveFilterViewListener removeFilterViewListener = new RemoveFilterViewListener() {
     @Override
-    public void onRemoveFilterView(TaskFilterType taskFilterType) {
+    public void onRemoveFilterView(FilterCriteriaType taskFilterType) {
       Optional<TaskFilterTypeViewPane> paneToRemove = tasksFilters.getItems().stream()
           .filter(pane -> pane.getFilterType() == taskFilterType).findFirst();
       if (paneToRemove.isPresent()) {
@@ -56,7 +53,6 @@ public class TasksFiltersController implements Initializable {
   private final TaskFilterTypeViewPane applicationNameFilterView = new ApplicationNameFilterView();
   private final TaskFilterTypeViewPane taskGroupFilterView = new TaskGroupFilterView();
   private final TaskFilterTypeViewPane taskResultTypeView  = new TaskResultTypeView();
-  private final TaskStartTimeTypeView taskStartTimeTypeView = new TaskStartTimeTypeView();
   private final TaskExecutionDurationTypeView taskExecutionDurationBelowTypeView =
       new TaskExecutionDurationBelowTypeView();
 
@@ -71,31 +67,29 @@ public class TasksFiltersController implements Initializable {
 
   public void addTaskFilterChangeListener(TaskFilterChangeListener taskFilterChangeListener) {
     changeListeners.add(taskFilterChangeListener);
-    taskStartTimeTypeView.addChangeListener(new DateTimeChangeListener() {
+    /*taskStartTimeTypeView.addChangeListener(new DateTimeChangeListener() {
       @Override
       public void onDateTimeChange(LocalDateTime dateTime) {
         taskFilterChangeListener.onTaskStartTimeFilterChange(dateTime);
       }
-    });
+    });*/
   }
 
   /***
    * <p>adds UI for the specified filterType.</p>
    * @param filterType filterType for tasks filtering
    */
-  public void addFilter(TaskFilterType filterType) {
+  public void addFilter(FilterCriteriaType filterType) {
     TaskFilterTypeViewPane pane;
-    if (filterType == TaskFilterType.ApplicationName) {
+    if (filterType == FilterCriteriaType.ApplicationName) {
       pane = applicationNameFilterView;
-    } else if (filterType == TaskFilterType.TaskGroup) {
+    } else if (filterType == FilterCriteriaType.TaskGroup) {
       pane = taskGroupFilterView;
-    } else if (filterType == TaskFilterType.ResultType) {
+    } else if (filterType == FilterCriteriaType.ResultType) {
       pane = taskResultTypeView;
-    } else if (filterType == TaskFilterType.TaskStartTime) {
-      pane = taskStartTimeTypeView;
-    } else if (filterType == TaskFilterType.TaskExecutionDurationBelow) {
+    } else if (filterType == FilterCriteriaType.ExecutionDurationBelow) {
       pane = taskExecutionDurationBelowTypeView;
-    } else if (filterType == TaskFilterType.TaskExecutionDurationAbove) {
+    } else if (filterType == FilterCriteriaType.ExecutionDurationAbove) {
       pane = taskExecutionDurationAboveTypeView;
     } else {
       showError("Not implemented yet", String.format("Filter %s is not supported", filterType.toString()));
@@ -170,15 +164,15 @@ public class TasksFiltersController implements Initializable {
 
   class ApplicationNameFilterView extends TaskTextFilterTypeView {
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.ApplicationName;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.ApplicationName;
     }
   }
 
   class TaskGroupFilterView extends TaskTextFilterTypeView {
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.TaskGroup;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.TaskGroup;
     }
   }
 
@@ -210,8 +204,8 @@ public class TasksFiltersController implements Initializable {
     }
 
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.ResultType;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.ResultType;
     }
 
     private final void resetSelection() {
@@ -224,7 +218,7 @@ public class TasksFiltersController implements Initializable {
     }
   }
 
-  class TaskStartTimeTypeView extends TaskFilterTypeView {
+  /*class TaskStartTimeTypeView extends TaskFilterTypeView {
     final DateTimePicker dateTimePicker = new DateTimePicker();
 
     protected TaskStartTimeTypeView() {
@@ -237,15 +231,15 @@ public class TasksFiltersController implements Initializable {
     }
 
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.TaskStartTime;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.TaskStartTime;
     }
 
     @Override
     public void resetView() {
       dateTimePicker.getEditor().clear();
     }
-  }
+  }*/
 
 
   class TaskExecutionDurationBelowTypeView extends TaskExecutionDurationTypeView {
@@ -254,8 +248,8 @@ public class TasksFiltersController implements Initializable {
     }
 
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.TaskExecutionDurationBelow;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.ExecutionDurationBelow;
     }
 
     @Override
@@ -270,8 +264,8 @@ public class TasksFiltersController implements Initializable {
     }
 
     @Override
-    public TaskFilterType getFilterType() {
-      return TaskFilterType.TaskExecutionDurationAbove;
+    public FilterCriteriaType getFilterType() {
+      return FilterCriteriaType.ExecutionDurationAbove;
     }
 
     @Override

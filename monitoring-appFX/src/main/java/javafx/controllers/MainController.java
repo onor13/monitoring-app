@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import javafx.TaskFilterType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
 import task.TaskResultType;
+import task.criteria.FilterCriteriaType;
 import view.Presenter;
 
 @Component
@@ -49,7 +49,7 @@ public class MainController
   TasksFiltersController tasksFiltersController;
 
   @FXML
-  ComboBox<TaskFilterType> filterTypeChoice;
+  ComboBox<FilterCriteriaType> filterTypeChoice;
 
   @Autowired
   TaskDataDistributor dataDistributor;
@@ -62,12 +62,12 @@ public class MainController
 
   Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
 
-  ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
-      TaskFilterType.ApplicationName,
-      TaskFilterType.ResultType,
-      TaskFilterType.TaskGroup,
-      TaskFilterType.TaskExecutionDurationBelow,
-      TaskFilterType.TaskExecutionDurationAbove);
+  ObservableList<FilterCriteriaType> filterTypes = FXCollections.observableArrayList(
+      FilterCriteriaType.ApplicationName,
+      FilterCriteriaType.ResultType,
+      FilterCriteriaType.TaskGroup,
+      FilterCriteriaType.ExecutionDurationBelow,
+      FilterCriteriaType.ExecutionDurationAbove);
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -111,7 +111,7 @@ public class MainController
       }
 
       @Override
-      public void onFilterRemove(TaskFilterType taskFilterType) {
+      public void onFilterRemove(FilterCriteriaType taskFilterType) {
         filterTypeChoice.getItems().add(taskFilterType);
         resetSelectionOnFilterTypes();
         removeFilter(taskFilterType);
@@ -133,16 +133,16 @@ public class MainController
     });
   }
 
-  private void removeFilter(TaskFilterType taskFilterType) {
-    if (taskFilterType == TaskFilterType.ApplicationName) {
+  private void removeFilter(FilterCriteriaType taskFilterType) {
+    if (taskFilterType == FilterCriteriaType.ApplicationName) {
       filteringSystem.removeApplicationNameFilter();
-    } else if (taskFilterType == TaskFilterType.ResultType) {
+    } else if (taskFilterType == FilterCriteriaType.ResultType) {
       filteringSystem.removeTaskResultTypeFilter();
-    } else if (taskFilterType == TaskFilterType.TaskGroup) {
+    } else if (taskFilterType == FilterCriteriaType.TaskGroup) {
       filteringSystem.removeTaskGroupNameFilter();
-    } else if (taskFilterType == TaskFilterType.TaskExecutionDurationBelow) {
+    } else if (taskFilterType == FilterCriteriaType.ExecutionDurationBelow) {
       filteringSystem.removeTaskExecutionDurationBelowFilter();
-    } else if (taskFilterType == TaskFilterType.TaskExecutionDurationAbove) {
+    } else if (taskFilterType == FilterCriteriaType.ExecutionDurationAbove) {
       filteringSystem.removeTaskExecutionDurationAboveFilter();
     } else {
       showNotImplementedAlert(String.format("removing filter %s is not supported"));
@@ -186,7 +186,7 @@ public class MainController
   @FXML
   protected void handleAddFilterAction(ActionEvent event) {
     logger.atInfo().log("Add filter button clicked " + event.getSource());
-    TaskFilterType selectedFilterType = filterTypeChoice.getValue();
+    FilterCriteriaType selectedFilterType = filterTypeChoice.getValue();
     tasksFiltersController.addFilter(selectedFilterType);
     filterTypes.remove(selectedFilterType);
     resetSelectionOnFilterTypes();

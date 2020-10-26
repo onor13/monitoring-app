@@ -1,14 +1,14 @@
 package javafx.view;
 
-import javafx.TaskFilterType;
 import javafx.scene.layout.Pane;
+import task.criteria.FilterCriteriaType;
 
 public interface TaskFilterTypeViewPane {
   Pane getView();
 
   void updateLabel();
 
-  TaskFilterType getFilterType();
+  FilterCriteriaType getFilterType();
 
   void resetView();
 }
