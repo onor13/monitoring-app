@@ -3,6 +3,7 @@ package task.dao;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.flogger.LazyArgs;
 import converters.LocalDateTimeConverter;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
@@ -72,6 +73,12 @@ public class TaskResultDaoImpl implements TaskResultDao {
       return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_TASK_RESULT_TYPE), criteria.getCriteriaValue());
     } else if (criteria.getType() == FilterCriteriaType.TaskGroup) {
       return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_TASK_GROUP), criteria.getCriteriaValue());
+    } else if (criteria.getType() == FilterCriteriaType.ExecutionDurationBelow) {
+      Duration duration = (Duration) criteria.getCriteriaValue();
+      return criteriaBuilder.lessThan(root.get(TaskResultEntity.CRITERIA_TASK_EXECUTION_DURATION), duration);
+    } else if (criteria.getType() == FilterCriteriaType.ExecutionDurationAbove) {
+      Duration duration = (Duration) criteria.getCriteriaValue();
+      return criteriaBuilder.greaterThan(root.get(TaskResultEntity.CRITERIA_TASK_EXECUTION_DURATION), duration);
     }
     throw new NotYetImplementedException("not supported criteria type " + criteria.getType().name());
   }
