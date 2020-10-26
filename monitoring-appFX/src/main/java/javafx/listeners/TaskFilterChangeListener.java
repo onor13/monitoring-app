@@ -12,7 +12,9 @@ public interface TaskFilterChangeListener {
 
   void onTaskResultTypeFilterChange(TaskResultType taskResultType);
 
-  void onTaskStartTimeFilterChange(LocalDateTime dateTime);
+  void onTaskStartTimeBeforeFilterChange(LocalDateTime dateTime);
+
+  void onTaskStartTimeAfterFilterChange(LocalDateTime dateTime);
 
   void onExecutionDurationBelowFilterChange(Duration duration);
 

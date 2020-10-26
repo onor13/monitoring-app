@@ -67,7 +67,9 @@ public class MainController
       FilterCriteriaType.ResultType,
       FilterCriteriaType.TaskGroup,
       FilterCriteriaType.ExecutionDurationBelow,
-      FilterCriteriaType.ExecutionDurationAbove);
+      FilterCriteriaType.ExecutionDurationAbove,
+      FilterCriteriaType.StartTimeBefore,
+      FilterCriteriaType.StartTimeAfter);
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -93,9 +95,15 @@ public class MainController
       }
 
       @Override
-      public void onTaskStartTimeFilterChange(LocalDateTime dateTime) {
-        logger.atInfo().log("New dateTime filter %s", formatter.format(dateTime));
-        showNotImplementedAlert("Filter on taskStartTime");
+      public void onTaskStartTimeBeforeFilterChange(LocalDateTime dateTime) {
+        logger.atInfo().log("New before startTime filter %s", formatter.format(dateTime));
+        filteringSystem.updateFilterByStartedBefore(dateTime);
+      }
+
+      @Override
+      public void onTaskStartTimeAfterFilterChange(LocalDateTime dateTime) {
+        logger.atInfo().log("New after startTime filter %s", formatter.format(dateTime));
+        filteringSystem.updateFilterByStartedAfter(dateTime);
       }
 
       @Override
@@ -146,13 +154,6 @@ public class MainController
     alert.setTitle("Failed with exception ");
     alert.setContentText(exception.toString());
     alert.setHeaderText(exception.getMessage());
-    alert.show();
-  }
-
-  private void showNotImplementedAlert(String feature) {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Not implemented yet");
-    alert.setContentText(String.format("Feature %s is not supported", feature));
     alert.show();
   }
 
