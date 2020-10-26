@@ -3,9 +3,12 @@ package filter;
 import filter.single.SingeTaskResultFilterByAppName;
 import filter.single.SingleTaskFilterExecutionDurationAbove;
 import filter.single.SingleTaskFilterExecutionDurationBelow;
+import filter.single.SingleTaskFilterStartedAfter;
+import filter.single.SingleTaskFilterStartedBefore;
 import filter.single.SingleTaskResultFilterByGroupName;
 import filter.single.SingleTaskResultFilterByResultType;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ import task.criteria.TaskExecutionDurationAboveFilterCriteria;
 import task.criteria.TaskExecutionDurationBelowFilterCriteria;
 import task.criteria.TaskGroupNameFilterCriteria;
 import task.criteria.TaskResultTypeFilterCriteria;
+import task.criteria.TaskStartTimeAfterFilterCriteria;
+import task.criteria.TaskStartTimeBeforeFilterCriteria;
 
 @Component
 public class TaskResultFilteringSystem {
@@ -37,6 +42,12 @@ public class TaskResultFilteringSystem {
 
   @Autowired
   private transient SingleTaskFilterExecutionDurationAbove singleTaskFilterExecutionDurationAbove;
+
+  @Autowired
+  private transient SingleTaskFilterStartedBefore singleTaskFilterStartedBefore;
+
+  @Autowired
+  private transient SingleTaskFilterStartedAfter singleTaskFilterStartedAfter;
 
   private final transient Collection<FilterChangeListener> filterChangeListeners = new ArrayList<>();
 
@@ -80,6 +91,24 @@ public class TaskResultFilteringSystem {
         filterChangeListener.onFilterChange(FilterCriteriaType.ApplicationName));
   }
 
+  public void updateFilterByStartedBefore(LocalDateTime referenceTime) {
+    singleTaskFilterStartedBefore.setStartedBeforeFilter(referenceTime);
+
+    removeFilterCriteria(FilterCriteriaType.StartTimeBefore);
+    filterCriteria.add(new TaskStartTimeBeforeFilterCriteria(referenceTime));
+    filterChangeListeners.stream().forEach(filterChangeListener ->
+        filterChangeListener.onFilterChange(FilterCriteriaType.StartTimeBefore));
+  }
+
+  public void updateFilterByStartedAfter(LocalDateTime referenceTime) {
+    singleTaskFilterStartedAfter.setStartedAfterFilter(referenceTime);
+
+    removeFilterCriteria(FilterCriteriaType.StartTimeAfter);
+    filterCriteria.add(new TaskStartTimeAfterFilterCriteria(referenceTime));
+    filterChangeListeners.stream().forEach(filterChangeListener ->
+        filterChangeListener.onFilterChange(FilterCriteriaType.StartTimeAfter));
+  }
+
   public void updateFilterByResultType(TaskResultType taskResultType) {
     singleTaskResultFilterByResultType.resetFilter();
     singleTaskResultFilterByResultType.addAcceptedResultType(taskResultType);
@@ -90,6 +119,10 @@ public class TaskResultFilteringSystem {
         filterChangeListener.onFilterChange(FilterCriteriaType.ResultType));
   }
 
+  /***
+   * <p>removes task filter criteria is it was present.</p>
+   * @param taskFilterType task filter type to remove
+   */
   public void removeTaskFilterCriteria(FilterCriteriaType taskFilterType) {
     removeFilterCriteria(taskFilterType);
     switch (taskFilterType) {
@@ -108,6 +141,12 @@ public class TaskResultFilteringSystem {
       case ExecutionDurationAbove:
         singleTaskFilterExecutionDurationAbove.resetFilter();
         break;
+      case StartTimeBefore:
+        singleTaskFilterStartedBefore.resetFilter();
+        break;
+      case StartTimeAfter:
+        singleTaskFilterStartedAfter.resetFilter();
+        break;
       default:
         throw new UnsupportedOperationException("Not supported FilterCriteriaType: " + taskFilterType);
     }
@@ -120,7 +159,9 @@ public class TaskResultFilteringSystem {
         && singleTaskResultFilterByResultType.isAccepted(taskResult)
         && singleTaskResultFilterByGroupName.isAccepted(taskResult)
         && singleTaskFilterExecutionDurationBelow.isAccepted(taskResult)
-        && singleTaskFilterExecutionDurationAbove.isAccepted(taskResult);
+        && singleTaskFilterExecutionDurationAbove.isAccepted(taskResult)
+        && singleTaskFilterStartedBefore.isAccepted(taskResult)
+        && singleTaskFilterStartedAfter.isAccepted(taskResult);
   }
 
   private void removeFilterCriteria(FilterCriteriaType criteriaType) {
