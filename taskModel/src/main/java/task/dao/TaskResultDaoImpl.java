@@ -53,7 +53,8 @@ public class TaskResultDaoImpl implements TaskResultDao {
   }
 
   private Predicate[] createPredicates(Collection<FilterCriteria> criteria,
-                                       Root<TaskResultEntity> root, CriteriaBuilder criteriaBuilder) {
+                                       Root<TaskResultEntity> root,
+                                       CriteriaBuilder criteriaBuilder) {
     Predicate[] predicates = new Predicate[criteria.size()];
     Iterator<FilterCriteria> criteriaIterator = criteria.iterator();
     int predicateIndex = 0;
@@ -65,7 +66,8 @@ public class TaskResultDaoImpl implements TaskResultDao {
   }
 
   private Predicate predicateFromCriteria(FilterCriteria criteria,
-                                          Root<TaskResultEntity> root, CriteriaBuilder criteriaBuilder) {
+                                          Root<TaskResultEntity> root,
+                                          CriteriaBuilder criteriaBuilder) {
     if (criteria.getType() == FilterCriteriaType.ApplicationName) {
       return criteriaBuilder.equal(root.get(TaskResultEntity.CRITERIA_APPLICATION)
           .get(ApplicationEntity.CRITERIA_NAME), criteria.getCriteriaValue());
@@ -79,6 +81,12 @@ public class TaskResultDaoImpl implements TaskResultDao {
     } else if (criteria.getType() == FilterCriteriaType.ExecutionDurationAbove) {
       Duration duration = (Duration) criteria.getCriteriaValue();
       return criteriaBuilder.greaterThan(root.get(TaskResultEntity.CRITERIA_TASK_EXECUTION_DURATION), duration);
+    } else if (criteria.getType() == FilterCriteriaType.StartTimeBefore) {
+      LocalDateTime referenceTime = (LocalDateTime) criteria.getCriteriaValue();
+      return criteriaBuilder.lessThan(root.get(TaskResultEntity.CRITERIA_TASK_START_TIME), referenceTime);
+    } else if (criteria.getType() == FilterCriteriaType.StartTimeAfter) {
+      LocalDateTime referenceTime = (LocalDateTime) criteria.getCriteriaValue();
+      return criteriaBuilder.greaterThan(root.get(TaskResultEntity.CRITERIA_TASK_START_TIME), referenceTime);
     }
     throw new NotYetImplementedException("not supported criteria type " + criteria.getType().name());
   }

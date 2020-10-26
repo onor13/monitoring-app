@@ -52,6 +52,7 @@ public class TaskResultEntity extends AbstractEntity implements TaskResult {
   public static final String CRITERIA_TASK_RESULT_TYPE = "taskResultType";
   public static final String CRITERIA_TASK_GROUP = "taskGroup";
   public static final String CRITERIA_TASK_EXECUTION_DURATION = "executionDuration";
+  public static final String CRITERIA_TASK_START_TIME = "startTime";
   private static final long serialVersionUID = -4760477593367753944L;
 
   @ManyToOne
