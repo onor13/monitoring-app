@@ -4,6 +4,8 @@ public enum FilterCriteriaType {
   ApplicationName("Application name"),
   ResultType("Result type"),
   TaskGroup("Task group"),
+  StartTimeBefore("Task started before"),
+  StartTimeAfter("Task started after"),
   ExecutionDurationBelow("Execution duration below"),
   ExecutionDurationAbove("Execution duration above");
 
