@@ -134,19 +134,19 @@ public class MainController
   }
 
   private void removeFilter(FilterCriteriaType taskFilterType) {
-    if (taskFilterType == FilterCriteriaType.ApplicationName) {
-      filteringSystem.removeApplicationNameFilter();
-    } else if (taskFilterType == FilterCriteriaType.ResultType) {
-      filteringSystem.removeTaskResultTypeFilter();
-    } else if (taskFilterType == FilterCriteriaType.TaskGroup) {
-      filteringSystem.removeTaskGroupNameFilter();
-    } else if (taskFilterType == FilterCriteriaType.ExecutionDurationBelow) {
-      filteringSystem.removeTaskExecutionDurationBelowFilter();
-    } else if (taskFilterType == FilterCriteriaType.ExecutionDurationAbove) {
-      filteringSystem.removeTaskExecutionDurationAboveFilter();
-    } else {
-      showNotImplementedAlert(String.format("removing filter %s is not supported"));
+    try {
+      filteringSystem.removeTaskFilterCriteria(taskFilterType);
+    } catch (Exception exception) {
+      showError(exception);
     }
+  }
+
+  private void showError(Exception exception) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Failed with exception ");
+    alert.setContentText(exception.toString());
+    alert.setHeaderText(exception.getMessage());
+    alert.show();
   }
 
   private void showNotImplementedAlert(String feature) {

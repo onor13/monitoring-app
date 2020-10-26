@@ -90,39 +90,29 @@ public class TaskResultFilteringSystem {
         filterChangeListener.onFilterChange(FilterCriteriaType.ResultType));
   }
 
-  public void removeTaskExecutionDurationBelowFilter() {
-    singleTaskFilterExecutionDurationBelow.resetFilter();
-    removeFilterCriteria(FilterCriteriaType.ExecutionDurationBelow);
+  public void removeTaskFilterCriteria(FilterCriteriaType taskFilterType) {
+    removeFilterCriteria(taskFilterType);
+    switch (taskFilterType) {
+      case ResultType:
+        singleTaskResultFilterByResultType.resetFilter();
+        break;
+      case ApplicationName:
+        singeTaskResultFilterByAppName.resetFilter();
+        break;
+      case TaskGroup:
+        singleTaskResultFilterByGroupName.resetFilter();
+        break;
+      case ExecutionDurationBelow:
+        singleTaskFilterExecutionDurationBelow.resetFilter();
+        break;
+      case ExecutionDurationAbove:
+        singleTaskFilterExecutionDurationAbove.resetFilter();
+        break;
+      default:
+        throw new UnsupportedOperationException("Not supported FilterCriteriaType: " + taskFilterType);
+    }
     filterChangeListeners.stream().forEach(filterChangeListener ->
-        filterChangeListener.onFilterChange(FilterCriteriaType.ExecutionDurationBelow));
-  }
-
-  public void removeTaskExecutionDurationAboveFilter() {
-    singleTaskFilterExecutionDurationAbove.resetFilter();
-    removeFilterCriteria(FilterCriteriaType.ExecutionDurationAbove);
-    filterChangeListeners.stream().forEach(filterChangeListener ->
-        filterChangeListener.onFilterChange(FilterCriteriaType.ExecutionDurationAbove));
-  }
-
-  public void removeApplicationNameFilter() {
-    singeTaskResultFilterByAppName.resetFilter();
-    removeFilterCriteria(FilterCriteriaType.ApplicationName);
-    filterChangeListeners.stream().forEach(filterChangeListener ->
-        filterChangeListener.onFilterChange(FilterCriteriaType.ApplicationName));
-  }
-
-  public void removeTaskGroupNameFilter() {
-    singleTaskResultFilterByGroupName.resetFilter();
-    removeFilterCriteria(FilterCriteriaType.TaskGroup);
-    filterChangeListeners.stream().forEach(filterChangeListener ->
-        filterChangeListener.onFilterChange(FilterCriteriaType.TaskGroup));
-  }
-
-  public void removeTaskResultTypeFilter() {
-    singleTaskResultFilterByResultType.resetFilter();
-    removeFilterCriteria(FilterCriteriaType.ResultType);
-    filterChangeListeners.stream().forEach(filterChangeListener ->
-        filterChangeListener.onFilterChange(FilterCriteriaType.ResultType));
+        filterChangeListener.onFilterChange(taskFilterType));
   }
 
   public boolean isAcceptedByAllFilters(TaskResult taskResult) {
