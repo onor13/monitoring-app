@@ -3,9 +3,9 @@ package javafx.controllers;
 import com.google.common.flogger.FluentLogger;
 import converters.LocalDateTimeConverter;
 import distributors.TaskDataDistributor;
-import filter.FilterChangeListener;
 import filter.TaskResultFilteringSystem;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.ResourceBundle;
@@ -27,7 +27,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import task.TaskResult;
 import task.TaskResultType;
-import task.criteria.FilterCriteriaType;
 import view.Presenter;
 
 @Component
@@ -64,17 +63,15 @@ public class MainController
   Set<TaskResult> alreadyAddedTaskResults = new HashSet<>();
 
   ObservableList<TaskFilterType> filterTypes = FXCollections.observableArrayList(
-      TaskFilterType.ApplicationName, TaskFilterType.ResultType,
-      TaskFilterType.TaskGroup, TaskFilterType.TaskStartTime);
+      TaskFilterType.ApplicationName,
+      TaskFilterType.ResultType,
+      TaskFilterType.TaskGroup,
+      TaskFilterType.TaskExecutionDurationBelow,
+      TaskFilterType.TaskExecutionDurationAbove);
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    filteringSystem.addChangeListener(new FilterChangeListener() {
-      @Override
-      public void onFilterChange(FilterCriteriaType changedCriteriaType) {
-        reloadTasksResults();
-      }
-    });
+    filteringSystem.addChangeListener(changedCriteriaType -> reloadTasksResults());
     filterTypeChoice.setItems(filterTypes);
     tasksFiltersController.addTaskFilterChangeListener(new TaskFilterChangeListener() {
       @Override
@@ -91,15 +88,26 @@ public class MainController
 
       @Override
       public void onTaskResultTypeFilterChange(TaskResultType taskResultType) {
-        //showNotImplementedAlert("Filter on taskResultType ");
         logger.atInfo().log("New taskResultType filter %s", taskResultType.toString());
         filteringSystem.updateFilterByResultType(taskResultType);
       }
 
       @Override
       public void onTaskStartTimeFilterChange(LocalDateTime dateTime) {
-        showNotImplementedAlert("Filter on taskStartTime");
         logger.atInfo().log("New dateTime filter %s", formatter.format(dateTime));
+        showNotImplementedAlert("Filter on taskStartTime");
+      }
+
+      @Override
+      public void onExecutionDurationBelowFilterChange(Duration duration) {
+        logger.atInfo().log("New ExecutionDuration Below filter %s", duration.toString());
+        filteringSystem.updateFilterByExecutionDurationBelow(duration);
+      }
+
+      @Override
+      public void onExecutionDurationAboveFilterChange(Duration duration) {
+        logger.atInfo().log("New ExecutionDuration Above filter %s", duration.toString());
+        filteringSystem.updateFilterByExecutionDurationAbove(duration);
       }
 
       @Override
@@ -132,6 +140,10 @@ public class MainController
       filteringSystem.removeTaskResultTypeFilter();
     } else if (taskFilterType == TaskFilterType.TaskGroup) {
       filteringSystem.removeTaskGroupNameFilter();
+    } else if (taskFilterType == TaskFilterType.TaskExecutionDurationBelow) {
+      filteringSystem.removeTaskExecutionDurationBelowFilter();
+    } else if (taskFilterType == TaskFilterType.TaskExecutionDurationAbove) {
+      filteringSystem.removeTaskExecutionDurationAboveFilter();
     } else {
       showNotImplementedAlert(String.format("removing filter %s is not supported"));
     }

@@ -1,5 +1,6 @@
 package javafx.listeners;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import javafx.TaskFilterType;
 import task.TaskResultType;
@@ -12,6 +13,10 @@ public interface TaskFilterChangeListener {
   void onTaskResultTypeFilterChange(TaskResultType taskResultType);
 
   void onTaskStartTimeFilterChange(LocalDateTime dateTime);
+
+  void onExecutionDurationBelowFilterChange(Duration duration);
+
+  void onExecutionDurationAboveFilterChange(Duration duration);
 
   void onFilterRemove(TaskFilterType taskFilterType);
 }

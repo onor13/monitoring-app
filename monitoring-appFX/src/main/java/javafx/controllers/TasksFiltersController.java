@@ -2,6 +2,7 @@ package javafx.controllers;
 
 import com.google.common.flogger.FluentLogger;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,20 +16,18 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.listeners.DateTimeChangeListener;
 import javafx.listeners.TaskFilterChangeListener;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.view.DateTimePicker;
+import javafx.view.RemoveFilterViewListener;
+import javafx.view.TaskExecutionDurationTypeView;
+import javafx.view.TaskFilterTypeView;
+import javafx.view.TaskFilterTypeViewPane;
 import org.springframework.stereotype.Component;
 import task.TaskResultType;
 
@@ -43,10 +42,26 @@ public class TasksFiltersController implements Initializable {
   @FXML
   ListView<TaskFilterTypeViewPane> tasksFilters;
 
+  private final RemoveFilterViewListener removeFilterViewListener = new RemoveFilterViewListener() {
+    @Override
+    public void onRemoveFilterView(TaskFilterType taskFilterType) {
+      Optional<TaskFilterTypeViewPane> paneToRemove = tasksFilters.getItems().stream()
+          .filter(pane -> pane.getFilterType() == taskFilterType).findFirst();
+      if (paneToRemove.isPresent()) {
+        removePane(paneToRemove.get());
+      }
+    }
+  };
+
   private final TaskFilterTypeViewPane applicationNameFilterView = new ApplicationNameFilterView();
   private final TaskFilterTypeViewPane taskGroupFilterView = new TaskGroupFilterView();
   private final TaskFilterTypeViewPane taskResultTypeView  = new TaskResultTypeView();
   private final TaskStartTimeTypeView taskStartTimeTypeView = new TaskStartTimeTypeView();
+  private final TaskExecutionDurationTypeView taskExecutionDurationBelowTypeView =
+      new TaskExecutionDurationBelowTypeView();
+
+  private final TaskExecutionDurationTypeView taskExecutionDurationAboveTypeView =
+      new TaskExecutionDurationAboveTypeView();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -78,6 +93,10 @@ public class TasksFiltersController implements Initializable {
       pane = taskResultTypeView;
     } else if (filterType == TaskFilterType.TaskStartTime) {
       pane = taskStartTimeTypeView;
+    } else if (filterType == TaskFilterType.TaskExecutionDurationBelow) {
+      pane = taskExecutionDurationBelowTypeView;
+    } else if (filterType == TaskFilterType.TaskExecutionDurationAbove) {
+      pane = taskExecutionDurationAboveTypeView;
     } else {
       showError("Not implemented yet", String.format("Filter %s is not supported", filterType.toString()));
       return;
@@ -115,60 +134,17 @@ public class TasksFiltersController implements Initializable {
     }
   }
 
-  interface TaskFilterTypeViewPane {
-    Pane getView();
-
-    void updateLabel();
-
-    TaskFilterType getFilterType();
-
-    void resetView();
-  }
-
   protected final void removePane(TaskFilterTypeViewPane pane) {
     pane.resetView();
     tasksFilters.getItems().remove(pane);
     changeListeners.stream().forEach(cl -> cl.onFilterRemove(pane.getFilterType()));
   }
 
-  abstract class TaskFilterTypeView implements TaskFilterTypeViewPane {
-    final HBox hbox = new HBox();
-    final Label label = new Label("");
-    final Button button = new Button("Delete");
-
-    protected TaskFilterTypeView() {
-      hbox.setSpacing(20);
-      label.setPadding(new Insets(5, 0, -10, 0));
-      button.setOnAction(event -> {
-        Optional<TaskFilterTypeViewPane> paneToRemove = tasksFilters.getItems().stream()
-            .filter(pane -> pane.getFilterType() == getFilterType()).findFirst();
-        if (paneToRemove.isPresent()) {
-          removePane(paneToRemove.get());
-        }
-      });
-      hbox.getChildren().addAll(button, label);
-    }
-
-    protected void addExtraNode(Node extraNode) {
-      hbox.getChildren().add(extraNode);
-    }
-
-    @Override
-    public Pane getView() {
-      return hbox;
-    }
-
-    @Override
-    public void updateLabel() {
-      this.label.setText(getFilterType().toString());
-    }
-  }
-
   abstract class TaskTextFilterTypeView extends TaskFilterTypeView {
     final TextField filterValue = new TextField();
 
     protected TaskTextFilterTypeView() {
-      super();
+      super(removeFilterViewListener);
       filterValue.textProperty().addListener((observable, oldValue, newValue) -> {
         changeListeners.stream().forEach(cl -> {
           switch (getFilterType()) {
@@ -211,7 +187,7 @@ public class TasksFiltersController implements Initializable {
     Map<Number, TaskResultType> taskResultTypeIndex = new HashMap<>();
 
     protected TaskResultTypeView() {
-      super();
+      super(removeFilterViewListener);
       taskResultTypeIndex.put(1, TaskResultType.SUCCESS);
       taskResultTypeIndex.put(2, TaskResultType.ERROR);
       taskResultTypeIndex.put(3, TaskResultType.WARNING);
@@ -252,7 +228,7 @@ public class TasksFiltersController implements Initializable {
     final DateTimePicker dateTimePicker = new DateTimePicker();
 
     protected TaskStartTimeTypeView() {
-      super();
+      super(removeFilterViewListener);
       addExtraNode(dateTimePicker);
     }
 
@@ -268,6 +244,39 @@ public class TasksFiltersController implements Initializable {
     @Override
     public void resetView() {
       dateTimePicker.getEditor().clear();
+    }
+  }
+
+
+  class TaskExecutionDurationBelowTypeView extends TaskExecutionDurationTypeView {
+    protected TaskExecutionDurationBelowTypeView() {
+      super(removeFilterViewListener);
+    }
+
+    @Override
+    public TaskFilterType getFilterType() {
+      return TaskFilterType.TaskExecutionDurationBelow;
+    }
+
+    @Override
+    protected void onValueChange(Duration duration) {
+      changeListeners.stream().forEach(cl -> cl.onExecutionDurationBelowFilterChange(duration));
+    }
+  }
+
+  class TaskExecutionDurationAboveTypeView extends TaskExecutionDurationTypeView {
+    protected TaskExecutionDurationAboveTypeView() {
+      super(removeFilterViewListener);
+    }
+
+    @Override
+    public TaskFilterType getFilterType() {
+      return TaskFilterType.TaskExecutionDurationAbove;
+    }
+
+    @Override
+    protected void onValueChange(Duration duration) {
+      changeListeners.stream().forEach(cl -> cl.onExecutionDurationAboveFilterChange(duration));
     }
   }
 
