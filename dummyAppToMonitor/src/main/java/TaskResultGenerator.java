@@ -51,9 +51,15 @@ public class TaskResultGenerator {
     tr.setTaskName("give medicine for " + group);
     tr.setTaskGroup(group);
     tr.setTaskResultType(getResultTypeFromInt(getRandomBetweenRange(0, 10)));
-    tr.setTaskStartTime(LocalDateTime.now());
+    tr.setTaskStartTime(getRandomStartTimeInThePast());
     tr.setTaskExecutionDuration(Duration.ofMinutes(getRandomBetweenRange(1, 60)));
     return tr;
+  }
+
+  private LocalDateTime getRandomStartTimeInThePast() {
+    LocalDateTime time = LocalDateTime.now();
+    time = time.minusMinutes(getRandomBetweenRange(1, 300));
+    return time;
   }
 
   public static int getRandomBetweenRange(int min, int max) {
